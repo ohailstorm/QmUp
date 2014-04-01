@@ -1,0 +1,20 @@
+TDDD27 Project GEOAWESOME
+==Members==
+oscha646
+gusen286
+
+===Project description===
+This project will include positioning data from some open data source. Users will
+then be able to add information about the existing places (ie. the closest
+outdoor gym) via their own accounts, that will use single sign-on from either 
+facebook or google. 
+
+==Technical specification==
+Initially, the project will be based upon the use of Meteor as a framework.
+Partially this is because it seemed to be a very interesting way of linking the 
+client-side with the server-side, but also because the server will more act as
+a coordinator of other web services rather than a heavy backend.
+
+The design of the website will be done by using components from bootstrap. The 
+main reason for this is that this is one of the most used frameworks today, and 
+is therefore good to have knowledge about.
