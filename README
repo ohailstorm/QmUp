@@ -13,9 +13,13 @@ facebook or google.
 Initially, the project will be based upon the use of Django as a framework on the
 server side. This is because both team members had good experiences from working
 with flask and a Python-based backend in TDDD24, but it is possible this will be
-changed into a php-based backend later on. On the client side we will use either 
-angular.js or ember.js to begin with. Further investigation is needed as the 
-design of the website is planned to be done by using components from twitter 
-bootstrap. The main reason for this is that this is one of the most used 
-frameworks today, and is therefore good to know how to work with bootstrap.
-The meteor framework is also under consideration.
+changed into a php-based backend later on. 
+
+On the client side we will use either angular.js or ember.js to begin with. 
+Further investigation is needed as the design of the website is planned to be 
+done by using components from twitter bootstrap. The main reason for this is 
+that this is one of the most used frameworks today, and is therefore good 
+to know how to work with bootstrap.
+
+For the data storage (ORM )the plan is to use SQLAlchemy, which seems to be 
+suitable for using with Django.
