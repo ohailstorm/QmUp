@@ -19,7 +19,9 @@ On the client side we will use either angular.js or ember.js to begin with.
 Further investigation is needed as the design of the website is planned to be 
 done by using components from twitter bootstrap. The main reason for this is 
 that this is one of the most used frameworks today, and is therefore good 
-to know how to work with bootstrap.
+to know how to work with bootstrap. The idea is also that the website design
+and functionality will thereby be responsive, so that it can work well on any
+device.
 
 For the data storage (ORM )the plan is to use SQLAlchemy, which seems to be 
 suitable for using with Django.
