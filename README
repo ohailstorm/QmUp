@@ -10,11 +10,11 @@ outdoor gym) via their own accounts, that will use single sign-on from either
 facebook or google. 
 
 ==Technical specification==
-Initially, the project will be based upon the use of Meteor as a framework.
-Partially this is because it seemed to be a very interesting way of linking the 
-client-side with the server-side, but also because the server will more act as
-a coordinator of other web services rather than a heavy backend.
-
-The design of the website will be done by using components from bootstrap. The 
-main reason for this is that this is one of the most used frameworks today, and 
-is therefore good to have knowledge about.
+Initially, the project will be based upon the use of Django as a framework on the
+server side. This is because both team members had good experiences from working
+with flask and a Python-based backend in TDDD24, but it is possible this will be
+changed into a php-based backend later on. On the client side we will use either 
+angular.js or ember.js to begin with. Further investigation is needed as the 
+design of the website will be done by using components from twitter bootstrap.
+The main reason for this is that this is one of the most used frameworks today,
+and is therefore good to know how to work with bootstrap.
