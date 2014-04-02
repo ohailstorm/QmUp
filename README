@@ -18,3 +18,4 @@ angular.js or ember.js to begin with. Further investigation is needed as the
 design of the website is planned to be done by using components from twitter 
 bootstrap. The main reason for this is that this is one of the most used 
 frameworks today, and is therefore good to know how to work with bootstrap.
+The meteor framework is also under consideration.
