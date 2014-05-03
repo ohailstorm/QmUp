@@ -18,7 +18,7 @@ The user shall be able to:
 ==Non-functional requirements==
 - Google maps api shall be used to retrieve information about directions
 - Google maps api shall be used to display the location of the event and the starting points for each user's trip.
-- Django with SQLAlchemy will be used 
+- The server side shall be built using Django REST framework 
 
 ==Technical specification==
 Initially, the project will be based upon the use of Django as a framework on the
