@@ -28,5 +28,4 @@ changed into a php-based backend or Django later on.
 
 On the client side we will use angular.js. The aim is to create a responsive website that will work well on any device.
 
-For the data storage (ORM )the plan is to use SQLAlchemy, which seems to be 
-suitable for using with Django.
+For the data storage (ORM )the plan is to use SQLAlchemy.
