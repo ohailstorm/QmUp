@@ -1,28 +1,27 @@
-TDDD27 Project Social trip planner
+TDDD27 Project GEOAWESOME
 ==Members==
 oscha646
 gusen286
 
 ===Project description===
-The aim of this project is to create a service where the users can create events and invite their friends. Each atendee is then given suggestions on how to get to the event, based on what others have chosen.
-
-==Functional requirements==
-The user shall be able to:
-- Log in with their facebook/google account
-- Create an event specified with the location of the event and the time it will take place
-- Invite friends to the event
-- Select from where he/she will go
-- See from where other users will get to the event, and when they will start their trip
-- get suggestions on when the user must leave the starting location to get to the event on time
-
-==Non-functional requirements==
-- Google maps api shall be used to retrieve information about directions
-- Google maps api shall be used to display the location of the event and the starting points for each user's trip.
-- The server side shall be built using the Codeigniter framwork and Doctrine
+This project will include positioning data from some open data source. Users will
+then be able to add information about the existing places (ie. the closest
+outdoor gym) via their own accounts, that will use single sign-on from either 
+facebook or google. 
 
 ==Technical specification==
-The server side will be built using the Codeigniter framework. The rationale for this that it is simple to set up, but still capable enough.
+Initially, the project will be based upon the use of Django as a framework on the
+server side. This is because both team members had good experiences from working
+with flask and a Python-based backend in TDDD24, but it is possible this will be
+changed into a php-based backend later on. 
 
-On the client side we will use angular.js. The aim is to create a responsive website that will work well on any device.
+On the client side we will use either angular.js or ember.js to begin with. 
+Further investigation is needed as the design of the website is planned to be 
+done by using components from twitter bootstrap. The main reason for this is 
+that this is one of the most used frameworks today, and is therefore good 
+to know how to work with bootstrap. The idea is also that the website design
+and functionality will thereby be responsive, so that it can work well on any
+device.
 
-For the data storage (ORM )the plan is to use Doctrine, which works well with Codeigniter.
+For the data storage (ORM )the plan is to use SQLAlchemy, which seems to be 
+suitable for using with Django.
