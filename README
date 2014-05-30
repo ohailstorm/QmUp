@@ -4,16 +4,11 @@ oscha646
 gusen286
 
 ===Project description===
-This project will include positioning data from some open data source. Users will
-then be able to add information about the existing places (ie. the closest
-outdoor gym) via their own accounts, that will use single sign-on from either 
-facebook or google. 
+The project will use the soundcloud api and let users create playlists. Songs can
+be added and queued but no skipping is allowed!
 
 ==Technical specification==
-Initially, the project will be based upon the use of Django as a framework on the
-server side. This is because both team members had good experiences from working
-with flask and a Python-based backend in TDDD24, but it is possible this will be
-changed into a php-based backend later on. 
+Codeigniter will be used as the server-side framework.
 
 On the client side we will use either angular.js or ember.js to begin with. 
 Further investigation is needed as the design of the website is planned to be 
@@ -23,5 +18,5 @@ to know how to work with bootstrap. The idea is also that the website design
 and functionality will thereby be responsive, so that it can work well on any
 device.
 
-For the data storage (ORM )the plan is to use SQLAlchemy, which seems to be 
-suitable for using with Django.
+For the data storage (ORM )the plan is to use Doctrine, which seems to be 
+suitable for using with Codeigniter.
