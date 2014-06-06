@@ -1,0 +1,252 @@
+<!Doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Demo</title>
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+  <script src="http://connect.soundcloud.com/sdk.js"></script>
+
+  <script>
+// initialize client with app credentials
+$(document).ready( function(){
+
+ SC.initialize({
+  client_id: "72e3791ab08ac0604b2407aa8fc279cb"
+});
+
+/*
+  SC.initialize({
+    client_id: '72e3791ab08ac0604b2407aa8fc279cb',
+    redirect_uri: 'http://127.0.0.1/callback.html'
+  });
+
+
+
+// initiate auth popup
+SC.connect(function() {
+  SC.get('/me', function(me) { 
+    alert('Hello, ' + me.username); 
+  });
+});*/
+var player;
+var trackNo=0;
+var current;
+playing=false;
+function playNext(){
+  trackNo = trackNo + 1;
+  console.log("playing " + trackNo + "track: "+ playlist[trackNo].title + " id=" + playlist[trackNo].id );
+  test(playlist[trackNo].id); 
+  player.play();
+};
+function test(track, skipping){
+
+
+  console.log("playing" + track);
+  current=track;
+  $("#track-info").html("<h1>Now playing: </h1><p>" + playlist[trackNo%playlist.length].title + "</p>");
+  $("#track-info").append('<img class="img-responsive" src="' + playlist[trackNo%playlist.length].artwork_url +'">');
+
+
+// stream track id 293
+SC.stream("/tracks/"+ track,{onfinish : function(){ playNext(); this.destruct();}}, function(sound){
+  player = new StateMan(sound);
+
+}
+);
+
+
+}
+
+function StateMan(currentTrack) {
+  var track = currentTrack;
+
+  var playing= false;
+  this.play = function () {
+    if(playing==false){
+      playing=true;
+      track.play(
+        //test med att tidsbegränsa låtar nedan
+      /*{from: 1000,
+    to: 60*3*1000}*/);
+    }
+  }
+  this.pause = function  () {
+    if(playing==true){
+      playing=false;
+      track.pause();
+    }
+
+  }
+  this.stop = function () {
+    track.stop();
+  }
+
+
+
+  this.stop();
+
+}
+
+
+
+
+$('#play').click(function(){
+  if(player){
+    player.play();
+  }
+  else{
+    test(playlist[trackNo%playlist.length].id);
+  }
+});
+$('#stop').click(function(){
+  if(player){
+    player.pause();
+  }
+});
+
+
+$('#skip').click(
+  function(){
+
+    if(player){
+      player.stop();
+      alert("skipping, ska vi inte ha med");
+      trackNo++;
+      console.log(trackNo%playlist.length);
+      test(playlist[trackNo%playlist.length].id, true);
+      player.play();
+    }
+  }
+  );
+
+
+
+
+
+
+function test2(){
+ alert("play! " + $("track").val());
+ var track = $(this).attr('id');
+// stream track id 293
+var track_url = 'http://soundcloud.com/forss/flickermood';
+SC.oEmbed(track_url, { auto_play: true }, function(oEmbed) {
+  console.log('oEmbed response: ' + oEmbed);
+});
+
+}
+
+var playlist = [];
+
+
+
+$('#search').click(function(){
+   //alert("search!");
+
+   SC.get('/tracks', { q: $('#sstr').val(), license: 'cc-by-sa' }, function(tracks) {
+   // console.log(tracks);
+    //playlist.push(tracks[0]);
+    console.log(playlist)
+    console.log(tracks.length);
+    var htmlString="";
+    htmlString = htmlString + '<tr><th>Results</th></tr>';
+    for(var i=0; i<tracks.length; i++){
+     htmlString = htmlString + '<tr>';
+
+     htmlString = htmlString+ '<td id="'+i+'" class="track"><span class="glyphicon glyphicon-plus"></span>'+ tracks[i].title + '</td></tr>';
+
+   }
+
+   $('#results').html(htmlString);
+
+   $('.track').click(function(){
+ playlist.push(tracks[$(this).attr('id')]);
+ 
+  console.log($(this).children('.glyphicon-plus').addClass('glyphicon-minus'));
+    //event.preventDefault();
+    /*
+    $('input[type=checkbox]').each(function () {
+     if (this.checked) {
+
+       playlist.push(tracks[$(this).val()]);
+     }
+   });*/
+   console.log($(this).attr('id'));
+    $('#plist').html('<tr><th>Playlist</th></tr>');
+    for(var i=0; i<playlist.length; i++){
+      $('#plist').append('<tr><td>'+playlist[i].title+'</td></tr>');
+    }
+    if(!player) test(playlist[trackNo].id);
+  });
+
+   //if(!player) test(playlist[trackNo].id);
+
+
+ });
+
+})
+
+
+
+
+});
+</script>
+
+</head>
+<body style="background:#eb9316; ">
+
+
+
+ <div class="container" style="background:rgba(0,0,0,0.8); margin-top:10px; padding:30px;  border-radius:20px; ">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-5">
+      <h1 style="color:white">Test sc api</h1></div>
+
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+
+        <div class="row"  style="margin: 10px 0px;">
+          <div class="col-md-8" id="track-info" style="background:rgba(255,255,255,.9); border-radius:5px; padding:15px 5px;">
+            <h1>Now playing: </h1></div>
+          </div>
+
+
+          <button class="btn btn-lg btn-success" id="play">Play!<span class="glyphicon glyphicon glyphicon-play"></span></button>
+          <button class="btn btn-lg btn-danger" id="stop">Stop!<span class="glyphicon glyphicon glyphicon-pause"></span></button>
+          <button class="btn btn-lg btn-warning" id="skip">Skip!<span class="glyphicon glyphicon-step-forward"></span></button>
+          <div class="col-md-8" style="background:rgba(255,255,255,.9); border-radius:5px; margin:30px 10px;padding:15px 1px;">
+            <!-- Table -->
+            <table class="table table-striped" id="plist" style="width: 100%;">
+            </table>
+          </div>
+
+        </div>
+
+
+        
+        <div class="col-md-6">
+          <div class="col-md-10" >
+           <input type="text" id="sstr">
+           <button class="btn btn-info" id="search">Search!</button>
+           <!--Sen ska man kunna välja vilka man vill ha med i playlist-->
+
+           <div style="background:rgba(255,255,255,.9); border-radius:5px; margin-top: 10px; padding:15px 5px;">
+            <table class="table table-striped" id="results" style="width: 100%;">
+            </table>
+           </div>
+         </div>
+       </div>
+
+
+     </div>
+   </body>
+   </html>
