@@ -20,10 +20,20 @@ exports.show = function(req, res) {
   });
 };
 
+// Get a list of playlists beloning to one user
+exports.showForUser = function(req, res) {
+  Playlist.find().where({ 'owner.id': req.params.id }).exec(function (err, playlists) {
+    if(err) { return handleError(res, err); }
+    return res.json(200, playlists);
+  });
+};
+
 // Creates a new playlist in the DB.
 exports.create = function(req, res) {
+
   Playlist.create(req.body, function(err, playlist) {
     if(err) { return handleError(res, err); }
+    console.log(playlist);
     return res.json(201, playlist);
   });
 };

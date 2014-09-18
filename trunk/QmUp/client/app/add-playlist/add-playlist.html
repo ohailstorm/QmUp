@@ -1,5 +1,54 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
 <div class="col-md-12">
 This is the add-playlist view.
-<button ng-click="add()">Add</button>
-<div ng-repeat="playlist in playlists">{{playlist.owner}} <a href="/playlist/{{playlist._id}}">GO</a></div>
+
+<div class="row" ng-if="loggedIn">
+	<div class="col-md-6">
+	<form role="form" ng-submit="add(plName)">
+	 
+   <div class="form-group">
+    <div class="input-group">
+      <div class="input-group-addon">Name</div>
+      <input class="form-control" ng-model="plName" type="text" placeholder="Enter name">
+      <div class="input-group-btn">
+      <button type="submit" class="btn btn-default">Add</button>
+  </div>
+    </div>
+   
+    </div>
+  
+</form>
+</div>
+</div>
+
+
+
+<!--button ng-click="add()">Add</button-->
+<div class="row">
+	<div class="col-md-6">
+ <div class="panel">
+          <!-- Default panel contents -->
+          <div class="panel-heading"><h2>Playlists</h2></div>
+          
+            <!-- Table -->
+            <table class="table table-striped" id="plist" style="width: 100%;">
+              <thead>
+                <th>Name</th>
+                <th>Created by</th>
+
+              </thead>
+              <tbody>
+                <tr ng-repeat="playlist in playlists track by $index">
+                <td><a href="/playlist/{{playlist._id}}">{{playlist.name}}</a></td>
+                <td>{{playlist.owner.name}}</td>
+              </tr>
+              </tbody>
+            	
+            </table>
+          </div>
+
+
+</div>
+</div>
 </div>

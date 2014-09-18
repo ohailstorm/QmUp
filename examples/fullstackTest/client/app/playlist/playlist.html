@@ -13,7 +13,7 @@
             <div class="panel-heading"><h1>Now playing:</h1> </div>
           <div class="panel-body"> 
 
-            <img src="{{currentTrack.artwork_url}}"><br>
+            <img ng-src="{{currentTrack.artwork_url}}"><br>
 			     {{currentTrack.title}}
        
         <div class="col-md-12">
@@ -48,10 +48,7 @@
             	
             </table>
           </div>
-          </div>
-
-
-        
+          </div>       
 
 
    <div class="col-md-6">
@@ -59,13 +56,11 @@
         <div class="panel">
           <div class="panel-heading">Search</div>
           
-          
-           
            <!--button class="btn btn-info" ng-click="search(searchStr)">Search!</button-->
            <!--Sen ska man kunna välja vilka man vill ha med i playlist-->
             
 
-                    <form ng-submit="search(searchStr)">
+        <form ng-submit="search(searchStr)">
           <div class="col-lg-6">
             <div class="input-group">
               <!--div class="input-group-btn">

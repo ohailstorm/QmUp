@@ -30,6 +30,7 @@
 
 body{
   font-family: Josefin Slab, sans-serif;
+
   background-image: url('../assets/images/bg.jpg');
   background-size: cover;
   background-attachment: fixed;
@@ -37,16 +38,20 @@ body{
   //background-color: #428F89;
   //background-color: #E0E4CC;
   //background-color: black;
+
+ // background-color: #DCD8CF;
+  //background-color: #428F89;
+ // background-color: #37A79E;
 }
 p{
-  color: #A7DBD8;
+  color: #DDD4BC;
 }
 
 a{
   color:#B33C40; 
 }
 small{
-  color: #A7DBD8;
+  color: #DDD4BC !Important;
   color: #428F89!Important;
 }
 h1,h2,h3,h4,h5 {
@@ -59,21 +64,28 @@ img{
   max-height: 250px;
 }
 label{
-  color: #A7DBD8;
+  color: #DDD4BC;
 }
 
 
-.navbar-inverse {
+.navbar-default {
   background-color:#FF606E;
   background-color:#B33C40;
   border-color: #B33C40;
   border-radius: 5px; 
 }
-#menu{
-  margin-top: 20px;
+.navbar-default .navbar-nav > .active > a{
+   background-color:#FF606E;
+  background-color:#B33C40;
+  border-color: #B33C40;
+  border-radius: 5px; 
+}
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus
+{
+    color:#428F89;
 }
 
-#menu ul li a{
+.navbar-default .navbar-nav > li > a{
   color:#DCD8CF;
   /*background-color:#B33C40;*/
 
@@ -83,38 +95,40 @@ label{
 .dropdown-menu{
   background-color:#B33C40; 
   /*background-color:#FF606E;*/
-  background-color:#A7DBD8;
+  background-color:#DDD4BC;
   /*  border: none;*/
 
 }
 
-#menu ul > li.dropdown.open > a{
+.navbar-default ul > li.dropdown.open > a{
   background-color:#B33C40;
 }
 
-#menu .dropdown-menu li a{
+.navbar-default .dropdown-menu li a{
   color:#B33C40;
   /*color:#DCD8CF;*/
   
 
 }
-.dropdown-menu li:hover a{
-  background-color:#E25D33;
-  background-color:#A7DBD8;
-  color: #428F89!Important;
-  
+
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus{
+  background-color:#B33C40;
+  color:white;
 }
 
-thead{
+.dropdown-menu li:hover a{
+  background-color:#E25D33;
+  background-color:#DDD4BC;
+  color: #428F89!Important;
   
 }
 
 /*buttons and panels*/
 .btn-default{
-  background-color:#E0E4CC;
+  background-color:#DDD4BC;
 }
 .panel{
-  background-color:#A7DBD8;
+  background-color:#DDD4BC;
   margin: 15px;
 }
 .panel-body p{
@@ -140,3 +154,9 @@ thead{
   }
   }
 
+@media (min-width: 768px){
+.navbar-nav.navbar-right:last-child {
+margin-right: 20px;
+}
+
+}

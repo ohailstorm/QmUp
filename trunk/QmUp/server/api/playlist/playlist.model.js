@@ -12,7 +12,11 @@ var mongoose = require('mongoose'),
         });
 
 var PlaylistSchema = new Schema({
-   owner:String,
+   owner: {
+   	id: {type: Schema.Types.ObjectId, ref: 'User'},
+   	name: {type:String, ref: 'User' }
+   },
+   name: String,
    songs: [SongSchema]
 });
 
