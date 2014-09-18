@@ -38,8 +38,7 @@ angular.module('fullstackTestApp')
           var oldItem = _.find(array, {_id: item._id});
           var index = array.indexOf(oldItem);
           var event = 'created';
-          console.log("new:", array);
-          console.log("array:",item);
+             console.log("save", item);
           // replace oldItem if it exists
           // otherwise just add item to the collection
           if (oldItem) {
@@ -56,8 +55,40 @@ angular.module('fullstackTestApp')
          * Syncs removed items on 'model:remove'
          */
         socket.on(modelName + ':remove', function (item) {
+          console.log("del", item);
           var event = 'deleted';
           _.remove(array, {_id: item._id});
+          cb(event, item, array);
+        });
+
+
+             /**
+         * CUSTOM on subdocument 'model:save'
+         */
+        socket.on(modelName + ':update', function (item) {
+          if(item){
+
+
+          var oldItem = _.find(array, {_id: item._id});
+          var index = array.indexOf(oldItem);
+          var event = 'created';
+             console.log("change", item);
+             console.log("old",oldItem)
+          // replace oldItem if it exists
+          // otherwise just add item to the collection
+          if (oldItem) {
+            array.splice(index, 1, item);
+            event = 'updated';
+          } else {
+            array.push(item);
+          }
+          }
+          else var event='deleted'
+          cb(event, item, array);
+        });
+
+        socket.on(modelName + ':hej', function (item) {
+          console.log("hej event");
           cb(event, item, array);
         });
       },

@@ -31,6 +31,7 @@ exports.create = function(req, res) {
 exports.addSong = function(req, res) {
 
     Playlist.findById(req.params.id, function (err, playlist) {
+      
     console.log(playlist);
     if(err) { return handleError(res, err); }
     if(!playlist) { return res.send(404); }
@@ -91,17 +92,16 @@ Playlist.remove(function (err, product) {
   Playlist.findById(req.params.id, function (err, playlist) {
     if(err) { return handleError(res, err); }
     if(!playlist) { return res.send(404); }
-
-    playlist.songs.findById(req.params.songId, function (err, song) {
-     if(err) { return handleError(res, err); }
-      if(!song) { return res.send(404); }
-
-      song.remove(function(err) {
-      if(err) { return handleError(res, err); }
-      return res.send(204);
-
-    });
-    });
+   // console.log("pl", playlist.songs);
+    //console.log(req.params.songId);
+    /*_.remove(playlist.songs, {_id: req.params.songId});*/
+    playlist.songs.id(req.params.songId).remove();
+    //console.log("del", playlist.songs);
+    playlist.save(function(err, song) {
+     
+    if(err) { return handleError(res, err); }
+    return res.json(204, song.songs[0]);
+  });
 
     
 
