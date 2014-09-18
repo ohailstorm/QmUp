@@ -5,6 +5,7 @@ angular.module('qmUpApp')
     $scope.user = {};
     $scope.errors = {};
 
+/*  DETTA KAN TAS BORT
     $scope.login = function(form) {
       $scope.submitted = true;
 
@@ -21,7 +22,7 @@ angular.module('qmUpApp')
           $scope.errors.other = err.message;
         });
       }
-    };
+    }; */
 
     $scope.loginOauth = function(provider) {
       $window.location.href = '/auth/' + provider;

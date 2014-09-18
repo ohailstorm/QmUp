@@ -82,10 +82,4 @@ angular.module('qmUpApp')
            });
 
 
-
-
-
-
-
-
   });
