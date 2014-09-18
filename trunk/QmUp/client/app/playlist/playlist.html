@@ -1,0 +1,111 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="col-md-12" >
+ <div class="container ">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-5">
+      <h1>Test sc api</h1></div>
+
+    </div>
+   
+   <div class="col-md-6">
+          <div class="panel" id="track-info">
+            <div class="panel-heading"><h1>Now playing:</h1> </div>
+          <div class="panel-body"> 
+
+            <img src="{{currentTrack.artwork_url}}"><br>
+			     {{currentTrack.title}}
+       
+        <div class="col-md-12">
+
+          <button ng-if="!isPlaying" class="btn btn-lg btn-success" ng-click="play()">Play!</button>
+          <button ng-if="isPlaying" class="btn btn-lg btn-danger" ng-click="pause()">Pause!</button>
+          <button class="btn btn-lg btn-warning" ng-click="notAllowed()">Skip!</button>
+        </div>
+        </div>
+
+        </div>
+
+ 
+
+        <div class="panel">
+          <!-- Default panel contents -->
+          <div class="panel-heading">Playlist</div>
+          
+            <!-- Table -->
+            <table class="table table-striped" id="plist" style="width: 100%;">
+              <thead>
+                <th></th>
+                <th></th>
+
+              </thead>
+              <tbody>
+                <tr ng-repeat="item in playlist track by $index">
+                <td>{{item.title}}</td>
+                <td><span class="fa fa-remove" ng-click="removeTrack(item)"></span></td>
+              </tr>
+              </tbody>
+            	
+            </table>
+          </div>
+          </div>
+
+
+        
+
+
+   <div class="col-md-6">
+        
+        <div class="panel">
+          <div class="panel-heading">Search</div>
+          
+          
+           
+           <!--button class="btn btn-info" ng-click="search(searchStr)">Search!</button-->
+           <!--Sen ska man kunna välja vilka man vill ha med i playlist-->
+            
+
+                    <form ng-submit="search(searchStr)">
+          <div class="col-lg-6">
+            <div class="input-group">
+              <!--div class="input-group-btn">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Search for: <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                  <li>Director</li>
+                  <li>Movie</li>
+                  <li>Actor</li>
+                </ul>
+              </div--><!-- /btn-group -->
+              <input type="text" class="form-control" name="searchstring" ng-model="searchStr">
+              <div class="input-group-btn">
+                <button type="submit" class="btn btn-default">Search</button>
+              </div><!-- /btn-group -->
+            </div><!-- /input-group -->
+          </div><!-- /.col-lg-6 -->
+        </form>
+           
+            <table class="table table-striped" id="results" style="width: 100%;">
+              <thead>
+                <th>Search results:</th>
+              </thead>
+              <tbody>
+                <tr ng-repeat="item in searchResult">
+                <td>{{item.title}}</td>
+                <td ng-click="addToPlayList(item)"><span class="fa fa-plus"></span></td>
+
+              </tr>
+              </tbody>
+            	
+            </table>
+           
+         </div>
+       </div>
+
+
+
+     </div>
+     </div>
+     </div>
+
+
+
