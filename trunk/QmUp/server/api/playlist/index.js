@@ -8,12 +8,13 @@ var router = express.Router();
 
 router.get('/', controller.index);
 router.get('/:id', controller.show);
-router.get('/user/:id', controller.showForUser);
+router.get('/user/:id',auth.isAuthenticated(), controller.showForUser);
 
 
 router.post('/', auth.isAuthenticated(), controller.create);
 
-router.post('/:id', controller.addSong);
+router.post('/:id', auth.isAuthenticated(), controller.addSong);
+router.post('/:id/collaborator', auth.isAuthenticated(), controller.addCollaborator);
 
 
 router.put('/:id', auth.isAuthenticated(), controller.update);

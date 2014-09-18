@@ -14,16 +14,26 @@ angular.module('qmUpApp')
     			});
 
 
-
   $scope.add = function (name) {
   	counter++;
-  	var newTrack = {owner:{id: Auth.getCurrentUser()._id, name:Auth.getCurrentUser().name}, name: name};
+    var own = Auth.getCurrentUser()._id;
+  	var newTrack = {owner: own};
     console.log(newTrack);
 	$http.post('/api/playlists', newTrack ).success(function (argument) {
 		console.log(argument);
 
-	});
-  	
-    
+	});    
+  };
+
+  $scope.addCollab = function (playlist) {
+    console.log(playlist);
+    var postObject =  {user: Auth.getCurrentUser()._id};
+
+    $http.post('/api/playlists/'+playlist._id+'/collaborator', postObject).success(function(response) {
+            $scope.playlists = response;
+            console.log(response);
+            socket.syncUpdates('playlist', $scope.playlists);
+          });
+
   }
   });

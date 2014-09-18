@@ -29,7 +29,7 @@ Thing.find({}).remove(function() {
     info : 'Easily deploy your app to Heroku or Openshift with the heroku and openshift subgenerators'
   });
 });
-
+/*
 User.find({}).remove(function() {
   User.create({
     provider: 'local',
@@ -42,8 +42,9 @@ User.find({}).remove(function() {
     name: 'Admin',
     email: 'admin@admin.com',
     password: 'admin'
-  }, function() {
+  }
+  , function() {
       console.log('finished populating users');
     }
   );
-});
+});*/
