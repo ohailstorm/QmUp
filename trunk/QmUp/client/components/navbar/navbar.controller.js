@@ -8,10 +8,10 @@ angular.module('qmUpApp')
     },
     {
       'title': 'Playlists',
-      'link': 'playlist'
+      'link': 'playlists'
     },
         {
-      'title': 'Add playlists',
+      'title': 'My playlists',
       'link': 'add-playlist'
     }
     ];

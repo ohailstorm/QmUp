@@ -20,6 +20,12 @@ exports.index = function(req, res) {
   });
 };
 
+exports.findAll = function(req, res) {
+  User.find(function (err, users) {
+    if(err) return res.send(500, err);
+    res.json(200, users);
+  });
+};
 /**
  * Creates a new user
  */

@@ -3,6 +3,10 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
+ var User = mongoose.model("User");
+  console.log(User.schema.paths.facebook);
+  
+
  var VoteSchema = new Schema({ ip: 'String' });
 
   var SongSchema = new mongoose.Schema({ 
@@ -12,12 +16,12 @@ var mongoose = require('mongoose'),
         });
 
 var PlaylistSchema = new Schema({
-   owner: {
-   	id: {type: Schema.Types.ObjectId, ref: 'User'},
-   	name: {type:String, ref: 'User' }
-   },
+   owner: {type: Schema.Types.ObjectId, ref: 'User'
+ },
    name: String,
-   songs: [SongSchema]
+   songs: [SongSchema],
+   collaborators: [{type: Schema.Types.ObjectId,
+    ref: 'User'}]
 });
 
 module.exports = mongoose.model('Playlist', PlaylistSchema);

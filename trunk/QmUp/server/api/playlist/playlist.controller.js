@@ -3,6 +3,7 @@
 var _ = require('lodash');
 var Playlist = require('./playlist.model');
 
+
 // Get list of playlists
 exports.index = function(req, res) {
   Playlist.find(function (err, playlists) {
@@ -22,8 +23,12 @@ exports.show = function(req, res) {
 
 // Get a list of playlists beloning to one user
 exports.showForUser = function(req, res) {
-  Playlist.find().where({ 'owner.id': req.params.id }).exec(function (err, playlists) {
+  console.log("User is:");
+  console.log(req.user);
+  Playlist.find().where({ 'owner': req.params.id }).populate('owner').exec(function (err, playlists) {
+    console.log(playlists);
     if(err) { return handleError(res, err); }
+
     return res.json(200, playlists);
   });
 };
@@ -33,7 +38,7 @@ exports.create = function(req, res) {
 
   Playlist.create(req.body, function(err, playlist) {
     if(err) { return handleError(res, err); }
-    console.log(playlist);
+   
     return res.json(201, playlist);
   });
 };
@@ -42,12 +47,37 @@ exports.addSong = function(req, res) {
 
     Playlist.findById(req.params.id, function (err, playlist) {
       
-    console.log(playlist);
+ 
     if(err) { return handleError(res, err); }
     if(!playlist) { return res.send(404); }
     playlist.songs.push(req.body);
     playlist.save(function(err, song) {
       console.log("songS", song.songs[0]);
+    if(err) { return handleError(res, err); }
+    return res.json(201, song.songs[song.songs.length]);
+  });
+
+  });
+
+
+
+};
+
+
+exports.addCollaborator = function(req, res) {
+
+    Playlist.findById(req.params.id, function (err, playlist) {
+      
+ 
+    if(err) { return handleError(res, err); }
+    if(!playlist) { return res.send(404); }
+    console.log(req.body.user);
+    playlist.collaborators.push(req.body.user);
+   // playlist.collaborators.push("sadqsdsad");
+
+    console.log(playlist);
+    playlist.save(function(err, song) {
+     
     if(err) { return handleError(res, err); }
     return res.json(201, song.songs[song.songs.length]);
   });
