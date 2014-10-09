@@ -101,6 +101,26 @@
          </div>
        </div>
 
+         <div class="col-md-6">
+        
+        <div class="panel">
+          <h1> Collaborators</h1>
+          <ul>
+            <li ng-repeat="collaborator in collaborators">{{collaborator.name}}</li>
+          </ul>
+        </div>
+        </div>
+
+       <div class="col-md-6">
+        
+        <div class="panel">
+          <h1 ng-click="getFriendsList()"> Add Friends</h1>
+          <ul>
+            <li ng-repeat="friend in friendsList" ng-click="addCollaborator(friend)">{{friend.name}}</li>
+          </ul>
+        </div>
+        </div>
+
 
 
      </div>

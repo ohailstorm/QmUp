@@ -15,6 +15,7 @@ exports.setup = function (User, config) {
         if (err) {
           return done(err);
         }
+      
         if (!user) {
           user = new User({
             name: profile.displayName,
@@ -22,14 +23,19 @@ exports.setup = function (User, config) {
             role: 'user',
             username: profile.username,
             provider: 'facebook',
-            facebook: profile._json
+            facebook: profile._json,
+            fbToken: accessToken
           });
           user.save(function(err) {
             if (err) done(err);
             return done(err, user);
           });
         } else {
-          return done(err, user);
+          user.fbToken = accessToken;
+          user.save(function(err) {
+            if (err) done(err);
+            return done(err, user);
+          });
         }
       })
     }

@@ -3,7 +3,10 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
- var User = mongoose.model("User");
+  var UserTemp = require('../user/user.model.js');
+
+
+ var User = mongoose.model('User');
   console.log(User.schema.paths.facebook);
   
 

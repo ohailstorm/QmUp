@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('qmUpApp')
-  .controller('PlaylistCtrl', function ($scope, playerService, playListService, $routeParams) {
+  .controller('PlaylistCtrl', function ($scope, playerService, playListService, $routeParams, $http, Auth) {
   
 
 
@@ -18,6 +18,18 @@ angular.module('qmUpApp')
 	$scope.trackNo=trackNo;
 	var current;
 	
+  $scope.getFriendsList = function () {
+
+    $http.get('https://graph.facebook.com/me/friends?access_token='+Auth.getCurrentUser().fbToken).success( 
+      function (response) {
+      console.log(response.data);
+      $scope.friendsList = response.data;
+    }
+
+      );
+   
+  }
+
 
 	$scope.play = function  (track) {
 		//if(playerService.currentTrack){
@@ -68,14 +80,32 @@ angular.module('qmUpApp')
 		playListService.removeTrack(track._id);
 	}
 
+	  $scope.addCollaborator = function (friend) {
+    
+    var postObject =  {user: friend.id};
+
+    $http.post('/api/playlists/'+playListService.getPlayListId()+'/collaborator', postObject).success(function(response) {
+            $scope.playlists = response;
+            console.log(response);
+            socket.syncUpdates('playlist', $scope.playlists);
+          }).error(
+          function(data,status) {
+            console.log(status);
+            console.log(data);
+          }
+          );
+
+  };
+
 
  $scope.$watch(function(){return playListService.getCurrentTrack();}, function(newTrack) {
 	 	console.log("change in track");
              $scope.currentTrack=newTrack;
            });
-  $scope.$watch(function(){return playListService.getPlayList();}, function(newTrack) {
+  $scope.$watch(function(){return playListService.getCollaborators();}, function(playlist) {
 	 	console.log("change in track");
-             $scope.playlist=newTrack;
+             $scope.collaborators=playlist;
+             console.log($scope.collaborators);
            });
  $scope.$watch(function(){return playerService.isPlaying();}, function(isPlaying) {
 	 	console.log("playing:", isPlaying);

@@ -10,20 +10,25 @@ angular.module('qmUpApp')
   $http.get('/api/playlists/user/'+Auth.getCurrentUser()._id).success(function(response) {
       			$scope.playlists = response;
       			console.log(response);
-      			socket.syncUpdates('playlist', $scope.playlists);
+      			//socket.syncUpdates('playlist', $scope.playlists);
     			});
 
 
-  $scope.add = function (name) {
+  $scope.add = function (newName) {
   	counter++;
     var own = Auth.getCurrentUser()._id;
-  	var newTrack = {owner: own};
+  	var newTrack = {name:newName, owner: own};
     console.log(newTrack);
-	$http.post('/api/playlists', newTrack ).success(function (argument) {
-		console.log(argument);
+	$http.post('/api/playlists', newTrack ).success(function (response) {
+		console.log(response);
+    if(response.owner===Auth.getCurrentUser()._id){
 
+    response.owner={_id:response.owner, name:Auth.getCurrentUser().name};
+    $scope.playlists.push(response);
+}
 	});    
   };
+
 
   $scope.addCollab = function (playlist) {
     console.log(playlist);
@@ -35,5 +40,5 @@ angular.module('qmUpApp')
             socket.syncUpdates('playlist', $scope.playlists);
           });
 
-  }
+  };
   });

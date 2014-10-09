@@ -2,7 +2,7 @@
 
 var _ = require('lodash');
 var Playlist = require('./playlist.model');
-
+var User = require('../user/user.model');
 
 // Get list of playlists
 exports.index = function(req, res) {
@@ -14,7 +14,7 @@ exports.index = function(req, res) {
 
 // Get a single playlist
 exports.show = function(req, res) {
-  Playlist.findById(req.params.id, function (err, playlist) {
+  Playlist.findById(req.params.id).populate('collaborators', 'name').exec( function (err, playlist) {
     if(err) { return handleError(res, err); }
     if(!playlist) { return res.send(404); }
     return res.json(playlist);
@@ -25,7 +25,7 @@ exports.show = function(req, res) {
 exports.showForUser = function(req, res) {
   console.log("User is:");
   console.log(req.user);
-  Playlist.find().where({ 'owner': req.params.id }).populate('owner').exec(function (err, playlists) {
+  Playlist.find().where({ 'owner': req.params.id }).populate('owner', 'name').exec(function (err, playlists) {
     console.log(playlists);
     if(err) { return handleError(res, err); }
 
@@ -37,6 +37,8 @@ exports.showForUser = function(req, res) {
 exports.create = function(req, res) {
 
   Playlist.create(req.body, function(err, playlist) {
+   
+    console.log(playlist.owner);
     if(err) { return handleError(res, err); }
    
     return res.json(201, playlist);
@@ -65,6 +67,8 @@ exports.addSong = function(req, res) {
 
 
 exports.addCollaborator = function(req, res) {
+     
+
 
     Playlist.findById(req.params.id, function (err, playlist) {
       
@@ -72,15 +76,28 @@ exports.addCollaborator = function(req, res) {
     if(err) { return handleError(res, err); }
     if(!playlist) { return res.send(404); }
     console.log(req.body.user);
-    playlist.collaborators.push(req.body.user);
+    
    // playlist.collaborators.push("sadqsdsad");
-
-    console.log(playlist);
+         User.findOne({
+        'facebook.id': req.body.user
+      },
+      function(err, user) {
+       
+      
+        if (!user) {
+         return res.send(404);
+        } else {
+         playlist.collaborators.push(user._id);
+         console.log(playlist);
     playlist.save(function(err, song) {
      
     if(err) { return handleError(res, err); }
     return res.json(201, song.songs[song.songs.length]);
   });
+        }
+      });
+
+    
 
   });
 
