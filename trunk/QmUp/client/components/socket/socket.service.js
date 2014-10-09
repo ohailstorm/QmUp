@@ -84,9 +84,13 @@ angular.module('qmUpApp')
           cb(event, item, array);
         });
 
-        socket.on(modelName + ':hej', function (item) {
-          console.log("hej event");
+        socket.on(modelName + ':removeSubDoc', function (item) {
+         console.log("test");
+           
+   
+       
           cb(event, item, array);
+
         });
       
       },

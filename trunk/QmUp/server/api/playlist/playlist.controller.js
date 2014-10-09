@@ -87,13 +87,18 @@ exports.addCollaborator = function(req, res) {
         if (!user) {
          return res.send(404);
         } else {
-         playlist.collaborators.push(user._id);
+         var exists =  _.find(playlist.collaborators, user._id);
+         console.log(exists);
+         if(!exists){
+                 playlist.collaborators.push(user._id);
          console.log(playlist);
     playlist.save(function(err, song) {
      
     if(err) { return handleError(res, err); }
     return res.json(201, song.songs[song.songs.length]);
   });
+         }
+  
         }
       });
 

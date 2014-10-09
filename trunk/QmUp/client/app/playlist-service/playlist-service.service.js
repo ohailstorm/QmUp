@@ -124,11 +124,13 @@ angular.module('qmUpApp')
 	var playListOperations = {
 		setPlaylistId: function (id) {
 			playlistId = id;
+
+			playlist=[];
 			   $http.get('/api/playlists/'+playlistId).success(function(response) {
       			playlist = response.songs;
       			collaborators = response.collaborators;
       			console.log(response);
-      			socket.syncUpdates('song', playlist);
+      			socket.syncUpdates(id, playlist);
     			});
 			   
 		},
