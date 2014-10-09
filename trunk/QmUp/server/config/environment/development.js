@@ -8,5 +8,5 @@ module.exports = {
     uri: 'mongodb://localhost/qmup-dev'
   },
 
-  seedDB: true
+  seedDB: false //var true från början
 };
