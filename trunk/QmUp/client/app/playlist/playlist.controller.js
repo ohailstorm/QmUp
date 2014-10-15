@@ -78,7 +78,7 @@ angular.module('qmUpApp')
 		playerService.skip();
 	};
 
-	$scope.skippingAllowed = function () {
+	$scope.isAdmin = function () {
 		return Auth.isLoggedIn() && Auth.getCurrentUser()._id===$scope.playlistOwner._id;
 	};
 
