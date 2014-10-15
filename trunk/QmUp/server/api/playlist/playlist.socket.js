@@ -15,24 +15,19 @@ exports.register = function(socket) {
   Playlist.schema.post('remove', function (doc) {
     onRemove(socket, doc);
   });
-
+/*
   Playlist.schema.paths.songs.schema.post('remove', function (doc) {
     onRemove(socket, doc);
-  });
+  });*/
 }
 
 function onSave(socket, doc, cb) {
-	console.log("saving");
-  console.log(cb);
-  socket.emit(doc._id+':update', doc.songs[doc.songs.length-1]);
-  
+  socket.emit(doc._id+':change', doc.songs);  
+  //For playlist specific actions, ie adding/deleting tracks
   socket.emit('playlist:save', doc);
 }
 
 function onRemove(socket, doc, cb) {
-  console.log("removing " + doc);
-//  socket.emit(doc.parent._id+':remove', doc);
-  socket.emit(doc._id+':remove', doc);
   socket.emit('playlist:remove', doc);
 }
 

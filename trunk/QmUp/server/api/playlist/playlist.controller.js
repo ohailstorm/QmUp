@@ -37,8 +37,8 @@ exports.showForUser = function(req, res) {
 exports.create = function(req, res) {
 
   Playlist.create(req.body, function(err, playlist) {
-   
-    console.log(playlist.owner);
+
+    console.log(err);
     if(err) { return handleError(res, err); }
    
     return res.json(201, playlist);
@@ -52,9 +52,28 @@ exports.addSong = function(req, res) {
  
     if(err) { return handleError(res, err); }
     if(!playlist) { return res.send(404); }
+    console.log("user", req.user._id);
+    console.log("real owner: ", playlist.owner);
+    var canModify=false;
+    if(playlist.owner.toString()===req.user._id.toString()){
+
+      canModify=true;
+    }
+    else{
+      console.log("no match!");
+      playlist.collaborators.forEach(function(collaborator){
+
+        if(req.user._id.toString()==collaborator.toString()){
+          canModify=true;
+          return;
+        }
+
+      });
+    }
+    if(!canModify) { return res.send(400);}
     playlist.songs.push(req.body);
     playlist.save(function(err, song) {
-      console.log("songS", song.songs[0]);
+     
     if(err) { return handleError(res, err); }
     return res.json(201, song.songs[song.songs.length]);
   });

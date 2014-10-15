@@ -1,10 +1,13 @@
 'use strict';
 
 angular.module('qmUpApp')
-.controller('AddPlaylistCtrl', function ($scope, $http, socket, Auth) {
+.controller('AddPlaylistCtrl', function ($scope, $http, socket, Auth, $location) {
   $scope.playlists = [];
   var counter =0;
   $scope.loggedIn = Auth.isLoggedIn();
+   if(!Auth.isLoggedIn()){
+      $location.path('/login');
+    }
   console.log(Auth.getCurrentUser());
   
   //$scope.isError = false;
@@ -18,7 +21,6 @@ angular.module('qmUpApp')
   $scope.closeAlert = function(index) {
     $scope.alerts.splice(index, 1);
   };
-
 
   $http.get('/api/playlists/user/'+Auth.getCurrentUser()._id).success(function(response) {
    $scope.playlists = response;

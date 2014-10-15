@@ -123,6 +123,9 @@ angular.module('qmUpApp')
 
 	var playListOperations = {
 		setPlaylistId: function (id) {
+			if(playlistId!=id){
+				playListOperations.unsyncSocket();
+			}
 			playlistId = id;
 
 			playlist=[];
@@ -175,10 +178,17 @@ angular.module('qmUpApp')
 		},
 		getCollaborators: function () {
 			return collaborators;
+		},
+		unsyncSocket: function () {
+			socket.unsyncUpdates(playlistId);
 		}
 
 
 	};
+
+	 $rootScope.$on('$destroy', function () {
+      socket.unsyncUpdates(playlistId);
+    });
 
 	return playListOperations;
 	

@@ -61,7 +61,7 @@ angular.module('qmUpApp')
         });
            /**
          * CUSTOM on subdocument 'model:save'
-         */
+         *//*
         socket.on(modelName + ':update', function (item) {
           if(item){
 
@@ -82,14 +82,14 @@ angular.module('qmUpApp')
           }
           else var event='deleted'
           cb(event, item, array);
-        });
+        });*/
 
-        socket.on(modelName + ':removeSubDoc', function (item) {
-         console.log("test");
-           
-   
-       
-          cb(event, item, array);
+        socket.on(modelName + ':change', function (item) {
+        
+        var event = 'updated_pl';
+        array.splice(0, array.length);
+        angular.copy(item, array);
+          cb(event, item, item);
 
         });
       
@@ -101,6 +101,7 @@ angular.module('qmUpApp')
        * @param modelName
        */
       unsyncUpdates: function (modelName) {
+        socket.removeAllListeners(modelName + ':change');
         socket.removeAllListeners(modelName + ':save');
         socket.removeAllListeners(modelName + ':remove');
       }

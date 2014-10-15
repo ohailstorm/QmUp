@@ -12,12 +12,11 @@ var UserSchema = new Schema({
     type: String,
     default: 'user'
   },
-  fbToken: String,
+  fbToken: String, //used to generate friends list
   hashedPassword: String,
   provider: String,
   salt: String,
-  facebook: {},
-  github: {}
+  facebook: {}
 });
 
 /**
