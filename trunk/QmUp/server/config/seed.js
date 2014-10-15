@@ -7,6 +7,8 @@
 
 var Thing = require('../api/thing/thing.model');
 var User = require('../api/user/user.model');
+var Playlist = require('../api/playlist/playlist.model');
+
 
 Thing.find({}).remove(function() {
   Thing.create({
@@ -29,6 +31,11 @@ Thing.find({}).remove(function() {
     info : 'Easily deploy your app to Heroku or Openshift with the heroku and openshift subgenerators'
   });
 });
+
+Playlist.find({}).remove(function() {
+console.log("playlists removed");
+}
+  );
 /*
 User.find({}).remove(function() {
   User.create({
@@ -46,5 +53,5 @@ User.find({}).remove(function() {
   , function() {
       console.log('finished populating users');
     }
-  );*/
-});
+  );
+});*/

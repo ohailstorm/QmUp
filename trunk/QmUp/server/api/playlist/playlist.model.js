@@ -26,6 +26,28 @@ var PlaylistSchema = new Schema({
    collaborators: [{type: Schema.Types.ObjectId,
     ref: 'User'}]
 });
+/*
+PlaylistSchema
+  .path('name')
+  .validate(function(name) {
+    //if (authTypes.indexOf(this.provider) !== -1) return true;
+    console.log("name",name);
+    return false;
+  }, 'Email cannot be blank');
+*/
+  /**
+ * Pre-save hook
+ */
+PlaylistSchema
+  .pre('save', function(next) {
+    
+    
+
+    if (!this.name)
+      next(new Error('Name can not be empty'));
+    else
+      next();
+  });
 
 module.exports = mongoose.model('Playlist', PlaylistSchema);
 
