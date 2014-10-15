@@ -49,7 +49,7 @@ angular.module('qmUpApp')
 
 	$scope.search = function (searchStr) {
 		SC.get('/tracks', {q: searchStr}, function(tracks) {
-			$scope.$apply(function() {$scope.searchResult = tracks});
+			$scope.$apply(function() {$scope.searchResult = tracks}); //Hack to fix update issues
 			
 			console.log($scope.searchResult);
 		
@@ -92,6 +92,7 @@ angular.module('qmUpApp')
           function(data,status) {
             console.log(status);
             console.log(data);
+            alert("Something went wrong");
           }
           );
 

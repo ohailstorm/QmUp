@@ -12,6 +12,8 @@ angular.module('qmUpApp')
 
   			
 	var currentSoundObject;
+	var track;
+	var playlistId;
 
 
 	var playing = false;
@@ -20,10 +22,13 @@ angular.module('qmUpApp')
 
 
 		setTrack : function  () {
-			var track = playListService.getCurrentTrack();
+			
+			track = playListService.getCurrentTrack();
+			playlistId=playListService.getPlayListId();
+			console.log(track);
 			if(track){
 
-			console.log(track);
+			console.log("track",track);
 
 			if(playing && currentSoundObject){
 				scService.stop();
@@ -34,6 +39,7 @@ angular.module('qmUpApp')
 			SC.stream("/tracks/"+ track.id,{onfinish : function(){ playNext(); this.destruct();}}, function(sound){
 				playing=false;
 				console.log(sound);
+				
 				scService.play(sound);
 				
 
@@ -51,13 +57,18 @@ angular.module('qmUpApp')
 			if(sound){
 				currentSoundObject = sound;
 			}
+			if(playListService.getPlayListId()!==playlistId){
+				scService.setTrack();
+			}
 
 			if(playing==false){			
-			
+					
 				if(currentSoundObject){
+
 					playing=true;
 					
 					console.log(playing);
+
 					currentSoundObject.play();
 					
 				}
@@ -94,6 +105,12 @@ angular.module('qmUpApp')
 		},
 		isPlaying : function () {
 			return playing;
+		},
+		nowPlaying: function () {
+			return track;
+		},
+		getPlayingPlaylistId: function () {
+			return playlistId;
 		}
 
 
@@ -163,7 +180,10 @@ angular.module('qmUpApp')
 			track.id=newTrack.id;
 			track.title=newTrack.title;
 			//if(playlist.length<=0 || playlist.indexOf(newTrack)<=0)
-				$http.post('/api/playlists/'+playlistId, newTrack );
+				$http.post('/api/playlists/'+playlistId, newTrack).error(function (response, status) {
+					alert("Something went wrong: " + response.message);
+					console.log(response.message);
+				});
 				//playlist.push(newTrack);
 		},
 		getPlayList: function () {
