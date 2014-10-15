@@ -32,8 +32,6 @@ angular.module('qmUpApp')
   $scope.add = function (newName) {
     $scope.closeAlert();
     if(newName !== undefined && newName.length > 0){
-
-    
     counter++;
     var own = Auth.getCurrentUser()._id;
     var newTrack = {name:newName, owner: own};
@@ -54,10 +52,6 @@ angular.module('qmUpApp')
     
   };
 };
-
-  $scope.lookForPlaylist = function (name) {
-
-  }
 
 
   $scope.addCollab = function (playlist) {

@@ -17,9 +17,19 @@ exports.show = function(req, res) {
   Playlist.findById(req.params.id).populate('collaborators', 'name').exec( function (err, playlist) {
     if(err) { return handleError(res, err); }
     if(!playlist) { return res.send(404); }
-    return res.json(playlist);
+    return res.json(200, playlist);
   });
 };
+
+// Look for certain playlist by name
+exports.findPlaylist = function(req, res) {
+  Playlist.find().where({'name': req.params.name}).exec( function (err, playlist) {
+    if(err) { return handleError(res, err); }
+    
+    return res.json(200, playlist);
+  })
+}
+
 
 // Get a list of playlists beloning to one user
 exports.showForUser = function(req, res) {
