@@ -144,6 +144,7 @@ angular.module('qmUpApp')
 	var playlist = [];
 	var playlistId;
 	var collaborators=[];
+	var played=[];
 	var owner;
 
 
@@ -160,6 +161,7 @@ angular.module('qmUpApp')
 			playlistId = id;
 
 			playlist=[];
+			played=[];
 			   $http.get('/api/playlists/'+playlistId).success(function(response) {
 			   	
       			playlist = response.songs;
@@ -175,18 +177,22 @@ angular.module('qmUpApp')
 		},
 		getCurrentTrack: function () {
 			if (playlist.length>0 && trackNo<playlist.length) {
-				return playlist[trackNo%playlist.length];
+				//return playlist[trackNo%playlist.length];
+				return _.difference(playlist, played)[0];
 			}
 			else return null;
 			
 		},
 		getNextTrack: function (argument) {
-			trackNo++;
+			//trackNo++;
 			//playlist.splice(0,1);
-			console.log(playlist);
+			played.push(_.difference(playlist, played)[0]);
+			console.log('played',played);
+			console.log('next', _.difference(playlist, played)[0]);
 			
 			if (playlist.length>0 && trackNo<playlist.length) {
-				return playlist[trackNo%playlist.length];
+				//return playlist[trackNo%playlist.length];
+				return _.difference(playlist, played)[0];
 			}
 			else return null;
 		},
@@ -204,7 +210,8 @@ angular.module('qmUpApp')
 		},
 		getPlaylist: function () {
 			if(trackNo<playlist.length){
-			return playlist.slice(trackNo+1, playlist.length);
+			//return playlist.slice(trackNo+1, playlist.length);
+			return _.difference(playlist, played);
 
 			}
 			else{
@@ -218,13 +225,13 @@ angular.module('qmUpApp')
 		removeTrack: function (trackId) {
 			console.log('want',trackId);
 			console.log('current', playListOperations.getCurrentTrack()._id)
-			if(trackId!==playListOperations.getCurrentTrack()._id){
+			//if(trackId!==playListOperations.getCurrentTrack()._id){
 				$http.delete('/api/playlists/'+playlistId+"/song/"+trackId).success( function (response) {
 				console.log("deleted");
 				
 			});
 
-			}
+			//}
 		},
 		getCollaborators: function () {
 			return collaborators;

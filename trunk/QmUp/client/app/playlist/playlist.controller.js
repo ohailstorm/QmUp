@@ -107,8 +107,12 @@ angular.module('qmUpApp')
 
  $scope.$watch(function(){return playListService.getCurrentTrack();}, function(newTrack) {
 	 	console.log("change in track");
-             $scope.currentTrack=newTrack;
+             
              $scope.playlist=playListService.getPlaylist();
+           });
+  $scope.$watch(function(){return playerService.nowPlaying();}, function(newTrack) {
+	 	console.log("change in track");
+             $scope.currentTrack=newTrack;
            });
   /*$scope.$watch(function(){return playListService.getCollaborators();}, function(playlist) {
 	 	console.log("change in track");
