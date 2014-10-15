@@ -79,7 +79,11 @@ angular.module('qmUpApp')
 	};
 
 	$scope.isAdmin = function () {
+		if($scope.playlistOwner){
 		return Auth.isLoggedIn() && Auth.getCurrentUser()._id===$scope.playlistOwner._id;
+
+		}
+		else return false;
 	};
 
 	$scope.removeTrack = function (track) {
@@ -98,7 +102,7 @@ angular.module('qmUpApp')
           function(data,status) {
             console.log(status);
             console.log(data);
-            alert("Something went wrong");
+          //  alert("Something went wrong");
           }
           );
 
@@ -114,11 +118,11 @@ angular.module('qmUpApp')
 	 	console.log("change in track");
              $scope.currentTrack=newTrack;
            });
-  /*$scope.$watch(function(){return playListService.getCollaborators();}, function(playlist) {
+  $scope.$watch(function(){return playListService.getCollaborators();}, function(collabs) {
 	 	console.log("change in track");
-             $scope.collaborators=playlist;
+             $scope.collaborators=collabs;
             
-           });*/
+           });
 
  $scope.$watch(function(){return playListService.getOwner();}, function(owner) {
 	 	console.log("change in pwner");
