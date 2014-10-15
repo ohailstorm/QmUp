@@ -17,6 +17,8 @@ angular.module('qmUpApp')
 	var trackNo=0;
 	$scope.trackNo=trackNo;
 	var current;
+	$scope.playlist=playListService.getPlaylist();
+	   $scope.playlistOwner=playListService.getOwner();
 	
   $scope.getFriendsList = function () {
 
@@ -72,8 +74,12 @@ angular.module('qmUpApp')
 
 	};
 
-	$scope.notAllowed = function () {
+	$scope.skip = function () {
 		playerService.skip();
+	};
+
+	$scope.skippingAllowed = function () {
+		return Auth.isLoggedIn() && Auth.getCurrentUser()._id===$scope.playlistOwner._id;
 	};
 
 	$scope.removeTrack = function (track) {
@@ -102,16 +108,24 @@ angular.module('qmUpApp')
  $scope.$watch(function(){return playListService.getCurrentTrack();}, function(newTrack) {
 	 	console.log("change in track");
              $scope.currentTrack=newTrack;
+             $scope.playlist=playListService.getPlaylist();
            });
-  $scope.$watch(function(){return playListService.getCollaborators();}, function(playlist) {
+  /*$scope.$watch(function(){return playListService.getCollaborators();}, function(playlist) {
 	 	console.log("change in track");
              $scope.collaborators=playlist;
-             console.log($scope.collaborators);
+            
+           });*/
+
+ $scope.$watch(function(){return playListService.getOwner();}, function(owner) {
+	 	console.log("change in pwner");
+             $scope.playlistOwner=owner;
+            
            });
-    $scope.$watch(function(){return playListService.getPlayList();}, function(playlist) {
-	 	console.log("change in track");
-             $scope.playlist=playlist;
-             console.log($scope.collaborators);
+           
+    $scope.$watch(function(){return playListService.playlistLength();}, function(playlist) {
+	 	console.log("change in pl");
+             $scope.playlist=playListService.getPlaylist();
+            
            });
  $scope.$watch(function(){return playerService.isPlaying();}, function(isPlaying) {
 	 	console.log("playing:", isPlaying);

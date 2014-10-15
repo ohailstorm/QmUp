@@ -3,7 +3,7 @@
 angular.module('qmUpApp')
   .controller('AddSongCtrl', function ($scope, $http, socket, $routeParams) {
     $scope.playlist = [];
-    var counter =1234;
+    
     $scope.plId = $routeParams.id;
     console.log($routeParams.id);
 
@@ -14,15 +14,15 @@ angular.module('qmUpApp')
     			});
 
 
-
+/*
   $scope.add = function (argument) {
   	counter++;
-  	var newTrack = {owner:"owneasdasdr"+ counter, title: "ip: " + Date.now()}
+  
 	$http.post('/api/playlists/'+$scope.plId, newTrack ).success(function (argument) {
-		console.log("response:",argument);
+		console.log('response:',argument);
 		console.log($scope.playlist.songs);
 
 	});
   	
-  }
+  }*/
   });

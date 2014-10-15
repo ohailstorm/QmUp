@@ -9,6 +9,7 @@ var router = express.Router();
 router.get('/', controller.index);
 router.get('/:id', controller.show);
 router.get('/user/:id',auth.isAuthenticated(), controller.showForUser);
+router.get('/search/:name',controller.findPlaylist);
 
 
 router.post('/', auth.isAuthenticated(), controller.create);

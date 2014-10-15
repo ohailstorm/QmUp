@@ -3,7 +3,7 @@
 angular.module('qmUpApp')
   .controller('AllPlaylistsCtrl', function ($scope, $http, socket, Auth) {
     $scope.playlists = [];
-    var counter =0;
+    
     $scope.loggedIn = Auth.isLoggedIn();
     console.log(Auth.getCurrentUser());
 

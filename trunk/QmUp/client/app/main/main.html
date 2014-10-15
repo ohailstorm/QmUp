@@ -14,15 +14,22 @@
     <p class="input-group">
       <input type="text" class="form-control" placeholder="Look for a playlist here" ng-model="newThing">
       <span class="input-group-btn">
-        <button type="submit" class="btn btn-primary" ng-click="addThing()">Search!</button>
+        <button type="submit" class="btn btn-primary" ng-click="searchForPlaylist(newThing)">Search!</button>
       </span>
     </p>
   </form>
 
+  
+
+  <ul>
+    <li ng-repeat="playlist in playlists"><a href="/playlist/{{playlist._id}}">{{playlist.name}}</a></li>
+
+  </ul>
+
 
 
   <h2>or <a class="btn btn-facebook" href="" ng-click="loginOauth('facebook')">
-            <i class="fa fa-facebook"></i> log in
+            <i class="fa fa-facebook"></i> login
           </a>
           to start collaborating</h2>
 </div>

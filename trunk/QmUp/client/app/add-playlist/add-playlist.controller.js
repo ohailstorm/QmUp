@@ -32,8 +32,6 @@ angular.module('qmUpApp')
   $scope.add = function (newName) {
     $scope.closeAlert();
     if(newName !== undefined && newName.length > 0){
-
-    
     counter++;
     var own = Auth.getCurrentUser()._id;
     var newTrack = {name:newName, owner: own};
@@ -45,19 +43,15 @@ angular.module('qmUpApp')
         response.owner={_id:response.owner, name:Auth.getCurrentUser().name};
         $scope.playlists.push(response);
       }
-      $scope.addAlert('success',"Successfully created playlist");
+      $scope.addAlert('success','Successfully created playlist');
     });    
   } else { 
-    console.log("Unnamed playlist");
+    console.log('Unnamed playlist');
     
-    $scope.addAlert('danger', "Unnamed playlist");
+    $scope.addAlert('danger', 'Unnamed playlist');
     
-  };
-};
-
-  $scope.lookForPlaylist = function (name) {
-
   }
+};
 
 
   $scope.addCollab = function (playlist) {

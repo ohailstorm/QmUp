@@ -20,7 +20,7 @@
 
           <button ng-if="!isPlaying" class="btn btn-lg btn-success" ng-click="play()">Play!</button>
           <button ng-if="isPlaying" class="btn btn-lg btn-danger" ng-click="pause()">Pause!</button>
-          <button class="btn btn-lg btn-warning" ng-click="notAllowed()">Skip!</button>
+          <button ng-if="skippingAllowed()"class="btn btn-lg btn-warning" ng-click="skip()">Skip!</button>
         </div>
         </div>
 
@@ -30,7 +30,7 @@
 
         <div class="panel">
           <!-- Default panel contents -->
-          <div class="panel-heading">Playlist</div>
+          <div class="panel-heading"><h2>Next up:</h2></div>
           
             <!-- Table -->
             <table class="table table-striped" id="plist" style="width: 100%;">

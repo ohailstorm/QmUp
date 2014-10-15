@@ -14,18 +14,28 @@ exports.index = function(req, res) {
 
 // Get a single playlist
 exports.show = function(req, res) {
-  Playlist.findById(req.params.id).populate('collaborators', 'name').exec( function (err, playlist) {
+  Playlist.findById(req.params.id).populate('owner','name _id').populate('collaborators', 'name').exec( function (err, playlist) {
     if(err) { return handleError(res, err); }
     if(!playlist) { return res.send(404); }
     return res.json(200, playlist);
   });
 };
 
+// Look for certain playlist by name
+exports.findPlaylist = function(req, res) {
+  Playlist.find().where({'name': req.params.name}).exec( function (err, playlist) {
+    if(err) { return handleError(res, err); }
+    
+    return res.json(200, playlist);
+  })
+}
+
+
 // Get a list of playlists beloning to one user
 exports.showForUser = function(req, res) {
   console.log("User is:");
   console.log(req.user);
-  Playlist.find().where({ $or: [{ 'owner': req.params.id }, { 'collaborators': req.params.id }]}).populate('owner', 'name').exec(function (err, playlists) {
+  Playlist.find().where({ $or: [{ 'owner': req.params.id }, { 'collaborators': req.params.id }]}).populate('owner', 'name _id').exec(function (err, playlists) {
     console.log(playlists);
     if(err) { return handleError(res, err); }
 
@@ -62,7 +72,7 @@ exports.addSong = function(req, res) {
     
       playlist.collaborators.forEach(function(collaborator){
 
-        if(req.user._id.toString()==collaborator.toString()){
+        if(req.user._id.toString()===collaborator.toString()){
           canModify=true;
           return;
         }
