@@ -1,16 +1,19 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
 <div class="col-md-12">
-This is the add-playlist view.
+
+  
+  
 
 <div class="row" ng-if="loggedIn">
 	<div class="col-md-6">
+  <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
 	<form role="form" ng-submit="add(plName)">
 	 
    <div class="form-group">
     <div class="input-group">
       <div class="input-group-addon">Name</div>
-      <input class="form-control" ng-model="plName" type="text" placeholder="Enter name">
+      <input class="form-control" ng-model="plName" type="text" placeholder="Enter name" id="playlistName">
       <div class="input-group-btn">
       <button type="submit" class="btn btn-default">Add</button>
   </div>
@@ -29,7 +32,7 @@ This is the add-playlist view.
 	<div class="col-md-6">
  <div class="panel">
           <!-- Default panel contents -->
-          <div class="panel-heading"><h2>Playlists</h2></div>
+          <div class="panel-heading"><h2>Playlists</h2> </div>
           
             <!-- Table -->
             <table class="table table-striped" id="plist" style="width: 100%;">

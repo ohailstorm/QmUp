@@ -8,15 +8,8 @@
 </header>
 
 <div class="container" id="cent">
-  <div class="row">
-    <div class="col-lg-12">
-      <h1 class="">Look for playlists directly</h1>
-      <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="thing in awesomeThings">
-        <li><a href="#" tooltip="{{thing.info}}">{{thing.name}}<button type="button" class="close" ng-click="deleteThing(thing)">&times;</button></a></li>
-      </ul>
-    </div>
-  </div>
   
+  <h1 class="">Look for playlists directly</h1>
   <form class="thing-form">
     <p class="input-group">
       <input type="text" class="form-control" placeholder="Look for a playlist here" ng-model="newThing">
