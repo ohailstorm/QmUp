@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('qmUpApp')
-  .controller('PlaylistCtrl', function ($scope, playerService, playListService, $routeParams, $http, Auth) {
-  
-
+  .controller('PlaylistCtrl', function ($scope, playerService, playListService, $routeParams, $http, Auth, $modal) {
+    
+  	
 
 
 	$scope.currentTrack;
@@ -17,6 +17,8 @@ angular.module('qmUpApp')
 	var trackNo=0;
 	$scope.trackNo=trackNo;
 	var current;
+	$scope.nrSearchRes = 25;
+	$scope.numbers = [10,25,50,100];
 	
   $scope.getFriendsList = function () {
 
@@ -47,11 +49,12 @@ angular.module('qmUpApp')
 				playerService.pause($scope.currentTrack);
 	};
 
-	$scope.search = function (searchStr) {
-		SC.get('/tracks', {q: searchStr}, function(tracks) {
+	$scope.search = function (searchStr, lim) {
+		SC.get('/tracks', {q: searchStr, limit: lim}, function(tracks) {
 			$scope.$apply(function() {$scope.searchResult = tracks});
 			
 			console.log($scope.searchResult);
+			
 		
 		});
 			
@@ -98,9 +101,23 @@ angular.module('qmUpApp')
   };
 
 
+  $scope.toggleModal = function() {
+   var modalInstance = $modal.open({
+  		templateUrl:'app/playlist/song-layover.html',
+  		resolve:{
+  			info: function() {
+  				console.log(trackNo);
+  				return $scope.currentTrack.id;
+  			}
+  		},
+  		controller: 'ModalInstanceCtrl'
+  	});	
+  }
+
  $scope.$watch(function(){return playListService.getCurrentTrack();}, function(newTrack) {
 	 	console.log("change in track");
-             $scope.currentTrack=newTrack;
+         $scope.currentTrack=newTrack;
+     	
            });
   $scope.$watch(function(){return playListService.getCollaborators();}, function(playlist) {
 	 	console.log("change in track");
@@ -119,3 +136,21 @@ angular.module('qmUpApp')
 
 
   });
+
+
+angular.module('qmUpApp').controller('ModalInstanceCtrl', function ($scope, $modalInstance, info) {
+
+  $scope.info = info;
+  $scope.selected = {
+   // item: $scope.items[0]
+  };
+  console.log("started" + info);
+
+  $scope.ok = function () {
+    $modalInstance.close();
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+});
