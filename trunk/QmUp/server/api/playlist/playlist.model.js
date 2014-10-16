@@ -15,6 +15,7 @@ var mongoose = require('mongoose'),
   var SongSchema = new mongoose.Schema({ 
   			id: String,
   			title: String,
+        artworkUrl: String,
          	votes: [VoteSchema]
         });
 

@@ -47,7 +47,7 @@ angular.module('qmUpApp')
 
       );
    
-  }
+  };
 
 
 	$scope.play = function  (track) {
@@ -90,6 +90,7 @@ angular.module('qmUpApp')
 
 			$scope.play(track);
 		}*/
+		console.log(track);
 		playListService.addTrack(track);
 		
 

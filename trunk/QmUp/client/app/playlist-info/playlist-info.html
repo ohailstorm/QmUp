@@ -7,7 +7,7 @@
           <div class="panel-heading">
           	<a href="/playlist/{{playlistId}}">Play this playlist!</a>
 			<h3>{{playlist.name}}, <small>created by {{playlist.owner.name}}</small></h3>
-			<h3 ng-click="remoteSkip()"><span class=" fa fa-step-forward" ng></span> Remote skip</h3>
+			<h3 ng-if="isAdmin()" ng-click="remoteSkip()"><span class=" fa fa-step-forward" ng></span> Remote skip</h3>
 			<h2>Songs</h2>
           </div>
           
@@ -32,10 +32,22 @@
             <div class="col-md-6">
         
         <div class="panel">
-          <h1> Collaborators</h1>
+          <h1>Collaborators</h1>
           <ul>
             <li ng-repeat="collaborator in playlist.collaborators">{{collaborator.name}}</li>
           </ul>
         </div>
         </div>
+
+
+          <div class="col-md-6" ng-if="isAdmin()">
+        
+        <div class="panel">
+          <h1 ng-click="getFriendsList()"> Add Collaborator</h1>
+          <ul>
+            <li ng-repeat="friend in friendsList" ng-click="addCollaborator(friend)">{{friend.name}}</li>
+          </ul>
+        </div>
+        </div>
+
 </div>
