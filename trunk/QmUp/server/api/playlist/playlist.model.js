@@ -16,7 +16,15 @@ var mongoose = require('mongoose'),
   			id: String,
   			title: String,
         artworkUrl: String,
-         	votes: [VoteSchema]
+        artist: String,
+        albumCover: String,
+        releaseYear: String,
+        recordLabel: String,
+        videoURL: String,
+        genre: String,
+        postingUser: String,
+        userURL: String,
+        votes: [VoteSchema]
         });
 
 var PlaylistSchema = new Schema({

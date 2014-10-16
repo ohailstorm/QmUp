@@ -1,10 +1,9 @@
 'use strict';
 
 angular.module('qmUpApp')
-  .controller('PlaylistCtrl', function ($scope, playerService, playListService, $routeParams, $http, Auth, socket) {
-  
 
-  
+  .controller('PlaylistCtrl', function ($scope, playerService, playListService, $routeParams, $http, Auth, $modal, socket) {
+
 	$scope.currentTrack;
 	$scope.allowRemoteSkipping=false;
 	$scope.isPlaying=false;
@@ -34,8 +33,13 @@ angular.module('qmUpApp')
 	var trackNo=0;
 	$scope.trackNo=trackNo;
 	var current;
+
+	$scope.nrSearchRes = 25;
+	$scope.numbers = [10,25,50,100];
+
 	$scope.playlist=playListService.getPlaylist();
 	   $scope.playlistOwner=playListService.getOwner();
+
 	
   $scope.getFriendsList = function () {
 
@@ -69,12 +73,14 @@ angular.module('qmUpApp')
 				playerService.pause($scope.currentTrack);
 	};
 
-	$scope.search = function (searchStr) {
+
+	$scope.search = function (searchStr, lim) {
 		socket.socket.emit("skip", playListService.getPlayListId());
-		SC.get('/tracks', {q: searchStr}, function(tracks) {
-			$scope.$apply(function() {$scope.searchResult = tracks}); //Hack to fix update issues
-			
+		SC.get('/tracks', {q: searchStr, limit: lim}, function(tracks) {
+			$scope.$apply(function() {$scope.searchResult = tracks});
+
 			console.log($scope.searchResult);
+			
 		
 		});
 			
@@ -136,10 +142,24 @@ angular.module('qmUpApp')
   }
 
 
+  $scope.toggleModal = function() {
+   var modalInstance = $modal.open({
+  		templateUrl:'app/playlist/song-layover.html',
+  		resolve:{
+  			info: function() {
+  				console.log(trackNo);
+  				return $scope.currentTrack.id;
+  			}
+  		},
+  		controller: 'ModalInstanceCtrl'
+  	});	
+  }
+
  $scope.$watch(function(){return playListService.getCurrentTrack();}, function(newTrack) {
 	 	console.log("change in track");
-             
-             $scope.playlist=playListService.getPlaylist();
+         $scope.currentTrack=newTrack;
+         //$scope.playlist=playListService.getPlaylist();
+
            });
   $scope.$watch(function(){return playerService.nowPlaying();}, function(newTrack) {
 	 	console.log("change in track");
@@ -169,3 +189,21 @@ angular.module('qmUpApp')
 
 
   });
+
+
+angular.module('qmUpApp').controller('ModalInstanceCtrl', function ($scope, $modalInstance, info) {
+
+  $scope.info = info;
+  $scope.selected = {
+   // item: $scope.items[0]
+  };
+  console.log("started" + info);
+
+  $scope.ok = function () {
+    $modalInstance.close();
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+});
