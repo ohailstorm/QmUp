@@ -43,17 +43,17 @@ angular.module('qmUpApp')
         response.owner={_id:response.owner, name:Auth.getCurrentUser().name};
         $scope.playlists.push(response);
       }
-      $scope.addAlert('success',"Successfully created playlist");
+      $scope.addAlert('success','Successfully created playlist');
     });    
   } else { 
-    console.log("Unnamed playlist");
+    console.log('Unnamed playlist');
     
-    $scope.addAlert('danger', "Unnamed playlist");
+    $scope.addAlert('danger', 'Unnamed playlist');
     
-  };
+  }
 };
 
-
+  /*
   $scope.addCollab = function (playlist) {
     console.log(playlist);
     var postObject =  {user: Auth.getCurrentUser()._id};
@@ -64,5 +64,5 @@ angular.module('qmUpApp')
       socket.syncUpdates('playlist', $scope.playlists);
     });
 
-  };
+  };*/
 });

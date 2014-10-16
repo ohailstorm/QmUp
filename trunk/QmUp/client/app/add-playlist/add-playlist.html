@@ -43,8 +43,8 @@
               </thead>
               <tbody>
                 <tr ng-repeat="playlist in playlists track by $index">
-                <td><a href="/playlist/{{playlist._id}}">{{playlist.name}}</a></td>
-                <td ng-click="addCollab(playlist)">{{playlist.owner.name}}</td>
+                <td><a href="/playlist-info/{{playlist._id}}">{{playlist.name}}</a></td>
+                <td>{{playlist.owner.name}}</td>
               </tr>
               </tbody>
             </table>

@@ -6,7 +6,7 @@ var User = require('../user/user.model');
 
 // Get list of playlists
 exports.index = function(req, res) {
-  Playlist.find(function (err, playlists) {
+  Playlist.find().populate('owner', 'name').exec(function (err, playlists) {
     if(err) { return handleError(res, err); }
     return res.json(200, playlists);
   });
@@ -14,7 +14,7 @@ exports.index = function(req, res) {
 
 // Get a single playlist
 exports.show = function(req, res) {
-  Playlist.findById(req.params.id).populate('collaborators', 'name').exec( function (err, playlist) {
+  Playlist.findById(req.params.id).populate('owner','name _id').populate('collaborators', 'name').exec( function (err, playlist) {
     if(err) { return handleError(res, err); }
     if(!playlist) { return res.send(404); }
     return res.json(200, playlist);
@@ -35,7 +35,7 @@ exports.findPlaylist = function(req, res) {
 exports.showForUser = function(req, res) {
   console.log("User is:");
   console.log(req.user);
-  Playlist.find().where({ 'owner': req.params.id }).populate('owner', 'name').exec(function (err, playlists) {
+  Playlist.find().where({ $or: [{ 'owner': req.params.id }, { 'collaborators': req.params.id }]}).populate('owner', 'name _id').exec(function (err, playlists) {
     console.log(playlists);
     if(err) { return handleError(res, err); }
 
@@ -62,25 +62,24 @@ exports.addSong = function(req, res) {
  
     if(err) { return handleError(res, err); }
     if(!playlist) { return res.send(404); }
-    console.log("user", req.user._id);
-    console.log("real owner: ", playlist.owner);
+    
     var canModify=false;
     if(playlist.owner.toString()===req.user._id.toString()){
 
       canModify=true;
     }
     else{
-      console.log("no match!");
+    
       playlist.collaborators.forEach(function(collaborator){
 
-        if(req.user._id.toString()==collaborator.toString()){
+        if(req.user._id.toString()===collaborator.toString()){
           canModify=true;
           return;
         }
 
       });
     }
-    if(!canModify) { return res.send(400);}
+    if(!canModify) { return res.json(400,{message:"User is not allowed to add to this playlist"});}
     playlist.songs.push(req.body);
     playlist.save(function(err, song) {
      

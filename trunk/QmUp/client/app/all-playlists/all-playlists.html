@@ -1,8 +1,6 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
 <div class="col-md-12">
-This is the add-playlist view.
-
 <div class="row">
 	<div class="col-md-6">
  <div class="panel">
@@ -18,7 +16,7 @@ This is the add-playlist view.
               </thead>
               <tbody>
                 <tr ng-repeat="playlist in playlists track by $index">
-                <td><a href="/playlist/{{playlist._id}}">{{playlist.name}}</a></td>
+                <td><a href="/playlist-info/{{playlist._id}}">{{playlist.name}}</a></td>
                 <td>{{playlist.owner.name}}</td>
               </tr>
               </tbody>

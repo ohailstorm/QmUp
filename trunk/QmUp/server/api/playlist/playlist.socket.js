@@ -19,6 +19,12 @@ exports.register = function(socket) {
   Playlist.schema.paths.songs.schema.post('remove', function (doc) {
     onRemove(socket, doc);
   });*/
+
+//Custom socket event 
+socket.on("skip", function (data) {
+  console.log("wanted skipping "+data);
+  onSkip(socket, data);
+});
 }
 
 function onSave(socket, doc, cb) {
@@ -31,3 +37,9 @@ function onRemove(socket, doc, cb) {
   socket.emit('playlist:remove', doc);
 }
 
+function onSkip (socket, data) {
+  console.log("skipping", data);
+  socket.broadcast.emit(data+':skip', data);
+  console.log("skipped", data);
+
+}

@@ -1,0 +1,41 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="col-md-12">
+		<div class="col-md-6">
+        <div class="panel">
+          <!-- Default panel contents -->
+          <div class="panel-heading">
+          	<a href="/playlist/{{playlistId}}">Play this playlist!</a>
+			<h3>{{playlist.name}}, <small>created by {{playlist.owner.name}}</small></h3>
+			<h3 ng-click="remoteSkip()"><span class=" fa fa-step-forward" ng></span> Remote skip</h3>
+			<h2>Songs</h2>
+          </div>
+          
+            <!-- Table -->
+            <table class="table table-striped" id="plist" style="width: 100%;">
+              <thead>
+                <th></th>
+                <th></th>
+
+              </thead>
+              <tbody>
+                <tr ng-repeat="item in playlist.songs track by $index">
+                <td>{{item.title}}</td>
+                <td><span class="fa fa-remove" ng-click="removeTrack(item)" ng-if="isAdmin()"></span></td>
+              </tr>
+              </tbody>
+            	
+            </table>
+          </div>
+      </div>
+
+            <div class="col-md-6">
+        
+        <div class="panel">
+          <h1> Collaborators</h1>
+          <ul>
+            <li ng-repeat="collaborator in playlist.collaborators">{{collaborator.name}}</li>
+          </ul>
+        </div>
+        </div>
+</div>

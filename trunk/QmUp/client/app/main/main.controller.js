@@ -33,7 +33,7 @@ angular.module('qmUpApp')
       console.log(response);
             //socket.syncUpdates('playlist', $scope.playlists);
       });
-    }
+    };
         
 
     $scope.$on('$destroy', function () {
