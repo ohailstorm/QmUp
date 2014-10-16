@@ -177,8 +177,8 @@ angular.module('qmUpApp')
 			}
 			playlistId = id;
 
-			playlist=[];
-			played=[];
+			playlist.splice(0, playlist.length);
+			played.splice(0, played.length);
 			   $http.get('/api/playlists/'+playlistId).success(function(response) {
 			   	
       			playlist = response.songs;
@@ -193,9 +193,10 @@ angular.module('qmUpApp')
 			return playlistId;
 		},
 		getCurrentTrack: function () {
-			if (playlist.length>0 && trackNo<playlist.length) {
+			if (playlist.length>0) {
 				//return playlist[trackNo%playlist.length];
-				return _.difference(playlist, played)[0];
+				//return _.difference(playlist, played)[0];
+				return playListOperations.getPlaylist()[0];
 			}
 			else return null;
 			
@@ -203,13 +204,15 @@ angular.module('qmUpApp')
 		getNextTrack: function (argument) {
 			//trackNo++;
 			//playlist.splice(0,1);
-			played.push(_.difference(playlist, played)[0]);
-			console.log('played',played);
-			console.log('next', _.difference(playlist, played)[0]);
+			//played.push(_.difference(playlist, played)[0]);
+			played.push(playListOperations.getPlaylist()[0]._id);
 			
-			if (playlist.length>0 && trackNo<playlist.length) {
+			//console.log('next', _.difference(playlist, played)[0]);
+			
+			if (playlist.length>0) {
 				//return playlist[trackNo%playlist.length];
-				return _.difference(playlist, played)[0];
+				//return _.difference(playlist, played)[0];
+				playListOperations.getPlaylist()[0];
 			}
 			else return null;
 		},
@@ -220,7 +223,7 @@ angular.module('qmUpApp')
 			track.title=newTrack.title;
 			track.artist = newTrack.artist;
 			track.genre=newTrack.genre;
-			track.albumCover=newTrack.artwork_url;
+			track.artworkUrl=newTrack.artwork_url;
 			track.postingUser=newTrack.user.username;
 			track.userURL=newTrack.user.uri;
 			track.videoURL=newTrack.video_url;
@@ -236,7 +239,13 @@ angular.module('qmUpApp')
 		getPlaylist: function () {
 			if(trackNo<playlist.length){
 			//return playlist.slice(trackNo+1, playlist.length);
-			return _.difference(playlist, played);
+			//return _.difference(playlist, played);
+			var test = _.select(playlist, function(c){    
+    				return played.indexOf(c._id) == -1;
+				});
+		
+			return test;
+			
 
 			}
 			else{

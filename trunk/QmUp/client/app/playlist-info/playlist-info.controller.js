@@ -67,8 +67,6 @@ $scope.remoteSkip = function  () {
 
 
 
-
-
 		
 
 			   

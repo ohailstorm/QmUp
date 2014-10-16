@@ -18,9 +18,10 @@
 
 <div class="col-md-6">
           <div class="panel" id="track-info">
-            <div class="panel-heading"><h1 ng-click="toggleModal()">Now playing:</h1> </div>
+            <div class="panel-heading"><h1>Now playing: </h1> </div>
           <div class="panel-body"> 
             <div class="col-md-12" style="text-align:center;">
+              <h1 style="display:inline-block;"><span class="fa fa-info-circle" ng-click="toggleModal()"></span></h1>
               <div class="row">
             <img class="img-rounded" src="{{currentTrack.artworkUrl}}" style="height:130px;"><br>
            <h4>{{currentTrack.title}}</h4>
@@ -30,6 +31,7 @@
           <button ng-show="!isPlaying" class="btn btn-lg btn-success" ng-click="play()">Play!</button>
           <button ng-show="isPlaying" class="btn btn-lg btn-danger" ng-click="pause()">Pause!</button>
           <button ng-if="isAdmin()" class="btn btn-lg btn-warning" ng-click="skip()">Skip!</button>
+
         </div>
         </div>
           </div>

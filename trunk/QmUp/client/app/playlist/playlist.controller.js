@@ -148,7 +148,7 @@ angular.module('qmUpApp')
   		resolve:{
   			info: function() {
   				console.log(trackNo);
-  				return $scope.currentTrack.id;
+  				return $scope.currentTrack;
   			}
   		},
   		controller: 'ModalInstanceCtrl'
@@ -158,9 +158,9 @@ angular.module('qmUpApp')
  $scope.$watch(function(){return playListService.getCurrentTrack();}, function(newTrack) {
 	 	console.log("change in track");
          $scope.currentTrack=newTrack;
-         //$scope.playlist=playListService.getPlaylist();
+         $scope.playlist=playListService.getPlaylist();
 
-           });
+           });/*
   $scope.$watch(function(){return playerService.nowPlaying();}, function(newTrack) {
 	 	console.log("change in track");
              $scope.currentTrack=newTrack;
@@ -168,12 +168,16 @@ angular.module('qmUpApp')
   $scope.$watch(function(){return playListService.getCollaborators();}, function(collabs) {
 	 	console.log("change in track");
              $scope.collaborators=collabs;
+         $scope.playlist=playListService.getPlaylist();
+
             
            });
 
  $scope.$watch(function(){return playListService.getOwner();}, function(owner) {
 	 	console.log("change in pwner");
              $scope.playlistOwner=owner;
+         $scope.playlist=playListService.getPlaylist();
+
             
            });
            

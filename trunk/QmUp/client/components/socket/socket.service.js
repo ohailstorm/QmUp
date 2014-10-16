@@ -87,16 +87,17 @@ angular.module('qmUpApp')
         socket.on(modelName + ':change', function (item) {
         
         var event = 'updated_pl';
+        if(array.songs){
+          array=[];
+        }
+        console.log(array);
         array.splice(0, array.length);
         angular.copy(item, array);
-          cb(event, item, item);
+          cb(event, item, array);
 
         });
 
-          socket.on('skip', function (item) {
         
-        console.log('skiiiip');
-        });
       
       
       },
