@@ -80,6 +80,7 @@ exports.addSong = function(req, res) {
       });
     }
     if(!canModify) { return res.json(400,{message:"User is not allowed to add to this playlist"});}
+    console.log("song: ", req.body);
     playlist.songs.push(req.body);
     playlist.save(function(err, song) {
      

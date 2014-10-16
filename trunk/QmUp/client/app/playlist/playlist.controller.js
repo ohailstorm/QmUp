@@ -1,18 +1,9 @@
 'use strict';
 
 angular.module('qmUpApp')
-<<<<<<< HEAD
-  .controller('PlaylistCtrl', function ($scope, playerService, playListService, $routeParams, $http, Auth, $modal) {
-    
-  	
 
+  .controller('PlaylistCtrl', function ($scope, playerService, playListService, $routeParams, $http, Auth, $modal, socket) {
 
-=======
-  .controller('PlaylistCtrl', function ($scope, playerService, playListService, $routeParams, $http, Auth, socket) {
-  
-
-  
->>>>>>> c2a0788c1776947b83bc43e63601f6a0228b5f4f
 	$scope.currentTrack;
 	$scope.allowRemoteSkipping=false;
 	$scope.isPlaying=false;
@@ -42,13 +33,13 @@ angular.module('qmUpApp')
 	var trackNo=0;
 	$scope.trackNo=trackNo;
 	var current;
-<<<<<<< HEAD
+
 	$scope.nrSearchRes = 25;
 	$scope.numbers = [10,25,50,100];
-=======
+
 	$scope.playlist=playListService.getPlaylist();
 	   $scope.playlistOwner=playListService.getOwner();
->>>>>>> c2a0788c1776947b83bc43e63601f6a0228b5f4f
+
 	
   $scope.getFriendsList = function () {
 
@@ -60,7 +51,7 @@ angular.module('qmUpApp')
 
       );
    
-  }
+  };
 
 
 	$scope.play = function  (track) {
@@ -105,6 +96,7 @@ angular.module('qmUpApp')
 
 			$scope.play(track);
 		}*/
+		console.log(track);
 		playListService.addTrack(track);
 		
 
@@ -165,13 +157,9 @@ angular.module('qmUpApp')
 
  $scope.$watch(function(){return playListService.getCurrentTrack();}, function(newTrack) {
 	 	console.log("change in track");
-<<<<<<< HEAD
          $scope.currentTrack=newTrack;
-     	
-=======
-             
-             $scope.playlist=playListService.getPlaylist();
->>>>>>> c2a0788c1776947b83bc43e63601f6a0228b5f4f
+         //$scope.playlist=playListService.getPlaylist();
+
            });
   $scope.$watch(function(){return playerService.nowPlaying();}, function(newTrack) {
 	 	console.log("change in track");

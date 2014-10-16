@@ -214,12 +214,20 @@ angular.module('qmUpApp')
 			else return null;
 		},
 		addTrack: function (newTrack) {
-			console.log("adding");
+			console.log("adding", newTrack);
 			var track={};
 			track.id=newTrack.id;
 			track.title=newTrack.title;
+			track.artist = newTrack.artist;
+			track.genre=newTrack.genre;
+			track.albumCover=newTrack.artwork_url;
+			track.postingUser=newTrack.user.username;
+			track.userURL=newTrack.user.uri;
+			track.videoURL=newTrack.video_url;
+			track.label=newTrack.label_name;
+			track.releaseYear=newTrack.release_year;
 			//if(playlist.length<=0 || playlist.indexOf(newTrack)<=0)
-				$http.post('/api/playlists/'+playlistId, newTrack).error(function (response, status) {
+				$http.post('/api/playlists/'+playlistId, track).error(function (response, status) {
 					alert("Something went wrong: " + response.message);
 					console.log(response.message);
 				});

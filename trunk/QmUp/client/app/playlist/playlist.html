@@ -4,27 +4,39 @@
  <div class="">
   <div class="col-md-12">
     <div class="col-md-6 col-md-offset-5">
-      <h1>Playlist</h1></div>
-      <h2><span ng-click="toggleRemoteSkipping()" class="fa" ng-class="allowRemoteSkipping?'fa-check-circle-o':'fa-times'"></span> Allow remote skipping</h2>
+      <h1>Playlist</h1>
+    </div>
+    <div class="col-md-6 col-md-offset-4">
+
+       <h2><span ng-click="toggleRemoteSkipping()" class="fa" ng-class="allowRemoteSkipping?'fa-check-circle-o':'fa-times'"></span> Allow remote skipping</h2>
+    </div>
+     
 
     </div>
 
-   
-   <div class="col-md-6">
+
+
+<div class="col-md-6">
           <div class="panel" id="track-info">
             <div class="panel-heading"><h1 ng-click="toggleModal()">Now playing:</h1> </div>
           <div class="panel-body"> 
-
-            <img src="{{currentTrack.artwork_url}}"><br>
-			     {{currentTrack.title}}
-       
-        <div class="col-md-12">
+            <div class="col-md-12" style="text-align:center;">
+              <div class="row">
+            <img class="img-rounded" src="{{currentTrack.artworkUrl}}" style="height:130px;"><br>
+           <h4>{{currentTrack.title}}</h4>
+       </div>
+        <div class="row">
 
           <button ng-show="!isPlaying" class="btn btn-lg btn-success" ng-click="play()">Play!</button>
           <button ng-show="isPlaying" class="btn btn-lg btn-danger" ng-click="pause()">Pause!</button>
           <button ng-if="isAdmin()" class="btn btn-lg btn-warning" ng-click="skip()">Skip!</button>
         </div>
         </div>
+          </div>
+        </div>
+
+ 
+
         <div class="panel">
           <!-- Default panel contents -->
           <div class="panel-heading"><h2>Next up:</h2></div>
@@ -42,41 +54,10 @@
                 <td><span class="fa fa-remove" ng-click="removeTrack(item)" ng-if="isAdmin()"></span></td>
               </tr>
               </tbody>
-            	
+              
             </table>
           </div>
->>>>>>> c2a0788c1776947b83bc43e63601f6a0228b5f4f
           </div>
-        </div>
-
-      </div>
-
-
-
-      <div class="panel">
-        <!-- Default panel contents -->
-        <div class="panel-heading">Playlist</div>
-
-        <!-- Table -->
-        <table class="table table-striped" id="plist" style="width: 100%;">
-          <thead>
-            <th></th>
-            <th></th>
-
-          </thead>
-          <tbody>
-            <tr ng-repeat="item in playlist track by $index">
-              <td>{{item.title}}</td>
-              <td><span class="fa fa-remove" ng-click="removeTrack(item)"></span></td>
-            </tr>
-          </tbody>
-
-        </table>
-      </div>
-    </div>
-
-
-
 
 
     <div class="col-md-6">
