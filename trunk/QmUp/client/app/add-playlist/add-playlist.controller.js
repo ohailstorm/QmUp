@@ -53,7 +53,7 @@ angular.module('qmUpApp')
   }
 };
 
-
+  /*
   $scope.addCollab = function (playlist) {
     console.log(playlist);
     var postObject =  {user: Auth.getCurrentUser()._id};
@@ -64,5 +64,5 @@ angular.module('qmUpApp')
       socket.syncUpdates('playlist', $scope.playlists);
     });
 
-  };
+  };*/
 });

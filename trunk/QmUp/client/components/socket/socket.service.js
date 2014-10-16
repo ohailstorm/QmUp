@@ -92,6 +92,12 @@ angular.module('qmUpApp')
           cb(event, item, item);
 
         });
+
+          socket.on('skip', function (item) {
+        
+        console.log('skiiiip');
+        });
+      
       
       },
 
@@ -101,9 +107,11 @@ angular.module('qmUpApp')
        * @param modelName
        */
       unsyncUpdates: function (modelName) {
+        socket.removeAllListeners(modelName + ':skip');
         socket.removeAllListeners(modelName + ':change');
         socket.removeAllListeners(modelName + ':save');
         socket.removeAllListeners(modelName + ':remove');
+        
       }
     };
   });

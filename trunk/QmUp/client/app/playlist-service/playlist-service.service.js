@@ -21,7 +21,7 @@ angular.module('qmUpApp')
 	var scService = {
 
 
-		setTrack : function  () {
+		setTrack : function  (autoStart) {
 			
 			track = playListService.getCurrentTrack();
 			playlistId=playListService.getPlayListId();
@@ -40,7 +40,8 @@ angular.module('qmUpApp')
 				playing=false;
 				console.log(sound);
 				
-				scService.play(sound);
+				scService.play(sound);					
+				
 				
 
 
@@ -51,7 +52,9 @@ angular.module('qmUpApp')
 				playing=false;
 				playNext();
 			});
+
 		}
+		return autoStart; //HACK
 		},
 
 		play : function (sound) {
@@ -60,7 +63,7 @@ angular.module('qmUpApp')
 				currentSoundObject = sound;
 			}
 			if(playListService.getPlayListId()!==playlistId){
-				scService.setTrack();
+				scService.setTrack(true);
 			}
 
 			if(playing==false){			
@@ -84,9 +87,10 @@ angular.module('qmUpApp')
 					
 				}
 				else{
-					scService.setTrack();
+					scService.setTrack(true);
 					console.log("back");
 				}
+				return playing;
 
 			}
 
@@ -99,6 +103,7 @@ angular.module('qmUpApp')
 				paused=true;
 				currentSoundObject.pause();
 			}
+			return playing;
 
 		},
 		skip: function () {
@@ -113,6 +118,7 @@ angular.module('qmUpApp')
 			currentSoundObject.stop();
 			currentSoundObject=null;
 		}
+		return playing;
 		},
 		isPlaying : function () {
 			return playing;
@@ -122,6 +128,17 @@ angular.module('qmUpApp')
 		},
 		getPlayingPlaylistId: function () {
 			return playlistId;
+		},
+		clearAll : function (argument) {
+			playing=false;
+			if(currentSoundObject){
+			currentSoundObject.stop();
+			currentSoundObject=null;
+			}
+			
+			track=null;
+			playlistId=null;
+
 		}
 
 
@@ -131,7 +148,7 @@ angular.module('qmUpApp')
 		playing=false;
 		playListService.getNextTrack();
 		console.log(playListService.getCurrentTrack());
-		scService.setTrack();
+		scService.setTrack(true);
 	};
 	function setPlaying (isPlaying) {
 		playing=isPlaying;

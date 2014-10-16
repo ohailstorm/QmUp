@@ -2,9 +2,10 @@
 
 <div class="col-md-12" >
  <div class="">
-  <div class="row">
+  <div class="col-md-12">
     <div class="col-md-6 col-md-offset-5">
       <h1>Playlist</h1></div>
+      <h2><span ng-click="toggleRemoteSkipping()" class="fa" ng-class="allowRemoteSkipping?'fa-check-circle-o':'fa-times'"></span> Allow remote skipping</h2>
 
     </div>
    
@@ -18,8 +19,8 @@
        
         <div class="col-md-12">
 
-          <button ng-if="!isPlaying" class="btn btn-lg btn-success" ng-click="play()">Play!</button>
-          <button ng-if="isPlaying" class="btn btn-lg btn-danger" ng-click="pause()">Pause!</button>
+          <button ng-show="!isPlaying" class="btn btn-lg btn-success" ng-click="play()">Play!</button>
+          <button ng-show="isPlaying" class="btn btn-lg btn-danger" ng-click="pause()">Pause!</button>
           <button ng-if="isAdmin()" class="btn btn-lg btn-warning" ng-click="skip()">Skip!</button>
         </div>
         </div>
