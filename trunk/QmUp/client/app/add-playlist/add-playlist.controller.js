@@ -21,13 +21,26 @@ angular.module('qmUpApp')
   $scope.closeAlert = function(index) {
     $scope.alerts.splice(index, 1);
   };
-
+/*
   $http.get('/api/playlists/user/'+Auth.getCurrentUser()._id).success(function(response) {
    $scope.playlists = response;
    console.log(response);
       			//socket.syncUpdates('playlist', $scope.playlists);
-         });
+         });*/
 
+playlistResource.getPlaylistsForUser({userId: Auth.getCurrentUser()._id}).$promise.then(
+  function(response) {
+          
+            $scope.playlists = response;
+            
+          
+             
+          },
+          function  (response, status) {
+            // on error...
+            console.log("error", response, status);
+          }
+  );
 
   $scope.add = function (newName) {
     $scope.closeAlert();

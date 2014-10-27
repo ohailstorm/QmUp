@@ -27,7 +27,7 @@ playlistResource.get({id:$scope.playlistId}).$promise.then(
             // on error...
             console.log("error", response, status);
           }
-  )
+  );
 
 
 

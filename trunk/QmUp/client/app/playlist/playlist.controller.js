@@ -2,7 +2,7 @@
 
 angular.module('qmUpApp')
 
-  .controller('PlaylistCtrl', function ($scope, playerService, playListService, $routeParams, $http, Auth, $modal, socket) {
+  .controller('PlaylistCtrl', function ($scope, playerService, playListService, $routeParams, $http, Auth, $modal, socket, playlistResource) {
 
 	$scope.currentTrack;
 	$scope.allowRemoteSkipping=false;
@@ -121,7 +121,7 @@ angular.module('qmUpApp')
     
     var postObject =  {user: friend.id};
 
-    $http.post('/api/playlists/'+playListService.getPlayListId()+'/collaborator', postObject).success(function(response) {
+   /* $http.post('/api/playlists/'+playListService.getPlayListId()+'/collaborator', postObject).success(function(response) {
             
             console.log(response);
             
@@ -131,7 +131,20 @@ angular.module('qmUpApp')
             console.log(data);
           //  alert("Something went wrong");
           }
-          );
+          );*/
+
+
+  var newCollab = new playlistResource();
+  newCollab.user= friend.id;
+  newCollab.$addCollaborator({id: playListService.getPlayListId()}, function (response) {
+    // on success...
+    console.log("success!", response);
+
+  },
+  function (response, status) {
+    console.log(status);
+    console.log(response);
+  });
 
   };
 
@@ -163,7 +176,8 @@ angular.module('qmUpApp')
   $scope.$watch(function(){return playerService.nowPlaying();}, function(newTrack) {
 	 	console.log("change in track");
              $scope.currentTrack=newTrack;
-           });
+           });*/
+           
   $scope.$watch(function(){return playListService.getCollaborators();}, function(collabs) {
 	 	console.log("change in track");
              $scope.collaborators=collabs;
@@ -171,7 +185,7 @@ angular.module('qmUpApp')
 
             
            });
-
+/*
  $scope.$watch(function(){return playListService.getOwner();}, function(owner) {
 	 	console.log("change in pwner");
              $scope.playlistOwner=owner;

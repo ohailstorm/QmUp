@@ -25,12 +25,14 @@ angular.module('qmUpApp')
           			action:'collaborator'
        			}
   			},
-  			getPlaylistForUser:{
+  			getPlaylistsForUser:{
   				method:'GET',
   				params: {
   					action:'user',
   					userId: '@_uId'
-  				}
+  				},
+            isArray: true
+          
   			}
   		}
   		);
