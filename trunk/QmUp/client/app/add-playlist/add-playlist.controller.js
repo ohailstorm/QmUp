@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('qmUpApp')
-.controller('AddPlaylistCtrl', function ($scope, $http, socket, Auth, $location) {
+.controller('AddPlaylistCtrl', function ($scope, $http, socket, Auth, $location, playlistResource) {
   $scope.playlists = [];
   var counter =0;
   $scope.loggedIn = Auth.isLoggedIn();
@@ -35,8 +35,15 @@ angular.module('qmUpApp')
     counter++;
     var own = Auth.getCurrentUser()._id;
     var newTrack = {name:newName, owner: own};
-    console.log(newTrack);
-    $http.post('/api/playlists', newTrack ).success(function (response) {
+    
+    //create resource and set parameters
+    var newPlaylist = new playlistResource();
+    newPlaylist.name=newName;
+    newPlaylist.owner=own;
+
+    //save to resource
+    newPlaylist.$save(
+      function (response) {
       console.log(response);
       if(response.owner===Auth.getCurrentUser()._id){
 
@@ -51,6 +58,29 @@ angular.module('qmUpApp')
     $scope.addAlert('danger', 'Unnamed playlist');
     
   }
+
+      
+
+
+    console.log(newTrack);/*
+    $http.post('/api/playlists', newTrack ).success(function (response) {
+      console.log(response);
+      if(response.owner===Auth.getCurrentUser()._id){
+
+        response.owner={_id:response.owner, name:Auth.getCurrentUser().name};
+        $scope.playlists.push(response);
+      }
+      $scope.addAlert('success','Successfully created playlist');
+    });    
+  } else { 
+    console.log('Unnamed playlist');
+    
+    $scope.addAlert('danger', 'Unnamed playlist');
+    
+  }*/
+
+
+
 };
 
   /*

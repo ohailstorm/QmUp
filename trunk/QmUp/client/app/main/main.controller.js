@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('qmUpApp')
-  .controller('MainCtrl', function ($scope, $http, socket, Auth, $window) {
+  .controller('MainCtrl', function ($scope, $http, socket, Auth, $window, playlistResource) {
     $scope.awesomeThings = [];
 
     $scope.isLoggedIn = Auth.isLoggedIn;
@@ -28,15 +28,20 @@ angular.module('qmUpApp')
     };
 
     $scope.searchForPlaylist = function(argument) {
-      $http.get('/api/playlists/search/'+ argument).success(function(response) {
+      playlistResource.searchPlaylist({key: argument}).$promise.then(
+        function (response) {
+        
       $scope.playlists = response;
-      console.log(response);
-            //socket.syncUpdates('playlist', $scope.playlists);
-      });
+
+      //tror vi skippar sockets här?
+      //socket.syncUpdates('playlist', $scope.playlists);
+        }
+        );
     };
         
 
     $scope.$on('$destroy', function () {
       socket.unsyncUpdates('thing');
+      socket.unsyncUpdates('playlist'); 
     });
   });
