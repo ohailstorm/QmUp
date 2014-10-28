@@ -33,7 +33,21 @@ angular.module('qmUpApp')
   				},
             isArray: true
           
-  			}
+  			},
+        deleteSong:{
+          method: 'DELETE',
+          params:{
+            action: 'song',
+            key: '@key'
+          }
+        },
+        removeCollaborator:{
+           method: 'DELETE',
+          params:{
+            action: 'collaborator',
+            userId: '@_uId'
+          }
+        }
   		}
   		);
     

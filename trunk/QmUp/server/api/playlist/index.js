@@ -8,8 +8,8 @@ var router = express.Router();
 
 router.get('/', controller.index);
 router.get('/:id', controller.show);
-router.get('/user/:id',auth.isAuthenticated(), controller.showForUser);
-router.get('/search/:name',controller.findPlaylist);
+router.get('/user/:id', auth.isAuthenticated(), controller.showForUser);
+router.get('/search/:name', controller.findPlaylist);
 
 
 router.post('/', auth.isAuthenticated(), controller.create);
@@ -21,6 +21,7 @@ router.post('/:id/collaborator', auth.isAuthenticated(), controller.addCollabora
 router.put('/:id', auth.isAuthenticated(), controller.update);
 router.patch('/:id', controller.update);
 router.delete('/:id', auth.isAuthenticated(), controller.destroy);
-router.delete('/:id/song/:songId',auth.isAuthenticated(), controller.deleteSong);
+router.delete('/:id/song/:songId', auth.isAuthenticated(), controller.deleteSong);
+router.delete('/:id/collaborator/:userId', auth.isAuthenticated(), controller.removeCollaborator);
 
 module.exports = router;

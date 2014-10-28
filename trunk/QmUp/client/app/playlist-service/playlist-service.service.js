@@ -38,19 +38,14 @@ angular.module('qmUpApp')
 			playing=true;
 			SC.stream("/tracks/"+ track.id,{onfinish : function(){ playNext(); this.destruct();}}, function(sound){
 				playing=false;
-				console.log(sound);
 				
 				scService.play(sound);					
-				
-				
-
-
 
 			}, function (error) {
 				//On Error
-				console.log("error");
+				
 				playing=false;
-				playNext();
+				//playNext();
 			});
 
 		}
@@ -164,11 +159,6 @@ angular.module('qmUpApp')
 	var played=[];
 	var owner;
 
-
-	//playlist = [{"kind":"track","id":146379385,"created_at":"2014/04/25 07:06:19 +0000","user_id":49063453,"duration":190162,"commentable":true,"state":"finished","original_content_size":4565009,"sharing":"public","tag_list":"","permalink":"wake-me-up","streamable":true,"embeddable_by":"all","downloadable":false,"purchase_url":null,"label_id":null,"purchase_title":null,"genre":"Acoustic","title":"Wake me up","description":"","label_name":null,"release":null,"track_type":null,"key_signature":null,"isrc":null,"video_url":null,"bpm":null,"release_year":null,"release_month":null,"release_day":null,"original_format":"mp3","license":"all-rights-reserved","uri":"https://api.soundcloud.com/tracks/146379385","user":{"id":49063453,"kind":"user","permalink":"hallstroms","username":"Kajsa & Fredrika","uri":"https://api.soundcloud.com/users/49063453","permalink_url":"http://soundcloud.com/hallstroms","avatar_url":"https://i1.sndcdn.com/avatars-000080187945-1q9v95-large.jpg?e76cf77"},"permalink_url":"http://soundcloud.com/hallstroms/wake-me-up","artwork_url":null,"waveform_url":"https://w1.sndcdn.com/fX8HQgWNkVZw_m.png","stream_url":"https://api.soundcloud.com/tracks/146379385/stream","playback_count":114,"download_count":0,"favoritings_count":5,"comment_count":2,"attachments_uri":"https://api.soundcloud.com/tracks/146379385/attachments","policy":"ALLOW","$$hashKey":"004"},{"kind":"track","id":146379623,"created_at":"2014/04/25 07:09:48 +0000","user_id":49063453,"duration":156566,"commentable":true,"state":"finished","original_content_size":3758760,"sharing":"public","tag_list":"","permalink":"kids","streamable":true,"embeddable_by":"all","downloadable":false,"purchase_url":null,"label_id":null,"purchase_title":null,"genre":"Acoustic","title":"Kids","description":"","label_name":null,"release":null,"track_type":null,"key_signature":null,"isrc":null,"video_url":null,"bpm":null,"release_year":null,"release_month":null,"release_day":null,"original_format":"mp3","license":"all-rights-reserved","uri":"https://api.soundcloud.com/tracks/146379623","user":{"id":49063453,"kind":"user","permalink":"hallstroms","username":"Kajsa & Fredrika","uri":"https://api.soundcloud.com/users/49063453","permalink_url":"http://soundcloud.com/hallstroms","avatar_url":"https://i1.sndcdn.com/avatars-000080187945-1q9v95-large.jpg?e76cf77"},"permalink_url":"http://soundcloud.com/hallstroms/kids","artwork_url":null,"waveform_url":"https://w1.sndcdn.com/BlDM9ATGsuy0_m.png","stream_url":"https://api.soundcloud.com/tracks/146379623/stream","playback_count":555,"download_count":0,"favoritings_count":7,"comment_count":3,"attachments_uri":"https://api.soundcloud.com/tracks/146379623/attachments","policy":"ALLOW","$$hashKey":"005"},{"kind":"track","id":146378826,"created_at":"2014/04/25 07:01:10 +0000","user_id":49063453,"duration":259001,"commentable":true,"state":"finished","original_content_size":6217012,"sharing":"public","tag_list":"","permalink":"home","streamable":true,"embeddable_by":"all","downloadable":false,"purchase_url":null,"label_id":null,"purchase_title":null,"genre":"","title":"Home","description":"","label_name":"","release":"","track_type":"","key_signature":"","isrc":"","video_url":null,"bpm":null,"release_year":null,"release_month":null,"release_day":null,"original_format":"mp3","license":"all-rights-reserved","uri":"https://api.soundcloud.com/tracks/146378826","user":{"id":49063453,"kind":"user","permalink":"hallstroms","username":"Kajsa & Fredrika","uri":"https://api.soundcloud.com/users/49063453","permalink_url":"http://soundcloud.com/hallstroms","avatar_url":"https://i1.sndcdn.com/avatars-000080187945-1q9v95-large.jpg?e76cf77"},"permalink_url":"http://soundcloud.com/hallstroms/home","artwork_url":null,"waveform_url":"https://w1.sndcdn.com/1R6iWtTzxS1J_m.png","stream_url":"https://api.soundcloud.com/tracks/146378826/stream","playback_count":245,"download_count":0,"favoritings_count":8,"comment_count":0,"attachments_uri":"https://api.soundcloud.com/tracks/146378826/attachments","policy":"ALLOW","$$hashKey":"006"},{"kind":"track","id":146379507,"created_at":"2014/04/25 07:08:11 +0000","user_id":49063453,"duration":164820,"commentable":true,"state":"finished","original_content_size":3956883,"sharing":"public","tag_list":"","permalink":"pumped-up-kicks","streamable":true,"embeddable_by":"all","downloadable":false,"purchase_url":null,"label_id":null,"purchase_title":null,"genre":"Acoustic","title":"Pumped up kicks","description":"","label_name":null,"release":null,"track_type":null,"key_signature":null,"isrc":null,"video_url":null,"bpm":null,"release_year":null,"release_month":null,"release_day":null,"original_format":"mp3","license":"all-rights-reserved","uri":"https://api.soundcloud.com/tracks/146379507","user":{"id":49063453,"kind":"user","permalink":"hallstroms","username":"Kajsa & Fredrika","uri":"https://api.soundcloud.com/users/49063453","permalink_url":"http://soundcloud.com/hallstroms","avatar_url":"https://i1.sndcdn.com/avatars-000080187945-1q9v95-large.jpg?e76cf77"},"permalink_url":"http://soundcloud.com/hallstroms/pumped-up-kicks","artwork_url":null,"waveform_url":"https://w1.sndcdn.com/DYh9sdmDcR6O_m.png","stream_url":"https://api.soundcloud.com/tracks/146379507/stream","playback_count":147,"download_count":0,"favoritings_count":7,"comment_count":1,"attachments_uri":"https://api.soundcloud.com/tracks/146379507/attachments","policy":"ALLOW","$$hashKey":"007"}] ;
-
-
-
 	var playListOperations = {
 		setPlaylistId: function (id) {
 			if(playlistId!=id){
@@ -218,6 +208,7 @@ angular.module('qmUpApp')
 		},
 		addTrack: function (newTrack) {
 			console.log("adding", newTrack);
+			//Set track properties
 			var track={};
 			track.id=newTrack.id;
 			track.title=newTrack.title;
@@ -229,12 +220,12 @@ angular.module('qmUpApp')
 			track.videoURL=newTrack.video_url;
 			track.label=newTrack.label_name;
 			track.releaseYear=newTrack.release_year;
-			//if(playlist.length<=0 || playlist.indexOf(newTrack)<=0)
+
 				$http.post('/api/playlists/'+playlistId, track).error(function (response, status) {
 					alert("Something went wrong: " + response.message);
 					console.log(response.message);
 				});
-				//playlist.push(newTrack);
+			
 		},
 		getPlaylist: function () {
 			if(trackNo<playlist.length){
@@ -245,7 +236,6 @@ angular.module('qmUpApp')
 				});
 		
 			return test;
-			
 
 			}
 			else{

@@ -12,7 +12,7 @@ angular.module('qmUpApp')
     },
         {
       'title': 'My playlists',
-      'link': 'add-playlist'
+      'link': 'user-playlist'
     }
     ];
 
