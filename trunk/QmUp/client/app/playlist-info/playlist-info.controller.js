@@ -124,7 +124,7 @@ angular.module('qmUpApp')
                         // on error...
                     }
                 )
-        }
+        };
 
 
 

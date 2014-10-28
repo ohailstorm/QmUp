@@ -45,7 +45,7 @@ angular.module('qmUpApp')
 				//On Error
 				
 				playing=false;
-				//playNext();
+				playNext();
 			});
 
 		}
@@ -155,6 +155,7 @@ angular.module('qmUpApp')
 	var trackNo=0;
 	var playlist = [];
 	var playlistId;
+	var playlistName;
 	var collaborators=[];
 	var played=[];
 	var owner;
@@ -173,11 +174,24 @@ angular.module('qmUpApp')
 			   	
       			playlist = response.songs;
       			collaborators = response.collaborators;
+      			playlistName=response.name;
       			owner = response.owner;
       			console.log(response);
       			socket.syncUpdates(id, playlist);
     			});
 			   
+		},
+		setPlaylist: function (newPlaylist) {
+			console.log(newPlaylist);
+			playListOperations.unsyncSocket();
+				playlistId = newPlaylist._id;
+				playlist = newPlaylist.songs;
+      			collaborators = newPlaylist.collaborators;
+      			playlistName= newPlaylist.name;
+      			owner = newPlaylist.owner;
+      		
+
+      			socket.syncUpdates(playlistId, playlist);
 		},
 		getPlayListId: function () {
 			return playlistId;
@@ -265,6 +279,9 @@ angular.module('qmUpApp')
 		},
 		unsyncSocket: function () {
 			socket.unsyncUpdates(playlistId);
+		},
+		getName: function () {
+			return playlistName;
 		}
 
 
