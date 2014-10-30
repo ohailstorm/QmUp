@@ -38,7 +38,6 @@ exports.findPlaylist = function(req, res) {
         if (err) {
             return handleError(res, err);
         }
-
         return res.json(200, playlist);
     })
 }
@@ -197,13 +196,13 @@ exports.update = function(req, res) {
 
 // Deletes a playlist from the DB.
 exports.destroy = function(req, res) {
-    //Test
+    /** Test
 
     Playlist.remove(function(err, product) {
         if (err) return handleError(err);
         return res.send(204);
-    });
-    /*
+    });**/
+    
       Playlist.findById(req.params.id, function (err, playlist) {
         if(err) { return handleError(res, err); }
         if(!playlist) { return res.send(404); }
@@ -211,7 +210,7 @@ exports.destroy = function(req, res) {
           if(err) { return handleError(res, err); }
           return res.send(204);
         });
-      });*/
+      });
 };
 
 exports.deleteSong = function(req, res) {

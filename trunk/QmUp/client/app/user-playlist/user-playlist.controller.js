@@ -75,6 +75,24 @@ angular.module('qmUpApp')
 
         };
 
+        $scope.deletePlaylist = function(pl) {
+            playlistResource.delete({
+            id: pl._id
+         }).$promise.then(
+            function(response) {
+                _.remove($scope.playlists, pl);
+            },
+            function(response) {
+                // on error...
+
+                console.log("error", response);
+            }   
+        );
+
+
+
+        };
+
         $scope.deleteModal = function(track) {
             var modalInstance = $modal.open({
                 templateUrl: 'app/user-playlist/delete-modal.html',
