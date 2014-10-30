@@ -6,7 +6,7 @@ var User = require('../user/user.model');
 
 // Get list of playlists
 exports.index = function(req, res) {
-    Playlist.find().populate('owner', 'name').exec(function(err, playlists) {
+    Playlist.find().select('-songs').populate('owner', 'name -_id').exec(function(err, playlists) {
         if (err) {
             return handleError(res, err);
         }
@@ -29,9 +29,12 @@ exports.show = function(req, res) {
 
 // Look for certain playlist by name
 exports.findPlaylist = function(req, res) {
+   
+    if(!req.params.name) { req.params.name=""; }
+
     Playlist.find().where({
-        'name': req.params.name
-    }).exec(function(err, playlist) {
+        'name': new RegExp(req.params.name, "i")
+    }).select('-songs').populate('owner', 'name -_id').exec(function(err, playlist) {
         if (err) {
             return handleError(res, err);
         }

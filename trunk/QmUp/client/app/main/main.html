@@ -1,43 +1,46 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
 <header class="hero-unit" id="banner">
-  <div class="container">
-    <h1>QmUP!</h1>
-       <h3>Live collaborate playlists</h3>
-  </div>
+    <div class="container">
+        <h1>QmUP!</h1>
+        <h3>Live collaborate playlists</h3>
+    </div>
 </header>
 
 <div class="container" id="cent">
-  
-  <h1 class="">Look for playlists directly</h1>
-  <form class="thing-form">
-    <p class="input-group">
-      <input type="text" class="form-control" placeholder="Look for a playlist here" ng-model="newThing">
-      <span class="input-group-btn">
-        <button type="submit" class="btn btn-primary" ng-click="searchForPlaylist(newThing)">Search!</button>
-      </span>
-    </p>
-  </form>
 
-  
-
-  <ul>
-    <li ng-repeat="playlist in playlists"><a href="/playlist/{{playlist._id}}">{{playlist.name}}</a></li>
-
-  </ul>
+    <h1 class="">Look for playlists directly</h1>
+    <form class="thing-form">
+        <p class="input-group">
+            <input type="text" class="form-control" placeholder="Look for a playlist here" ng-model="newThing">
+            <span class="input-group-btn">
+                <button type="submit" class="btn btn-primary" ng-click="searchForPlaylist(newThing)">Search!</button>
+            </span>
+        </p>
+    </form>
 
 
+    <div class="panel">
+      <div class="panel-body">
+        <ul class="list-unstyled">
+            <li ng-repeat="playlist in playlists"><a href="/playlist-info/{{playlist._id}}">{{playlist.name}}</a>
+            </li>
 
-  <h2>or <a class="btn btn-facebook" href="" ng-click="loginOauth('facebook')">
+        </ul>
+      </div>
+    </div>
+
+
+    <h2>or
+        <a class="btn btn-facebook" href="" ng-click="loginOauth('facebook')">
             <i class="fa fa-facebook"></i> login
-          </a>
-          to start collaborating</h2>
+        </a>
+        to start collaborating</h2>
 </div>
 
 <footer class="footer">
-  <div class="container">
-      <p>Angular Fullstack v2.0.13 |
-        Project in Advanced Web Programming @ Linköping University. By gusen286 and oscha646 | <a href="">About QmUP</a>
+    <div class="container">
+        <p>Angular Fullstack v2.0.13 | Project in Advanced Web Programming @ Linköping University. By gusen286 and oscha646 | <a href="">About QmUP</a>
         </p>
-  </div>
+    </div>
 </footer>

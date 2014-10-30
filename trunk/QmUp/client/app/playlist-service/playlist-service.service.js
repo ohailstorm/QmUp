@@ -182,6 +182,7 @@ angular.module('qmUpApp')
 			   
 		},
 		setPlaylist: function (newPlaylist) {
+			if(newPlaylist){
 			console.log(newPlaylist);
 			playListOperations.unsyncSocket();
 				playlistId = newPlaylist._id;
@@ -192,6 +193,7 @@ angular.module('qmUpApp')
       		
 
       			socket.syncUpdates(playlistId, playlist);
+      		}
 		},
 		getPlayListId: function () {
 			return playlistId;

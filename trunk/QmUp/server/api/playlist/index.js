@@ -7,6 +7,7 @@ var auth = require('../../auth/auth.service');
 var router = express.Router();
 
 router.get('/', controller.index);
+router.get('/search', controller.findPlaylist);
 router.get('/:id', controller.show);
 router.get('/user/:id', auth.isAuthenticated(), controller.showForUser);
 router.get('/search/:name', controller.findPlaylist);

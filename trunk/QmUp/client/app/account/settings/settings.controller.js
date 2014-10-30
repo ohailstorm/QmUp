@@ -3,6 +3,7 @@
 angular.module('qmUpApp')
   .controller('SettingsCtrl', function ($scope, User, Auth) {
     $scope.errors = {};
+    $scope.user=Auth.getCurrentUser();
 
     $scope.changePassword = function(form) {
       $scope.submitted = true;
