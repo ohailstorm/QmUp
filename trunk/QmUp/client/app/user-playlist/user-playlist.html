@@ -2,9 +2,6 @@
 
 <div class="col-md-12">
 
-
-
-
     <div class="row" ng-if="loggedIn">
         <div class="col-md-6">
             <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
@@ -41,13 +38,16 @@
                     <thead>
                         <th>Name</th>
                         <th>Created by</th>
+                        <th></th>
+
 
                     </thead>
                     <tbody>
                         <tr ng-repeat="playlist in playlists track by $index">
                             <td><a href="/playlist-info/{{playlist._id}}">{{playlist.name}}</a>
                             </td>
-                            <td ng-click="deleteModal(playlist)">{{playlist.owner.name}}</td>
+                            <td >{{playlist.owner.name}}</td>
+                            <td><span class="fa fa-trash-o" ng-click="deleteModal(playlist)"></span></td>
                         </tr>
                     </tbody>
                 </table>
