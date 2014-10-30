@@ -4,6 +4,7 @@ angular.module('qmUpApp')
     .controller('UserPlaylistCtrl', function($scope, socket, Auth, $location, playlistResource, $modal) {
         $scope.playlists = [];
         $scope.loggedIn = Auth.isLoggedIn();
+        $scope.user=Auth.getCurrentUser();
 
         if (!Auth.isLoggedIn()) {
             $location.path('/login');

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('qmUpApp')
-  .controller('MainCtrl', function ($scope, $http, socket, Auth, $window, playlistResource) {
+  .controller('MainCtrl', function ($scope, $http, socket, Auth, $window, playlistResource, $modal) {
     $scope.awesomeThings = [];
 
     $scope.isLoggedIn = Auth.isLoggedIn;
@@ -38,7 +38,21 @@ angular.module('qmUpApp')
         }
         );
     };
-        
+
+$scope.aboutModal = function  (argument) {
+ var modalInstance = $modal.open({
+                templateUrl: 'app/main/about-modal.html',
+                resolve: {
+                    info: function() {
+                      var aboutInfo = {};
+                        return aboutInfo;
+                    }
+                },
+                scope: $scope,
+                controller: 'ModalInstanceCtrl'
+            });
+}
+   
 
     $scope.$on('$destroy', function () {
       socket.unsyncUpdates('thing');
