@@ -1,17 +1,17 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
 <div class="col-md-12">
-    <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+    <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)" ng-click="closeAlert($index)">{{alert.msg}}</alert>
     <div class="col-md-6">
         <div class="panel">
             <!-- Default panel contents -->
             <div class="panel-heading">
-                <a href="/playlist/{{playlistId}}">Play this playlist!</a>
-                <h3>{{playlist.name}},
-                    <small>created by {{playlist.owner.name}}</small>
-                </h3>
-                <h3 ng-if="isAdmin()" ng-click="remoteSkip()">
-                    <span class=" fa fa-step-forward" ng></span> Remote skip</h3>
+                <h2><span class="fa fa-play-circle whiteButton"></span><a href="/playlist/{{playlistId}}"> Play {{playlist.name}} </a></h2>
+                
+                    created by {{playlist.owner.name}}
+                
+                <h4 ng-if="isAdmin()" ng-click="remoteSkip()">
+                    <span class=" fa fa-step-forward whiteButton" ></span> Remote skip</h4>
                 <h2>Songs</h2>
             </div>
 
