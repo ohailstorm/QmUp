@@ -45,13 +45,7 @@ body{
   background-image: url('../assets/images/vinyl_record_player_black_and_white-wallpaper-1680x1050.jpg');
   background-size: cover;
   background-attachment: fixed;
-  //background-color: #DCD8CF;
-  //background-color: #428F89;
-  //background-color: #E0E4CC;
-  // background-color: #DCD8CF;
-  //background-color: #428F89;
-  //background-color: #37A79E;
-  
+  padding-bottom:30px;
 }
 p{
   color: @mainTextColor;
@@ -59,6 +53,10 @@ p{
 
 a{
   color:#B33C40; 
+}
+a:hover{
+  color:@accentColor;
+  text-decoration:none;
 }
 small{
   color: #DDD4BC !Important;
@@ -92,7 +90,7 @@ label{
 }
 .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus
 {
-    color:#428F89;
+    color:@accentColor;
 }
 
 .navbar-default .navbar-nav > li > a{
@@ -126,16 +124,11 @@ label{
   color:white;
 }
 
-.dropdown-menu li:hover a{
-  background-color:#E25D33;
-  background-color:#DDD4BC;
-  color: #428F89!Important;
-  
-}
-
 /*buttons and panels*/
 .btn{
   border-radius:0px;
+  border:none;
+  padding: 7px 20px;
 }
 .btn-default{
   background-color:#DDD4BC;
@@ -155,14 +148,7 @@ label{
   background-color: @panelBackground;
 
 }
-#pictureform{
-  display: none;
-}
-.form-error{
-  color:red;
-  font-size: 1em;
-  font-style: italic;
-}
+
 span{
   cursor:pointer;
 }
@@ -180,12 +166,26 @@ margin-right: 20px;
 }
 
 }
+.form-control{
+  border:0px;
+  border-radius:0px;
+}
+select {
+  -webkit-appearance: none;
+  -webkit-border-radius: 0px;
+}
 
 .navbar-default .navbar-text {
 color: @accentColor;
 }
 
 .title {
+  color: @accentColor;
+}
+.navbar-default .navbar-brand {
+  color: @accentColor;
+}
+.navbar-default .navbar-brand:hover{
   color: @accentColor;
 }
 
