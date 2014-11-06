@@ -15,8 +15,7 @@ var UserSchema = new Schema({
   fbToken: String, //used to generate friends list
   hashedPassword: String,
   provider: String,
-  salt: String,
-  facebook: {}
+  salt: String
 });
 
 /**

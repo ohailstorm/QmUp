@@ -3,7 +3,7 @@
 angular.module('qmUpApp')
 
 .controller('PlaylistCtrl', function($scope, playerService, playListService, $routeParams, $http, Auth, $modal, socket, playlistResource) {
-        $scope.alerts = [];
+    $scope.alerts = [];
 
     $scope.currentTrack;
     $scope.allowRemoteSkipping = false;
@@ -17,18 +17,20 @@ angular.module('qmUpApp')
 
     }*/
     if (playListService.getPlayListId() !== $routeParams.id) {
-    playlistResource.get({id: $routeParams.id}).$promise.then(function (response) {
-        
-    
-    playListService.setPlaylist(response);
-    $scope.playlist = playListService.getPlaylist();
-     $scope.playlist = playListService.getPlaylist();
-    $scope.playlistOwner = playListService.getOwner();
-    $scope.name=playListService.getName();
-    },
-    function (response) {
-        // body...
-    });
+        playlistResource.get({
+            id: $routeParams.id
+        }).$promise.then(function(response) {
+
+
+                playListService.setPlaylist(response);
+                $scope.playlist = playListService.getPlaylist();
+                $scope.playlist = playListService.getPlaylist();
+                $scope.playlistOwner = playListService.getOwner();
+                $scope.name = playListService.getName();
+            },
+            function(response) {
+                // body...
+            });
     }
     var id = $routeParams.id;
 
@@ -54,7 +56,7 @@ angular.module('qmUpApp')
 
     $scope.playlist = playListService.getPlaylist();
     $scope.playlistOwner = playListService.getOwner();
-    $scope.name=playListService.getName();
+    $scope.name = playListService.getName();
 
 
     $scope.getFriendsList = function() {
@@ -78,8 +80,8 @@ angular.module('qmUpApp')
         //}
         //else{
         /*$scope.currentTrack = playListService.getCurrentTrack();
-			playerService.setTrack($scope.currentTrack);
-			*/
+            playerService.setTrack($scope.currentTrack);
+            */
         //}
     };
 
@@ -111,12 +113,12 @@ angular.module('qmUpApp')
     $scope.addToPlayList = function(track) {
 
         /*
-		if($scope.playlist.length<=0 || $scope.playlist.indexOf(track)<=0)
-		$scope.playlist.push(track);
-		if($scope.playlist.length==1){
+        if($scope.playlist.length<=0 || $scope.playlist.indexOf(track)<=0)
+        $scope.playlist.push(track);
+        if($scope.playlist.length==1){
 
-			$scope.play(track);
-		}*/
+            $scope.play(track);
+        }*/
         console.log(track);
         playListService.addTrack(track);
 
@@ -136,97 +138,97 @@ angular.module('qmUpApp')
     };
 
     $scope.removeTrack = function(track) {
-        playListService.removeTrack(track._id);
-    }
-/*
+            playListService.removeTrack(track._id);
+        }
+        /*
+            $scope.addCollaborator = function(friend) {
+
+                var postObject = {
+                    user: friend.id
+                };
+
+                /* $http.post('/api/playlists/'+playListService.getPlayListId()+'/collaborator', postObject).success(function(response) {
+                         
+                         console.log(response);
+                         
+                       }).error(
+                       function(data,status) {
+                         console.log(status);
+                         console.log(data);
+                       //  alert("Something went wrong");
+                       }
+                       );
+
+
+                var newCollab = new playlistResource();
+                newCollab.user = friend.id;
+                newCollab.$addCollaborator({
+                        id: playListService.getPlayListId()
+                    }, function(response) {
+                        // on success...
+                        console.log("success!", response);
+
+                    },
+                    function(response, status) {
+                        console.log(status);
+                        console.log(response);
+                    });
+
+            };
+        */
     $scope.addCollaborator = function(friend) {
-
-        var postObject = {
-            user: friend.id
-        };
-
-        /* $http.post('/api/playlists/'+playListService.getPlayListId()+'/collaborator', postObject).success(function(response) {
-                 
-                 console.log(response);
-                 
-               }).error(
-               function(data,status) {
-                 console.log(status);
-                 console.log(data);
-               //  alert("Something went wrong");
-               }
-               );
-
-
+        //$scope.closeAlert();
         var newCollab = new playlistResource();
         newCollab.user = friend.id;
         newCollab.$addCollaborator({
                 id: playListService.getPlayListId()
-            }, function(response) {
+            },
+            function(response) {
                 // on success...
                 console.log("success!", response);
 
+                $scope.collaborators.push(response); // hack
+
             },
-            function(response, status) {
-                console.log(status);
-                console.log(response);
+            function(response) {
+                if (response.status === 409) {
+                    $scope.alerts.push({
+                        type: 'danger',
+                        msg: friend.name + ' is already a collaborator!'
+                    });
+                    $scope.alerts = _.uniq($scope.alerts, function(alert) {
+                        return alert.msg;
+                    });
+                } else if (response.status === 404) {
+                    $scope.alerts.push({
+                        type: 'danger',
+                        msg: friend.name + ' is not using QmUp. Let them know!'
+                    });
+                    $scope.alerts = _.uniq($scope.alerts, function(alert) {
+                        return alert.msg;
+                    });
+                }
             });
 
     };
-*/
-         $scope.addCollaborator = function(friend) {
-            //$scope.closeAlert();
-            var newCollab = new playlistResource();
-            newCollab.user = friend.id;
-            newCollab.$addCollaborator({
-                    id: playListService.getPlayListId()
-                },
+
+    $scope.removeCollaborator = function(collaborator) {
+        playlistResource.removeCollaborator({
+                id: playListService.getPlayListId(),
+                userId: collaborator._id
+            })
+            .$promise.then(
                 function(response) {
                     // on success...
-                    console.log("success!", response);
-
-                    $scope.collaborators.push(response); // hack
-
+                    _.remove($scope.collaborators, collaborator);
+                    console.log(response);
                 },
-                function(response) {
-                    if (response.status === 409) {
-                        $scope.alerts.push({
-                            type: 'danger',
-                            msg: friend.name + ' is already a collaborator!'
-                        });
-                        $scope.alerts = _.uniq($scope.alerts, function(alert) {
-                            return alert.msg;
-                        });
-                    } else if (response.status === 404) {
-                        $scope.alerts.push({
-                            type: 'danger',
-                            msg: friend.name + ' is not using QmUp. Let them know!'
-                        });
-                        $scope.alerts = _.uniq($scope.alerts, function(alert) {
-                            return alert.msg;
-                        });
-                    }
-                });
-
-        };
-
-        $scope.removeCollaborator = function(collaborator) {
-            playlistResource.removeCollaborator({
-                    id: playListService.getPlayListId(),
-                    userId: collaborator._id
-                })
-                .$promise.then(
-                    function(response) {
-                        // on success...
-                        _.remove($scope.collaborators, collaborator);
-                        console.log(response);
-                    },
-                    function function_name(response) {
-                        console.log("error", response);
-                        // on error...
-                    }
-                )
-        };
+                function function_name(response) {
+                    console.log("error", response);
+                    // on error...
+                }
+            )
+    };
 
     $scope.toggleRemoteSkipping = function() {
         console.log("toggle");
@@ -247,6 +249,17 @@ angular.module('qmUpApp')
         });
     };
 
+    $scope.addAlert = function(type, newMsg) {
+        $scope.alerts.push({
+            type: type,
+            msg: newMsg
+        });
+    };
+
+    $scope.closeAlert = function(index) {
+        $scope.alerts.splice(index, 1);
+    };
+
     $scope.$watch(function() {
         return playListService.getCurrentTrack();
     }, function(newTrack) {
@@ -257,7 +270,7 @@ angular.module('qmUpApp')
     });
     /*
       $scope.$watch(function(){return playerService.nowPlaying();}, function(newTrack) {
-    	 	console.log("change in track");
+            console.log("change in track");
                  $scope.currentTrack=newTrack;
                });*/
 
@@ -267,13 +280,13 @@ angular.module('qmUpApp')
         console.log("change in track");
         $scope.collaborators = collabs;
         $scope.playlist = playListService.getPlaylist();
-        $scope.name=playListService.getName();
-        $scope.playlistOwner=playListService.getOwner();
+        $scope.name = playListService.getName();
+        $scope.playlistOwner = playListService.getOwner();
 
     });
     /*
      $scope.$watch(function(){return playListService.getOwner();}, function(owner) {
-    	 	console.log("change in pwner");
+            console.log("change in pwner");
                  $scope.playlistOwner=owner;
              $scope.playlist=playListService.getPlaylist();
 
@@ -281,14 +294,16 @@ angular.module('qmUpApp')
                });
                
         $scope.$watch(function(){return playListService.playlistLength();}, function(playlist) {
-    	 	console.log("change in pl");
+            console.log("change in pl");
                  $scope.playlist=playListService.getPlaylist();
                 
                }); */
-     $scope.$watch(function(){return playerService.isPlaying();}, function(isPlaying) {
-    	 	console.log("playing:", isPlaying);
-                 $scope.isPlaying=isPlaying;
-               });
+    $scope.$watch(function() {
+        return playerService.isPlaying();
+    }, function(isPlaying) {
+        console.log("playing:", isPlaying);
+        $scope.isPlaying = isPlaying;
+    });
 
 
 });
