@@ -39,11 +39,19 @@ angular.module('qmUpApp')
 			SC.stream("/tracks/"+ track.id,{onfinish : function(){ playNext(); this.destruct();}}, function(sound){
 				playing=false;
 				
-				scService.play(sound);					
+				scService.play(sound);
+
+				 $rootScope.$evalAsync(
+                        function( $scope ) {
+ 
+                            console.log( "$evalAsync" );
+ 
+                        }
+                    );
 
 			}, function (error) {
 				//On Error
-				
+				console.log("Fel i uppspelning");
 				playing=false;
 				playNext();
 			});
@@ -70,13 +78,28 @@ angular.module('qmUpApp')
 					console.log(playing);
 
 					currentSoundObject.play({
+						
 					    // Exisiting…
 					    onload: function() {
 					      if (this.readyState == 2) {
 					      	//On error
 					        console.log("error");
 					        playNext();
+
+
+
+
     					}
+
+    					 $rootScope.$evalAsync(
+                        function( $scope ) {
+ 
+                            console.log( "$evalAsync" );
+ 
+                        }
+                    );
+
+
     				}
     			});
 					
@@ -105,8 +128,9 @@ angular.module('qmUpApp')
 			if(currentSoundObject){
 			currentSoundObject.stop();
 			currentSoundObject=null;
-			playNext();
+			
 		}
+		playNext();
 		},
 		stop : function (track) {
 			if(currentSoundObject){
@@ -212,12 +236,18 @@ angular.module('qmUpApp')
 			//playlist.splice(0,1);
 			//played.push(_.difference(playlist, played)[0]);
 			played.push(playListOperations.getPlaylist()[0]._id);
-			
+			if(playListOperations.getPlaylist()[0] === undefined){
+				played = [];
+			}
 			//console.log('next', _.difference(playlist, played)[0]);
-			
+			console.log(playListOperations.getPlaylist()[0] , " ¤¤¤¤¤");
 			if (playlist.length>0) {
 				//return playlist[trackNo%playlist.length];
 				//return _.difference(playlist, played)[0];
+
+				playListOperations.getPlaylist()[0];
+			} else if (playlist.length === 0) {
+				played = [];
 				playListOperations.getPlaylist()[0];
 			}
 			else return null;

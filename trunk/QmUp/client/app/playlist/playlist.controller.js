@@ -125,6 +125,7 @@ angular.module('qmUpApp')
 
     $scope.skip = function() {
         playerService.skip();
+        //$scope.isPlaying = true;
     };
 
     $scope.isAdmin = function() {
@@ -283,11 +284,11 @@ angular.module('qmUpApp')
     	 	console.log("change in pl");
                  $scope.playlist=playListService.getPlaylist();
                 
-               });/*
+               }); */
      $scope.$watch(function(){return playerService.isPlaying();}, function(isPlaying) {
     	 	console.log("playing:", isPlaying);
                  $scope.isPlaying=isPlaying;
-               });*/
+               });
 
 
 });
