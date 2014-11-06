@@ -27,6 +27,7 @@ angular.module('qmUpApp', [
         if ($cookieStore.get('token')) {
           config.headers.Authorization = 'Bearer ' + $cookieStore.get('token');
         }
+
         return config;
       },
 
@@ -39,6 +40,7 @@ angular.module('qmUpApp', [
           return $q.reject(response);
         }
         else {
+        	
           return $q.reject(response);
         }
       }

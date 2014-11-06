@@ -91,7 +91,6 @@ angular.module('qmUpApp')
         );
 
 
-
         };
 
         $scope.deleteModal = function(track) {
