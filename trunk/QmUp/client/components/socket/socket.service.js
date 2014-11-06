@@ -59,31 +59,8 @@ angular.module('qmUpApp')
           _.remove(array, {_id: item._id});
           cb(event, item, array);
         });
-           /**
-         * CUSTOM on subdocument 'model:save'
-         *//*
-        socket.on(modelName + ':update', function (item) {
-          if(item){
-
-
-          var oldItem = _.find(array, {_id: item._id});
-          var index = array.indexOf(oldItem);
-          var event = 'created';
-             console.log("change", item);
-             console.log("old",oldItem)
-          // replace oldItem if it exists
-          // otherwise just add item to the collection
-          if (oldItem) {
-            array.splice(index, 1, item);
-            event = 'updated';
-          } else {
-            array.push(item);
-          }
-          }
-          else var event='deleted'
-          cb(event, item, array);
-        });*/
-
+     
+     //custom
         socket.on(modelName + ':change', function (item) {
         
         var event = 'updated_pl';

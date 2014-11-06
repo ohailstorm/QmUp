@@ -2,8 +2,8 @@
 
 <header class="hero-unit" id="banner">
     <div class="container">
-        <h1 style="color:#F9FF00;">QmUP!</h1>
-        <h3>Live collaborate playlists</h3>
+        <h1 style="color:#FFCB00;">QmUP!</h1>
+        <h3>Live collaborative playlists</h3>
     </div>
 </header>
 
@@ -20,7 +20,7 @@
     </form>
 
 
-    <div class="panel">
+    <div class="panel" ng-show="playlists">
       <div class="panel-body">
         <ul class="list-unstyled">
             <li ng-repeat="playlist in playlists"><a href="/playlist-info/{{playlist._id}}">{{playlist.name}}</a>
@@ -31,7 +31,7 @@
     </div>
 
 
-    <h2>or
+    <h2 ng-if="!isLoggedIn()">or
         <a class="btn btn-facebook" href="" ng-click="loginOauth('facebook')">
             <i class="fa fa-facebook"></i> login
         </a>
