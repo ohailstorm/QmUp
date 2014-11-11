@@ -3,64 +3,69 @@
 <div class="col-md-12">
     <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)" ng-click="closeAlert($index)">{{alert.msg}}</alert>
     <div class="col-md-6">
-        <div class="panel">
-            <!-- Default panel contents -->
-            <div class="panel-heading">
-                <h2><span class="fa fa-play-circle whiteButton"></span><a href="/playlist/{{playlistId}}"> Play {{playlist.name}} </a></h2>
-                
+        <div class="row">
+            <div class="panel">
+                <!-- Default panel contents -->
+                <div class="panel-heading">
+                    <h2>
+                        <span class="fa fa-play-circle whiteButton"></span><a href="/playlist/{{playlistId}}"> Play {{playlist.name}} </a>
+                    </h2>
+
                     created by {{playlist.owner.name}}
-                
-                <h4 ng-if="isAdmin()" ng-click="remoteSkip()">
-                    <span class=" fa fa-step-forward whiteButton" ></span> Remote skip</h4>
-                <h2>Songs</h2>
-            </div>
 
-            <!-- Table -->
-            <table class="table table-striped" id="plist" style="width: 100%;">
-                <thead>
-                    <th></th>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="item in playlist.songs track by $index">
-                        <td>{{item.title}}</td>
-                    </tr>
-                </tbody>
+                    <h4 ng-if="isAdmin()" ng-click="remoteSkip()">
+                        <span class=" fa fa-step-forward whiteButton"></span>Remote skip</h4>
+                    <h2>Songs</h2>
+                </div>
 
-            </table>
-        </div>
-    </div>
+                <!-- Table -->
+                <table class="table table-striped" id="plist" style="width: 100%;">
+                    <thead>
+                        <th></th>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in playlist.songs track by $index">
+                            <td>{{item.title}}</td>
+                        </tr>
+                    </tbody>
 
-
-  <div class="col-md-6">
-    <div class="row">
-        <div class="panel">
-            <div class="panel-heading">
-
-                <h1 style="display:inline-block">Collaborators</h1> <button class="btn btn-default space" ng-click="getFriendsList()">Add new</button>
-                <ul class="list-unstyled">
-                    <li ng-repeat="collaborator in playlist.collaborators">{{collaborator.name}}
-                        <span ng-if="isAdmin()" class="fa fa-remove" ng-click="removeCollaborator(collaborator)"></span>
-                    </li>
-                </ul>
+                </table>
             </div>
         </div>
     </div>
 
 
-    <div class="row" ng-show="isAdmin()&&friendsList">
+    <div class="col-md-6">
+        <div class="row">
+            <div class="panel">
+                <div class="panel-heading">
 
-        <div class="panel">
-            <div class="panel-heading">
-               <h2>Facebook friends</h2>
-                <ul class="list-unstyled">
-                    <li ng-repeat="friend in friendsList">
-                        {{friend.name}}
-                        <span class="fa fa-plus" ng-click="addCollaborator(friend)"></span>
-                    </li>
-                </ul>
+                    <h1 style="display:inline-block">Collaborators</h1>
+                    <button class="btn btn-default space" ng-click="getFriendsList()" ng-if="isAdmin()">Add new</button>
+                    <ul class="list-unstyled">
+                        <li ng-repeat="collaborator in playlist.collaborators">{{collaborator.name}}
+                            <span ng-if="isAdmin()" class="fa fa-remove" ng-click="removeCollaborator(collaborator)"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row" ng-show="isAdmin()&&friendsList">
+
+            <div class="panel">
+                <div class="panel-heading">
+                    <h2>Facebook friends</h2>
+                    <ul class="list-unstyled">
+                        <li ng-repeat="friend in friendsList">
+                            {{friend.name}}
+                            <span class="fa fa-plus" ng-click="addCollaborator(friend)"></span>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 </div>
