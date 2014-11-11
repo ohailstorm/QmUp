@@ -34,6 +34,10 @@
                         <br>
                         <h4>{{currentTrack.title}}</h4>
                     </div>
+                     <div ng-show="duration" class="row">
+                        <p>{{currentPosition | date:'mm:ss'}}/
+                        {{duration | date:'mm:ss'}}</p>
+                    </div>
                     <div class="row">
 
                         <button ng-show="!isPlaying" class="btn btn-lg btn-success" ng-click="play()">Play!</button>
@@ -75,7 +79,7 @@
 
 
     <div class="col-md-6">
-
+    <div class="row">
         <div class="panel">
 
             <div class="panel-heading">Search for songs</div>
@@ -134,6 +138,8 @@
             </div>
         </div>
     </div>
+    </div>
+
 
 
     <!-- For Collaborators and Add collaborators -->
@@ -159,11 +165,11 @@
 
 
   <div class="col-md-6">
-
+    <div class="row">
         <div class="panel">
             <div class="panel-heading">
 
-                <h1>Collaborators</h1>
+                <h1 style="display:inline-block">Collaborators</h1> <button class="btn btn-default space" ng-click="getFriendsList()">Add new</button>
                 <ul class="list-unstyled">
                     <li ng-repeat="collaborator in collaborators">{{collaborator.name}}
                         <span ng-if="isAdmin()" class="fa fa-remove" ng-click="removeCollaborator(collaborator)"></span>
@@ -174,11 +180,11 @@
     </div>
 
 
-    <div class="col-md-6" ng-if="isAdmin()">
+    <div class="row" ng-show="isAdmin()&&friendsList">
 
         <div class="panel">
             <div class="panel-heading">
-               <button class="btn btn-default space" ng-click="getFriendsList()"><h1>Add Collaborator</h1></button>
+               <h2>Facebook friends</h2>
                 <ul class="list-unstyled">
                     <li ng-repeat="friend in friendsList">
                         {{friend.name}}
@@ -188,6 +194,7 @@
             </div>
         </div>
     </div>
+</div>
 
 
 </div>

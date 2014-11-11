@@ -2,12 +2,13 @@
 
 angular.module('qmUpApp')
 
-.controller('PlaylistCtrl', function($scope, playerService, playListService, $routeParams, $http, Auth, $modal, socket, playlistResource) {
+.controller('PlaylistCtrl', function($scope, playerService, playListService, $routeParams, $http, Auth, $modal, socket, playlistResource, $interval) {
     $scope.alerts = [];
 
     $scope.currentTrack;
     $scope.allowRemoteSkipping = false;
     $scope.isPlaying = false;
+   
     /*
     if (playListService.getPlayListId() !== $routeParams.id) {
         playerService.clearAll();
@@ -74,15 +75,14 @@ angular.module('qmUpApp')
 
     $scope.play = function(track) {
 
-        //if(playerService.currentTrack){
         $scope.isPlaying = true;
         playerService.play();
-        //}
-        //else{
-        /*$scope.currentTrack = playListService.getCurrentTrack();
-            playerService.setTrack($scope.currentTrack);
-            */
-        //}
+        $interval(function () {
+        $scope.currentPosition = playerService.getPosition();
+        $scope.currentProgress = $scope.currentPosition/playerService.getDuration()*100;
+        },
+        1000);
+    
     };
 
     $scope.pause = function(argument) {
@@ -112,13 +112,7 @@ angular.module('qmUpApp')
 
     $scope.addToPlayList = function(track) {
 
-        /*
-        if($scope.playlist.length<=0 || $scope.playlist.indexOf(track)<=0)
-        $scope.playlist.push(track);
-        if($scope.playlist.length==1){
-
-            $scope.play(track);
-        }*/
+   
         console.log(track);
         playListService.addTrack(track);
 
@@ -127,7 +121,15 @@ angular.module('qmUpApp')
 
     $scope.skip = function() {
         playerService.skip();
-        //$scope.isPlaying = true;
+        if(!$scope.isPlaying){
+       $interval(function () {
+        $scope.currentPosition = playerService.getPosition();
+        $scope.currentProgress = $scope.currentPosition/playerService.getDuration()*100;
+        },
+        1000);
+        }
+         
+
     };
 
     $scope.isAdmin = function() {
@@ -138,44 +140,13 @@ angular.module('qmUpApp')
     };
 
     $scope.removeTrack = function(track) {
+            if(track._id===playerService.nowPlaying()._id){
+                $scope.skip();
+            }
             playListService.removeTrack(track._id);
         }
-        /*
-            $scope.addCollaborator = function(friend) {
-
-                var postObject = {
-                    user: friend.id
-                };
-
-                /* $http.post('/api/playlists/'+playListService.getPlayListId()+'/collaborator', postObject).success(function(response) {
-                         
-                         console.log(response);
-                         
-                       }).error(
-                       function(data,status) {
-                         console.log(status);
-                         console.log(data);
-                       //  alert("Something went wrong");
-                       }
-                       );
 
 
-                var newCollab = new playlistResource();
-                newCollab.user = friend.id;
-                newCollab.$addCollaborator({
-                        id: playListService.getPlayListId()
-                    }, function(response) {
-                        // on success...
-                        console.log("success!", response);
-
-                    },
-                    function(response, status) {
-                        console.log(status);
-                        console.log(response);
-                    });
-
-            };
-        */
     $scope.addCollaborator = function(friend) {
         //$scope.closeAlert();
         var newCollab = new playlistResource();
@@ -268,11 +239,7 @@ angular.module('qmUpApp')
         $scope.playlist = playListService.getPlaylist();
 
     });
-    /*
-      $scope.$watch(function(){return playerService.nowPlaying();}, function(newTrack) {
-            console.log("change in track");
-                 $scope.currentTrack=newTrack;
-               });*/
+  
 
     $scope.$watch(function() {
         return playListService.getCollaborators();
@@ -284,20 +251,7 @@ angular.module('qmUpApp')
         $scope.playlistOwner = playListService.getOwner();
 
     });
-    /*
-     $scope.$watch(function(){return playListService.getOwner();}, function(owner) {
-            console.log("change in pwner");
-                 $scope.playlistOwner=owner;
-             $scope.playlist=playListService.getPlaylist();
 
-                
-               });
-               
-        $scope.$watch(function(){return playListService.playlistLength();}, function(playlist) {
-            console.log("change in pl");
-                 $scope.playlist=playListService.getPlaylist();
-                
-               }); */
     $scope.$watch(function() {
         return playerService.isPlaying();
     }, function(isPlaying) {
@@ -305,7 +259,12 @@ angular.module('qmUpApp')
         $scope.isPlaying = isPlaying;
     });
 
-
+    $scope.$watch(function() {
+        return playerService.getDuration();
+    }, function(duration) {
+        
+        $scope.duration = duration;
+    });
 });
 
 
