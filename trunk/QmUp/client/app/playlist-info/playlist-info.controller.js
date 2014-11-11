@@ -16,16 +16,8 @@ angular.module('qmUpApp')
         };
 
         $scope.playlistId = $routeParams.id;
-        $scope.friendsList = [];
-        /*
-    $http.get('/api/playlists/'+$scope.playlistId).success(function(response) {
-          
-            $scope.playlist = response;
-            $scope.playlistId=response._id;
-          
-            console.log(response);
-            socket.syncUpdates($scope.playlistId, $scope.playlist);           
-         });*/
+        $scope.friendsList;
+
         playlistResource.get({
             id: $scope.playlistId
         }).$promise.then(

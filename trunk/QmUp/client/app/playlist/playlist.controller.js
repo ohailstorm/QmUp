@@ -56,8 +56,10 @@ angular.module('qmUpApp')
     $scope.numbers = [10, 25, 50, 100];
 
     $scope.playlist = playListService.getPlaylist();
+
     $scope.playlistOwner = playListService.getOwner();
     $scope.name = playListService.getName();
+    $scope.collaborators;
 
 
     $scope.getFriendsList = function() {
@@ -137,6 +139,22 @@ angular.module('qmUpApp')
             return Auth.isLoggedIn() && Auth.getCurrentUser()._id === $scope.playlistOwner._id;
 
         } else return false;
+    };
+
+    $scope.isCollab = function() {
+        if ($scope.playlist) {
+            if(Auth.isLoggedIn()){
+                if(_.find($scope.collaborators, {_id: Auth.getCurrentUser()._id})){
+                   // console.log("collab",_.find($scope.collaborators, {_id: Auth.getCurrentUser()._id}));
+                    return true;
+                }
+                else return false;
+                 
+
+        } 
+    }
+
+        return false;
     };
 
     $scope.removeTrack = function(track) {

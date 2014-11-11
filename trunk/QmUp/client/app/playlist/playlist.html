@@ -20,6 +20,7 @@
     </div>
 
     <div class="col-md-6">
+        <div class="row">
         <div class="panel" id="track-info">
             <div class="panel-heading">
                 <h1>Now playing:</h1>
@@ -48,9 +49,10 @@
                 </div>
             </div>
         </div>
+        </div>
 
 
-
+        <div class="row">
         <div class="panel">
             <!-- Default panel contents -->
             <div class="panel-heading">
@@ -76,11 +78,12 @@
             </table>
         </div>
     </div>
+    </div>
 
 
-    <div class="col-md-6">
+    <div class="col-md-6" ng-if="isAdmin() || isCollab()">
     <div class="row">
-        <div class="panel">
+        <div class="panel" >
 
             <div class="panel-heading">Search for songs</div>
 
@@ -140,36 +143,12 @@
     </div>
     </div>
 
-
-
-    <!-- For Collaborators and Add collaborators -->
-    <!--div class="col-md-6">
-
-        <div class="panel">
-            <h1>Collaborators</h1>
-            <ul class="list-unstyled">
-                <li ng-repeat="collaborator in collaborators">{{collaborator.name}}</li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="col-md-6">
-
-        <div class="panel">
-            <h1 ng-click="getFriendsList()">Add Friends</h1>
-            <ul class="list-unstyled">
-                <li ng-repeat="friend in friendsList" ng-click="addCollaborator(friend)">{{friend.name}}</li>
-            </ul>
-        </div>
-    </div-->
-
-
   <div class="col-md-6">
     <div class="row">
         <div class="panel">
             <div class="panel-heading">
 
-                <h1 style="display:inline-block">Collaborators</h1> <button class="btn btn-default space" ng-click="getFriendsList()">Add new</button>
+                <h1 style="display:inline-block">Collaborators</h1> <button class="btn btn-default space" ng-click="getFriendsList()" ng-hide="!isAdmin()">Add new</button>
                 <ul class="list-unstyled">
                     <li ng-repeat="collaborator in collaborators">{{collaborator.name}}
                         <span ng-if="isAdmin()" class="fa fa-remove" ng-click="removeCollaborator(collaborator)"></span>
