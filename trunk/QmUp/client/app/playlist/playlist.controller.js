@@ -127,7 +127,7 @@ angular.module('qmUpApp')
     };
 
     $scope.removeTrack = function(track) {
-        if (track._id === playerService.nowPlaying()._id) {
+        if (playerService.nowPlaying() && track._id === playerService.nowPlaying()._id) {
             $scope.skip();
         }
         playListService.removeTrack(track._id);
