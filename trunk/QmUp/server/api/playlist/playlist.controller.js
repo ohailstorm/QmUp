@@ -45,8 +45,7 @@ exports.findPlaylist = function(req, res) {
 
 // Get a list of playlists beloning to one user
 exports.showForUser = function(req, res) {
-    console.log("User is:");
-    console.log(req.user);
+   
     Playlist.find().where({
         $or: [{
             'owner': req.params.id
@@ -54,7 +53,7 @@ exports.showForUser = function(req, res) {
             'collaborators': req.params.id
         }]
     }).populate('owner', 'name _id').exec(function(err, playlists) {
-        console.log(playlists);
+        
         if (err) {
             return handleError(res, err);
         }
@@ -68,7 +67,7 @@ exports.create = function(req, res) {
 
     Playlist.create(req.body, function(err, playlist) {
 
-        console.log(err);
+       
         if (err) {
             return handleError(res, err);
         }
@@ -139,9 +138,7 @@ exports.addCollaborator = function(req, res) {
         if (!playlist) {
             return res.send(404);
         }
-        console.log(req.body.user);
 
-        // playlist.collaborators.push("sadqsdsad");
         User.findOne({
                 'facebook.id': req.body.user
             },
@@ -150,10 +147,8 @@ exports.addCollaborator = function(req, res) {
                     return res.send(404);
                 } else {
                     var exists = _.find(playlist.collaborators, user._id);
-                    console.log(exists);
                     if (!exists) {
                         playlist.collaborators.push(user._id);
-                        console.log(playlist);
                         var returnedUser = {
                             _id: user._id,
                             name: user.name
@@ -196,12 +191,6 @@ exports.update = function(req, res) {
 
 // Deletes a playlist from the DB.
 exports.destroy = function(req, res) {
-    /** Test
-
-    Playlist.remove(function(err, product) {
-        if (err) return handleError(err);
-        return res.send(204);
-    });**/
     
       Playlist.findById(req.params.id, function (err, playlist) {
         if(err) { return handleError(res, err); }
@@ -214,13 +203,6 @@ exports.destroy = function(req, res) {
 };
 
 exports.deleteSong = function(req, res) {
-    //Test
-    /*
-    Playlist.remove(function (err, product) {
-      if (err) return handleError(err);
-      return res.send(204);
-    });*/
-
     Playlist.findById(req.params.id, function(err, playlist) {
         if (err) {
             return handleError(res, err);
@@ -228,11 +210,9 @@ exports.deleteSong = function(req, res) {
         if (!playlist) {
             return res.send(404);
         }
-        // console.log("pl", playlist.songs);
-        //console.log(req.params.songId);
-        /*_.remove(playlist.songs, {_id: req.params.songId});*/
+       
         playlist.songs.id(req.params.songId).remove();
-        //console.log("del", playlist.songs);
+       
         playlist.save(function(err, song) {
 
             if (err) {
@@ -244,12 +224,7 @@ exports.deleteSong = function(req, res) {
 };
 
 exports.removeCollaborator = function(req, res) {
-    //Test
-    /*
-    Playlist.remove(function (err, product) {
-      if (err) return handleError(err);
-      return res.send(204);
-    });*/
+
 
     Playlist.findById(req.params.id, function(err, playlist) {
         if (err) {
@@ -262,18 +237,7 @@ exports.removeCollaborator = function(req, res) {
         if (req.user._id.toString() !== playlist.owner.toString()) {
             return res.send(400);
         }
-        //console.log(req.user);
-        // console.log("pl", playlist.songs);
-        //console.log(req.params.songId);
-        /*_.remove(playlist.songs, {_id: req.params.songId});*/
-        /*
-         
-          var removedCollaborator = _.remove(playlist.collaborators, 
-            function (collab) {
-              
-             return req.params.userId.toString()===collab.toString();
-            }
-            );*/
+
 
         //from answer by JohnnyHK @stackoverflow
         //http://stackoverflow.com/questions/14940660/whats-mongoose-error-cast-to-objectid-failed-for-value-xxx-at-path-id
@@ -285,13 +249,8 @@ exports.removeCollaborator = function(req, res) {
             return res.send(400);
         }
 
-        //console.log("removed" , removedCollaborator);
-        console.log("kvar", playlist.collaborators);
-
-
-        //console.log("del", playlist.songs);
+       
         playlist.save(function(err, song) {
-            console.log("saved", song)
             if (err) {
                 return handleError(res, err);
             }
