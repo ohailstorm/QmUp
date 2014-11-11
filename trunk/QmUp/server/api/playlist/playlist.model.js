@@ -7,13 +7,11 @@ var mongoose = require('mongoose'),
 
 
  var User = mongoose.model('User');
-  console.log(User.schema.paths.facebook);
   
-
  var VoteSchema = new Schema({ ip: 'String' });
 
   var SongSchema = new mongoose.Schema({ 
-  			id: String,
+  			id: {type: String, required: true},
   			title: String,
         artworkUrl: String,
         artist: String,
@@ -28,9 +26,9 @@ var mongoose = require('mongoose'),
         });
 
 var PlaylistSchema = new Schema({
-   owner: {type: Schema.Types.ObjectId, ref: 'User'
+   owner: {type: Schema.Types.ObjectId, ref: 'User', required: true
  },
-   name: String,
+   name: {type: String, required: true},
    songs: [SongSchema],
    collaborators: [{type: Schema.Types.ObjectId,
     ref: 'User'}]

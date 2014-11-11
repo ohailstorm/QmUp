@@ -20,7 +20,7 @@ playlistResource.query({}).$promise.then(
            
           
             console.log(response);
-            socket.syncUpdates($scope.playlistId, $scope.playlist);           
+            socket.syncUpdates('playlist', $scope.playlists);           
           },
           function  (response, status) {
             // on error...

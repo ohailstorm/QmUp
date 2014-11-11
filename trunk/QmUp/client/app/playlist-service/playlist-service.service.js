@@ -18,6 +18,7 @@ angular.module('qmUpApp')
 
 	var playing = false;
 	var paused=false;
+	var position=0;
 	var scService = {
 
 
@@ -43,9 +44,6 @@ angular.module('qmUpApp')
 
 				 $rootScope.$evalAsync(
                         function( $scope ) {
- 
-                            console.log( "$evalAsync" );
- 
                         }
                     );
 
@@ -158,7 +156,28 @@ angular.module('qmUpApp')
 			track=null;
 			playlistId=null;
 
+		},
+		getPosition: function () {
+			if(currentSoundObject && currentSoundObject.position){
+				$rootScope.$evalAsync();
+				return currentSoundObject.position;
+			}
+			else return 0;
+			
+		},
+		getDuration: function (argument) {
+			if(currentSoundObject && currentSoundObject.duration){
+
+				if (currentSoundObject.bytesLoaded<currentSoundObject.bytesTotal) {
+					return currentSoundObject.durationEstimate;
+				};
+				
+				return currentSoundObject.duration;
+			}
+			else return null;
+			
 		}
+
 
 
 	};
@@ -214,7 +233,7 @@ angular.module('qmUpApp')
       			collaborators = newPlaylist.collaborators;
       			playlistName= newPlaylist.name;
       			owner = newPlaylist.owner;
-      		
+      			played = [];
 
       			socket.syncUpdates(playlistId, playlist);
       		}

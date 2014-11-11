@@ -30,11 +30,11 @@ socket.on("skip", function (data) {
 function onSave(socket, doc, cb) {
   socket.emit(doc._id+':change', doc.songs);  
   //For playlist specific actions, ie adding/deleting tracks
-  socket.emit('playlist:save', doc);
+  //socket.emit('playlist:save', doc); //skip this
 }
 
 function onRemove(socket, doc, cb) {
-  socket.emit('playlist:remove', doc);
+  socket.emit('playlist:remove', doc); //skip this
 }
 
 function onSkip (socket, data) {
