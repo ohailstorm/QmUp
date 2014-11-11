@@ -8,6 +8,9 @@ The project will use the soundcloud api and let users create playlists. Songs ca
 be added and queued but no skipping is allowed!
 
 ==Technical specification==
+EDIT: This project is using the MEAN stack (MongoDB, Express.js, AngularJS, Node.js). The information below is outdated. Mongoose is used for object modeling.
+
+=========OLD INFO======
 Codeigniter will be used as the server-side framework.
 
 On the client side we will use either angular.js or ember.js to begin with. 
