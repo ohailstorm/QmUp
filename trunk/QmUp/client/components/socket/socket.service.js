@@ -67,7 +67,6 @@ angular.module('qmUpApp')
         if(array.songs){
           array=[];
         }
-        console.log(array);
         array.splice(0, array.length);
         angular.copy(item, array);
           cb(event, item, array);
