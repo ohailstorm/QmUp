@@ -1,29 +1,32 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
 <div class="col-md-12">
-<div class="row">
-	<div class="col-md-6">
- <div class="panel">
-          <!-- Default panel contents -->
-          <div class="panel-heading"><h2>Playlists</h2></div>
-          
-            <!-- Table -->
-            <table class="table table-striped" id="plist" style="width: 100%;">
-              <thead>
-                <th>Name</th>
-                <th>Created by</th>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel">
+                <!-- Default panel contents -->
+                <div class="panel-heading">
+                    <h2>Playlists</h2>
+                </div>
 
-              </thead>
-              <tbody>
-                <tr ng-repeat="playlist in playlists track by $index">
-                <td><a href="/playlist-info/{{playlist._id}}">{{playlist.name}}</a></td>
-                <td>{{playlist.owner.name}}</td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
+                <!-- Table -->
+                <table class="table table-striped" id="plist" style="width: 100%;">
+                    <thead>
+                        <th>Name</th>
+                        <th>Created by</th>
+
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="playlist in playlists track by $index">
+                            <td><a href="/playlist-info/{{playlist._id}}">{{playlist.name}}</a>
+                            </td>
+                            <td>{{playlist.owner.name}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
 
-</div>
-</div>
+        </div>
+    </div>
 </div>

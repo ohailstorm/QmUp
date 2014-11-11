@@ -1,8 +1,0 @@
-<div ng-include="'components/navbar/navbar.html'"></div>
-
-<div class="col-md-12">
-This is the add-song view.
-{{$routeParams.id}}
-<button ng-click="add()">Add</button>
-<div ng-repeat="song in playlist.songs">{{song.title}} <a href="/add-song/{{song._id}}">GO</a></div>
-</div>

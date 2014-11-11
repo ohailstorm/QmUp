@@ -1,349 +1,319 @@
 'use strict';
 
 angular.module('qmUpApp')
-  .factory('playerService',
-  	function(playListService, $rootScope) {
+    .factory('playerService',
+        function(playListService, $rootScope) {
 
-  			SC.initialize({
-		client_id: "72e3791ab08ac0604b2407aa8fc279cb"
-	}, function (response) {
-		console.log(response);
-	});
-
-  			
-	var currentSoundObject;
-	var track;
-	var playlistId;
+            SC.initialize({
+                client_id: "72e3791ab08ac0604b2407aa8fc279cb"
+            }, function(response) {});
 
 
-	var playing = false;
-	var paused=false;
-	var position=0;
-	var scService = {
+            var currentSoundObject;
+            var track;
+            var playlistId;
 
 
-		setTrack : function  (autoStart) {
-			
-			track = playListService.getCurrentTrack();
-			playlistId=playListService.getPlayListId();
-			console.log(track);
-			if(track){
+            var playing = false;
+            var paused = false;
+            var position = 0;
+            var scService = {
 
-			console.log("track",track);
 
-			if(playing && currentSoundObject){
-				scService.stop();
-				currentSoundObject=null;
-			}
-			//HACK
-			playing=true;
-			SC.stream("/tracks/"+ track.id,{onfinish : function(){ playNext(); this.destruct();}}, function(sound){
-				playing=false;
-				
-				scService.play(sound);
+                setTrack: function(autoStart) {
 
-				 $rootScope.$evalAsync(
-                        function( $scope ) {
+                    track = playListService.getCurrentTrack();
+                    playlistId = playListService.getPlayListId();
+                    if (track) {
+
+
+                        if (playing && currentSoundObject) {
+                            scService.stop();
+                            currentSoundObject = null;
                         }
-                    );
+                        //HACK
+                        playing = true;
+                        SC.stream("/tracks/" + track.id, {
+                            onfinish: function() {
+                                playNext();
+                                this.destruct();
+                            }
+                        }, function(sound) {
+                            playing = false;
 
-			}, function (error) {
-				//On Error
-				console.log("Fel i uppspelning");
-				playing=false;
-				playNext();
-			});
+                            scService.play(sound);
 
-		}
-		return autoStart; //HACK
-		},
+                            $rootScope.$evalAsync(
+                                function($scope) {}
+                            );
 
-		play : function (sound) {
+                        }, function(error) {
+                            //On Error
+                            playing = false;
+                            playNext();
+                        });
 
-			if(sound){
-				currentSoundObject = sound;
-			}
-			if(playListService.getPlayListId()!==playlistId){
-				scService.setTrack(true);
-			}
+                    }
+                    return autoStart; //HACK
+                },
 
-			if(playing==false){			
-					
-				if(currentSoundObject){
+                play: function(sound) {
 
-					playing=true;
-					
-					console.log(playing);
+                    if (sound) {
+                        currentSoundObject = sound;
+                    }
+                    if (playListService.getPlayListId() !== playlistId) {
+                        scService.setTrack(true);
+                    }
 
-					currentSoundObject.play({
-						
-					    // Exisiting…
-					    onload: function() {
-					      if (this.readyState == 2) {
-					      	//On error
-					        console.log("error");
-					        playNext();
+                    if (playing == false) {
+
+                        if (currentSoundObject) {
+
+                            playing = true;
 
 
+                            currentSoundObject.play({
+
+                                // Exisiting…
+                                onload: function() {
+                                    if (this.readyState == 2) {
+                                        //On error
+                                        console.log("error");
+                                        playNext();
 
 
-    					}
 
-    					 $rootScope.$evalAsync(
-                        function( $scope ) {
- 
-                            console.log( "$evalAsync" );
- 
+
+                                    }
+
+                                    $rootScope.$evalAsync(
+                                        function($scope) {
+
+                                            console.log("$evalAsync");
+
+                                        }
+                                    );
+
+
+                                }
+                            });
+
+                        } else {
+                            scService.setTrack(true);
                         }
-                    );
+                        return playing;
 
-
-    				}
-    			});
-					
-				}
-				else{
-					scService.setTrack(true);
-					console.log("back");
-				}
-				return playing;
-
-			}
-
-
-			
-		},
-		pause : function  (track) {
-			if(playing==true){
-				playing=false;
-				paused=true;
-				currentSoundObject.pause();
-			}
-			return playing;
-
-		},
-		skip: function () {
-			if(currentSoundObject){
-			currentSoundObject.stop();
-			currentSoundObject=null;
-			
-		}
-		playNext();
-		},
-		stop : function (track) {
-			if(currentSoundObject){
-			currentSoundObject.stop();
-			currentSoundObject=null;
-		}
-		return playing;
-		},
-		isPlaying : function () {
-			return playing;
-		},
-		nowPlaying: function () {
-			return track;
-		},
-		getPlayingPlaylistId: function () {
-			return playlistId;
-		},
-		clearAll : function (argument) {
-			playing=false;
-			if(currentSoundObject){
-			currentSoundObject.stop();
-			currentSoundObject=null;
-			}
-			
-			track=null;
-			playlistId=null;
-
-		},
-		getPosition: function () {
-			if(currentSoundObject && currentSoundObject.position){
-				$rootScope.$evalAsync();
-				return currentSoundObject.position;
-			}
-			else return 0;
-			
-		},
-		getDuration: function (argument) {
-			if(currentSoundObject && currentSoundObject.duration){
-
-				if (currentSoundObject.bytesLoaded<currentSoundObject.bytesTotal) {
-					return currentSoundObject.durationEstimate;
-				};
-				
-				return currentSoundObject.duration;
-			}
-			else return null;
-			
-		}
+                    }
 
 
 
-	};
-	function playNext(){
-		console.log("end");
-		playing=false;
-		playListService.getNextTrack();
-		console.log(playListService.getCurrentTrack());
-		scService.setTrack(true);
-	};
-	function setPlaying (isPlaying) {
-		playing=isPlaying;
-	}
-	return scService;
-})
-.factory('playListService', function($http, socket, $rootScope, $routeParams) {
+                },
+                pause: function(track) {
+                    if (playing == true) {
+                        playing = false;
 
-	var trackNo=0;
-	var playlist = [];
-	var playlistId;
-	var playlistName;
-	var collaborators=[];
-	var played=[];
-	var owner;
+                        if (currentSoundObject) {
+                            currentSoundObject.pause();
+                        }
 
-	var playListOperations = {
-		setPlaylistId: function (id) {
-			if(playlistId!=id){
-				playListOperations.unsyncSocket();
-				trackNo=0;
-			}
-			playlistId = id;
+                    }
+                    return playing;
 
-			playlist.splice(0, playlist.length);
-			played.splice(0, played.length);
-			   $http.get('/api/playlists/'+playlistId).success(function(response) {
-			   	
-      			playlist = response.songs;
-      			collaborators = response.collaborators;
-      			playlistName=response.name;
-      			owner = response.owner;
-      			console.log(response);
-      			socket.syncUpdates(id, playlist);
-    			});
-			   
-		},
-		setPlaylist: function (newPlaylist) {
-			if(newPlaylist){
-			console.log(newPlaylist);
-			playListOperations.unsyncSocket();
-				playlistId = newPlaylist._id;
-				playlist = newPlaylist.songs;
-      			collaborators = newPlaylist.collaborators;
-      			playlistName= newPlaylist.name;
-      			owner = newPlaylist.owner;
-      			played = [];
+                },
+                skip: function() {
+                    if (currentSoundObject) {
+                        currentSoundObject.stop();
+                        currentSoundObject = null;
 
-      			socket.syncUpdates(playlistId, playlist);
-      		}
-		},
-		getPlayListId: function () {
-			return playlistId;
-		},
-		getCurrentTrack: function () {
-			if (playlist.length>0) {
-				//return playlist[trackNo%playlist.length];
-				//return _.difference(playlist, played)[0];
-				return playListOperations.getPlaylist()[0];
-			}
-			else return null;
-			
-		},
-		getNextTrack: function (argument) {
-			//trackNo++;
-			//playlist.splice(0,1);
-			//played.push(_.difference(playlist, played)[0]);
-			played.push(playListOperations.getPlaylist()[0]._id);
-			if(playListOperations.getPlaylist()[0] === undefined){
-				played = [];
-			}
-			//console.log('next', _.difference(playlist, played)[0]);
-			console.log(playListOperations.getPlaylist()[0] , " ¤¤¤¤¤");
-			if (playlist.length>0) {
-				//return playlist[trackNo%playlist.length];
-				//return _.difference(playlist, played)[0];
+                    }
+                    playNext();
+                },
+                stop: function(track) {
+                    if (currentSoundObject) {
+                        currentSoundObject.stop();
+                        currentSoundObject = null;
+                    }
+                    return playing;
+                },
+                isPlaying: function() {
+                    return playing;
+                },
+                nowPlaying: function() {
+                    return track;
+                },
+                getPlayingPlaylistId: function() {
+                    return playlistId;
+                },
+                clearAll: function(argument) {
+                    playing = false;
+                    if (currentSoundObject) {
+                        currentSoundObject.stop();
+                        currentSoundObject = null;
+                    }
 
-				playListOperations.getPlaylist()[0];
-			} else if (playlist.length === 0) {
-				played = [];
-				playListOperations.getPlaylist()[0];
-			}
-			else return null;
-		},
-		addTrack: function (newTrack) {
-			console.log("adding", newTrack);
-			//Set track properties
-			var track={};
-			track.id=newTrack.id;
-			track.title=newTrack.title;
-			track.artist = newTrack.artist;
-			track.genre=newTrack.genre;
-			track.artworkUrl=newTrack.artwork_url;
-			track.postingUser=newTrack.user.username;
-			track.userURL=newTrack.user.uri;
-			track.videoURL=newTrack.video_url;
-			track.label=newTrack.label_name;
-			track.releaseYear=newTrack.release_year;
+                    track = null;
+                    playlistId = null;
 
-				$http.post('/api/playlists/'+playlistId, track).error(function (response, status) {
-					alert("Something went wrong: " + response.message);
-					console.log(response.message);
-				});
-			
-		},
-		getPlaylist: function () {
-			if(trackNo<playlist.length){
-			//return playlist.slice(trackNo+1, playlist.length);
-			//return _.difference(playlist, played);
-			var test = _.select(playlist, function(c){    
-    				return played.indexOf(c._id) == -1;
-				});
-		
-			return test;
+                },
+                getPosition: function() {
+                    if (currentSoundObject && currentSoundObject.position) {
+                        $rootScope.$evalAsync();
+                        return currentSoundObject.position;
+                    } else return 0;
 
-			}
-			else{
-				return [];
-			}
+                },
+                getDuration: function(argument) {
+                    if (currentSoundObject && currentSoundObject.duration) {
 
-		},
-		playlistLength: function  (argument) {
-			return playlist.length;
-		},
-		removeTrack: function (trackId) {
-			console.log('want',trackId);
-			console.log('current', playListOperations.getCurrentTrack()._id)
-			//if(trackId!==playListOperations.getCurrentTrack()._id){
-				$http.delete('/api/playlists/'+playlistId+"/song/"+trackId).success( function (response) {
-				console.log("deleted");
-				
-			});
+                        if (currentSoundObject.bytesLoaded < currentSoundObject.bytesTotal) {
+                            return currentSoundObject.durationEstimate;
+                        };
 
-			//}
-		},
-		getCollaborators: function () {
-			return collaborators;
-		},
-		getOwner: function () {
-			return owner;
-		},
-		unsyncSocket: function () {
-			socket.unsyncUpdates(playlistId);
-		},
-		getName: function () {
-			return playlistName;
-		}
+                        return currentSoundObject.duration;
+                    } else return null;
+
+                }
 
 
-	};
 
-	 $rootScope.$on('$destroy', function () {
-      socket.unsyncUpdates(playlistId);
+            };
+
+            function playNext() {
+
+                playing = false;
+                playListService.getNextTrack();
+                scService.setTrack(true);
+            };
+
+            function setPlaying(isPlaying) {
+                playing = isPlaying;
+            }
+            return scService;
+        })
+    .factory('playListService', function($http, socket, $rootScope, $routeParams) {
+
+        var trackNo = 0;
+        var playlist = [];
+        var playlistId;
+        var playlistName;
+        var collaborators = [];
+        var played = [];
+        var owner;
+
+        var playListOperations = {
+            setPlaylistId: function(id) {
+                if (playlistId != id) {
+                    playListOperations.unsyncSocket();
+                    trackNo = 0;
+                }
+                playlistId = id;
+
+                playlist.splice(0, playlist.length);
+                played.splice(0, played.length);
+                $http.get('/api/playlists/' + playlistId).success(function(response) {
+
+                    playlist = response.songs;
+                    collaborators = response.collaborators;
+                    playlistName = response.name;
+                    owner = response.owner;
+                    socket.syncUpdates(id, playlist);
+                });
+
+            },
+            setPlaylist: function(newPlaylist) {
+                if (newPlaylist) {
+
+                    playListOperations.unsyncSocket();
+                    playlistId = newPlaylist._id;
+                    playlist = newPlaylist.songs;
+                    collaborators = newPlaylist.collaborators;
+                    playlistName = newPlaylist.name;
+                    owner = newPlaylist.owner;
+                    played = [];
+                    socket.syncUpdates(playlistId, playlist);
+                }
+            },
+            getPlayListId: function() {
+                return playlistId;
+            },
+            getCurrentTrack: function() {
+                if (playlist.length > 0) {
+                    return playListOperations.getPlaylist()[0];
+                } else return null;
+
+            },
+            getNextTrack: function(argument) {
+                if (playlist.length > 0) {
+                    played.push(playListOperations.getPlaylist()[0]._id);
+                    if (playListOperations.getPlaylist()[0] === undefined) {
+                        played = [];
+                    }
+                    playListOperations.getPlaylist()[0];
+                }
+            },
+            addTrack: function(newTrack) {
+                //Set track properties
+                var track = {};
+                track.id = newTrack.id;
+                track.title = newTrack.title;
+                track.artist = newTrack.artist;
+                track.genre = newTrack.genre;
+                track.artworkUrl = newTrack.artwork_url;
+                track.postingUser = newTrack.user.username;
+                track.userURL = newTrack.user.uri;
+                track.videoURL = newTrack.video_url;
+                track.label = newTrack.label_name;
+                track.releaseYear = newTrack.release_year;
+
+                $http.post('/api/playlists/' + playlistId, track).error(function(response, status) {
+                    alert("Something went wrong: " + response.message);
+                });
+
+            },
+            getPlaylist: function() {
+
+
+                var remainingSongs = _.select(playlist, function(c) {
+                    return played.indexOf(c._id) == -1;
+                });
+
+                return remainingSongs;
+
+            },
+            playlistLength: function(argument) {
+                return playlist.length;
+            },
+            removeTrack: function(trackId) {
+                $http.delete('/api/playlists/' + playlistId + "/song/" + trackId).success(function(response) {
+
+
+                });
+
+
+            },
+            getCollaborators: function() {
+                return collaborators;
+            },
+            getOwner: function() {
+                return owner;
+            },
+            unsyncSocket: function() {
+                socket.unsyncUpdates(playlistId);
+            },
+            getName: function() {
+                return playlistName;
+            }
+
+
+        };
+
+        $rootScope.$on('$destroy', function() {
+            socket.unsyncUpdates(playlistId);
+        });
+
+        return playListOperations;
+
+
+
     });
-
-	return playListOperations;
-	
-
-	
-});

@@ -4,7 +4,7 @@ angular.module('qmUpApp')
     .controller('UserPlaylistCtrl', function($scope, socket, Auth, $location, playlistResource, $modal) {
         $scope.playlists = [];
         $scope.loggedIn = Auth.isLoggedIn();
-        $scope.user=Auth.getCurrentUser();
+        $scope.user = Auth.getCurrentUser();
 
         if (!Auth.isLoggedIn()) {
             $location.path('/login');
@@ -78,17 +78,16 @@ angular.module('qmUpApp')
 
         $scope.deletePlaylist = function(pl) {
             playlistResource.delete({
-            id: pl._id
-         }).$promise.then(
-            function(response) {
-                _.remove($scope.playlists, pl);
-            },
-            function(response) {
-                // on error...
+                id: pl._id
+            }).$promise.then(
+                function(response) {
+                    _.remove($scope.playlists, pl);
+                },
+                function(response) {
+                    // on error...
 
-                console.log("error", response);
-            }   
-        );
+                }
+            );
 
 
         };
@@ -106,8 +105,6 @@ angular.module('qmUpApp')
             });
         };
 
-        $scope.test = function(argument) {
-            console.log(argument);
-        }
+      
 
     });

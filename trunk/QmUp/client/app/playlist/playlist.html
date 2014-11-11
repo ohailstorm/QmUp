@@ -4,12 +4,15 @@
 
     <div class="col-md-12">
         <div class="col-md-6 col-md-offset-4">
-            <h1>Playing from <span class="title">{{name}}</span></h1>
+            <h1>Playing from
+                <span class="title">{{name}}</span>
+            </h1>
         </div>
         <div class="col-md-6 col-md-offset-4">
 
             <h4>
-                <span class="divider"></span><span ng-click="toggleRemoteSkipping()" class="fa" ng-class="allowRemoteSkipping?'fa-check-circle-o':'fa-times'"></span>Allow remote skipping</h4>
+                <span class="divider"></span>
+                <span ng-click="toggleRemoteSkipping()" class="fa" ng-class="allowRemoteSkipping?'fa-check-circle-o':'fa-times'"></span>Allow remote skipping</h4>
         </div>
 
 
@@ -21,159 +24,159 @@
 
     <div class="col-md-6">
         <div class="row">
-        <div class="panel" id="track-info">
-            <div class="panel-heading">
-                <h1>Now playing:</h1>
-            </div>
-            <div class="panel-body">
-                <div class="col-md-12" style="text-align:center;">
-                    <h1 style="display:inline-block;">
-                        <span class="fa fa-info-circle" ng-click="openModal()"></span>
-                    </h1>
-                    <div class="row">
-                        <img class="img-rounded" src="{{currentTrack.artworkUrl}}" style="height:130px;">
-                        <br>
-                        <h4>{{currentTrack.title}}</h4>
-                    </div>
-                     <div ng-show="duration" class="row">
-                        <p>{{currentPosition | date:'mm:ss'}}/
-                        {{duration | date:'mm:ss'}}</p>
-                    </div>
-                    <div class="row">
+            <div class="panel" id="track-info">
+                <div class="panel-heading">
+                    <h1>Now playing:</h1>
+                </div>
+                <div class="panel-body">
+                    <div class="col-md-12" style="text-align:center;">
+                        <h1 style="display:inline-block;">
+                            <span class="fa fa-info-circle" ng-click="openModal()"></span>
+                        </h1>
+                        <div class="row">
+                            <img class="img-rounded" src="{{currentTrack.artworkUrl}}" style="height:130px;">
+                            <br>
+                            <h4>{{currentTrack.title}}</h4>
+                        </div>
+                        <div ng-show="duration" class="row">
+                            <p>{{currentPosition | date:'mm:ss'}}/ {{duration | date:'mm:ss'}}</p>
+                        </div>
+                        <div class="row">
 
-                        <button ng-show="!isPlaying" class="btn btn-lg btn-success" ng-click="play()">Play!</button>
-                        <button ng-show="isPlaying" class="btn btn-lg btn-danger" ng-click="pause()">Pause!</button>
-                        <button ng-if="isAdmin()" class="btn btn-lg btn-warning" ng-click="skip()">Skip!</button>
+                            <button ng-show="!isPlaying" class="btn btn-lg btn-success" ng-click="play()">Play!</button>
+                            <button ng-show="isPlaying" class="btn btn-lg btn-danger" ng-click="pause()">Pause!</button>
+                            <button ng-if="isAdmin()" class="btn btn-lg btn-warning" ng-click="skip()">Skip!</button>
 
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         </div>
 
 
         <div class="row">
-        <div class="panel">
-            <!-- Default panel contents -->
-            <div class="panel-heading">
-                <h2>Next up:</h2>
+            <div class="panel">
+                <!-- Default panel contents -->
+                <div class="panel-heading">
+                    <h2>Next up:</h2>
+                </div>
+
+                <!-- Table -->
+                <table class="table table-striped" id="plist" style="width: 100%;">
+                    <thead>
+                        <th></th>
+                        <th></th>
+
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in playlist track by $index">
+                            <td>{{item.title}}</td>
+                            <td>
+                                <span class="fa fa-remove" ng-click="removeTrack(item)" ng-if="isAdmin()"></span>
+                            </td>
+                        </tr>
+                    </tbody>
+
+                </table>
             </div>
-
-            <!-- Table -->
-            <table class="table table-striped" id="plist" style="width: 100%;">
-                <thead>
-                    <th></th>
-                    <th></th>
-
-                </thead>
-                <tbody>
-                    <tr ng-repeat="item in playlist track by $index">
-                        <td>{{item.title}}</td>
-                        <td>
-                            <span class="fa fa-remove" ng-click="removeTrack(item)" ng-if="isAdmin()"></span>
-                        </td>
-                    </tr>
-                </tbody>
-
-            </table>
         </div>
-    </div>
     </div>
 
 
     <div class="col-md-6" ng-if="isAdmin() || isCollab()">
-    <div class="row">
-        <div class="panel" >
+        <div class="row">
+            <div class="panel">
 
-            <div class="panel-heading">Search for songs</div>
-
-
-
-            <!--button class="btn btn-info" ng-click="search(searchStr)">Search!</button-->
-            <!--Sen ska man kunna välja vilka man vill ha med i playlist-->
+                <div class="panel-heading">Search for songs</div>
 
 
-            <form ng-submit="search(searchStr,nrSearchRes)" class="form-inline">
-                <div class="col-md-12">
-                    <div class="form-group">
 
-                        <input type="text" class="form-control" name="searchstring" ng-model="searchStr">
+                <!--button class="btn btn-info" ng-click="search(searchStr)">Search!</button-->
+                <!--Sen ska man kunna välja vilka man vill ha med i playlist-->
 
-                        <!--div class="input-group-btn"-->
-                        <button type="submit" class="btn btn-default">Search</button>
 
-                        <!--/div-->
-                        <!-- /btn-group -->
-                        <!-- /input-group -->
+                <form ng-submit="search(searchStr,nrSearchRes)" class="form-inline">
+                    <div class="col-md-12">
+                        <div class="form-group">
+
+                            <input type="text" class="form-control" name="searchstring" ng-model="searchStr">
+
+                            <!--div class="input-group-btn"-->
+                            <button type="submit" class="btn btn-default">Search</button>
+
+                            <!--/div-->
+                            <!-- /btn-group -->
+                            <!-- /input-group -->
+                        </div>
+                        <span class="divider"></span>
+                        <div class="form-group">Max results:
+                            <select class="form-control" ng-model="nrSearchRes" ng-options="number for number in numbers"></select>
+                        </div>
                     </div>
-                    <span class="divider"></span>
-                    <div class="form-group">Max results:
-                        <select class="form-control" ng-model="nrSearchRes" ng-options="number for number in numbers"></select>
+                    <!-- /.col-md-12 -->
+
+                </form>
+
+                <div class="scrollable">
+                    <div class="panel-body">
+                        <table class="table table-striped" id="results" style="width: 100%;">
+
+                            <thead>
+                                <th>Search results:</th>
+                            </thead>
+
+                            <tbody>
+
+                                <tr ng-repeat="item in searchResult">
+                                    <td>{{item.title}}</td>
+                                    <td ng-click="addToPlayList(item)">
+                                        <span class="fa fa-plus"></span>
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
                     </div>
+
                 </div>
-                <!-- /.col-md-12 -->
+            </div>
+        </div>
+    </div>
 
-            </form>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="panel">
+                <div class="panel-heading">
 
-            <div class="scrollable">
-                <div class="panel-body">
-                    <table class="table table-striped" id="results" style="width: 100%;">
-
-                        <thead>
-                            <th>Search results:</th>
-                        </thead>
-
-                        <tbody>
-
-                            <tr ng-repeat="item in searchResult">
-                                <td>{{item.title}}</td>
-                                <td ng-click="addToPlayList(item)">
-                                    <span class="fa fa-plus"></span>
-                                </td>
-
-                            </tr>
-
-                        </tbody>
-
-                    </table>
+                    <h1 style="display:inline-block">Collaborators</h1>
+                    <button class="btn btn-default space" ng-click="getFriendsList()" ng-hide="!isAdmin()">Add new</button>
+                    <ul class="list-unstyled">
+                        <li ng-repeat="collaborator in collaborators">{{collaborator.name}}
+                            <span ng-if="isAdmin()" class="fa fa-remove" ng-click="removeCollaborator(collaborator)"></span>
+                        </li>
+                    </ul>
                 </div>
+            </div>
+        </div>
 
+
+        <div class="row" ng-show="isAdmin()&&friendsList">
+
+            <div class="panel">
+                <div class="panel-heading">
+                    <h2>Facebook friends</h2>
+                    <ul class="list-unstyled">
+                        <li ng-repeat="friend in friendsList">
+                            {{friend.name}}
+                            <span class="fa fa-plus" ng-click="addCollaborator(friend)"></span>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
-    </div>
-
-  <div class="col-md-6">
-    <div class="row">
-        <div class="panel">
-            <div class="panel-heading">
-
-                <h1 style="display:inline-block">Collaborators</h1> <button class="btn btn-default space" ng-click="getFriendsList()" ng-hide="!isAdmin()">Add new</button>
-                <ul class="list-unstyled">
-                    <li ng-repeat="collaborator in collaborators">{{collaborator.name}}
-                        <span ng-if="isAdmin()" class="fa fa-remove" ng-click="removeCollaborator(collaborator)"></span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="row" ng-show="isAdmin()&&friendsList">
-
-        <div class="panel">
-            <div class="panel-heading">
-               <h2>Facebook friends</h2>
-                <ul class="list-unstyled">
-                    <li ng-repeat="friend in friendsList">
-                        {{friend.name}}
-                        <span class="fa fa-plus" ng-click="addCollaborator(friend)"></span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
 
 
 </div>

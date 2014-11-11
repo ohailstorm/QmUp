@@ -26,13 +26,11 @@ angular.module('qmUpApp')
                 $scope.playlist = response;
                 $scope.playlistId = response._id;
 
-                console.log(response);
                 socket.syncUpdates($scope.playlistId, $scope.playlist);
             },
             function(response) {
                 // on error...
 
-                console.log("error", response);
             }
         );
 
@@ -56,7 +54,6 @@ angular.module('qmUpApp')
 
             $http.get('https://graph.facebook.com/me/friends?access_token=' + Auth.getCurrentUser().fbToken).success(
                 function(response) {
-                    console.log(response.data);
                     $scope.friendsList = response.data;
                 }
 
@@ -73,7 +70,6 @@ angular.module('qmUpApp')
                 },
                 function(response) {
                     // on success...
-                    console.log("success!", response);
 
                     $scope.playlist.collaborators.push(response); // hack
 
@@ -109,10 +105,8 @@ angular.module('qmUpApp')
                     function(response) {
                         // on success...
                         _.remove($scope.playlist.collaborators, collaborator);
-                        console.log(response);
                     },
                     function function_name(response) {
-                        console.log("error", response);
                         // on error...
                     }
                 )

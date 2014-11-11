@@ -21,13 +21,13 @@
 
 
     <div class="panel" ng-show="playlists">
-      <div class="panel-body">
-        <ul class="list-unstyled">
-            <li ng-repeat="playlist in playlists"><a href="/playlist-info/{{playlist._id}}">{{playlist.name}}</a>
-            </li>
+        <div class="panel-body">
+            <ul class="list-unstyled">
+                <li ng-repeat="playlist in playlists"><a href="/playlist-info/{{playlist._id}}">{{playlist.name}}</a>
+                </li>
 
-        </ul>
-      </div>
+            </ul>
+        </div>
     </div>
 
 
@@ -40,7 +40,10 @@
 
 <footer class="footer">
     <div class="container">
-        <p>Angular Fullstack v2.0.13 | Project in TDDD27 Advanced Web Programming @ Linköping University. By gusen286 and oscha646 | <a href="" ng-click="aboutModal()"><strong>About QmUP</strong></a>
+        <p>Angular Fullstack v2.0.13 | Project in TDDD27 Advanced Web Programming @ Linköping University. By gusen286 and oscha646 |
+            <a href="" ng-click="aboutModal()">
+                <strong>About QmUP</strong>
+            </a>
         </p>
     </div>
 </footer>

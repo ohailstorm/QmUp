@@ -46,8 +46,10 @@
                         <tr ng-repeat="playlist in playlists track by $index">
                             <td><a href="/playlist-info/{{playlist._id}}">{{playlist.name}}</a>
                             </td>
-                            <td >{{playlist.owner.name}}</td>
-                            <td><span class="fa fa-trash-o" ng-click="deleteModal(playlist)"></span></td>
+                            <td>{{playlist.owner.name}}</td>
+                            <td>
+                                <span class="fa fa-trash-o" ng-click="deleteModal(playlist)"></span>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -63,8 +65,10 @@
                     <h2>My profile</h2>
                 </div>
                 <div class="panel-body">
-                    <p><strong>Name: </strong>{{user.name}}</p>
-                    <p><strong>Email address:</strong> {{user.email}}</p>
+                    <p>
+                        <strong>Name:</strong>{{user.name}}</p>
+                    <p>
+                        <strong>Email address:</strong>{{user.email}}</p>
                 </div>
             </div>
         </div>
