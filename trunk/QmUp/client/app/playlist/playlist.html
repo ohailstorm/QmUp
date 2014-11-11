@@ -4,12 +4,12 @@
 
     <div class="col-md-12">
         <div class="col-md-6 col-md-offset-4">
-            <h1>Playing from {{name}}</h1>
+            <h1>Playing from <span class="title">{{name}}</span></h1>
         </div>
         <div class="col-md-6 col-md-offset-4">
 
-            <h2>
-                <span ng-click="toggleRemoteSkipping()" class="fa" ng-class="allowRemoteSkipping?'fa-check-circle-o':'fa-times'"></span>Allow remote skipping</h2>
+            <h4>
+                <span class="divider"></span><span ng-click="toggleRemoteSkipping()" class="fa" ng-class="allowRemoteSkipping?'fa-check-circle-o':'fa-times'"></span>Allow remote skipping</h4>
         </div>
 
 
@@ -106,7 +106,7 @@
                         <!-- /btn-group -->
                         <!-- /input-group -->
                     </div>
-
+                    <span class="divider"></span>
                     <div class="form-group">Max results:
                         <select class="form-control" ng-model="nrSearchRes" ng-options="number for number in numbers"></select>
                     </div>
