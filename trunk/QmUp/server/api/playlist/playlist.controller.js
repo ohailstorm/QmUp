@@ -195,6 +195,10 @@ exports.destroy = function(req, res) {
       Playlist.findById(req.params.id, function (err, playlist) {
         if(err) { return handleError(res, err); }
         if(!playlist) { return res.send(404); }
+          if (!(req.user._id.toString() === playlist.owner.toString())) {
+                    
+                    return res.send(400);
+            }
         playlist.remove(function(err) {
           if(err) { return handleError(res, err); }
           return res.send(204);
