@@ -76,7 +76,7 @@ angular.module('qmUpApp')
 
 
     $scope.search = function(searchStr, lim) {
-        socket.socket.emit("skip", playListService.getPlayListId());
+        
         SC.get('/tracks', {
             q: searchStr,
             limit: lim
