@@ -9,7 +9,7 @@ exports.setup = function (User, config) {
     },
     function(accessToken, refreshToken, profile, done) {
       User.findOne({
-        'facebook.id': profile.id
+        'facebookId': profile.id
       },
       function(err, user) {
         if (err) {
@@ -23,7 +23,8 @@ exports.setup = function (User, config) {
             role: 'user',
             username: profile.username,
             provider: 'facebook',
-            fbToken: accessToken
+            fbToken: accessToken,
+            facebookId: profile.id
           });
           user.save(function(err) {
             if (err) done(err);

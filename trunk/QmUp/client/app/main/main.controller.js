@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('qmUpApp')
-    .controller('MainCtrl', function($scope, $http, socket, Auth, $window, playlistResource, $modal) {
+    .controller('MainCtrl', function($scope, $http, Auth, $window, playlistResource, $modal) {
         $scope.awesomeThings = [];
 
         $scope.isLoggedIn = Auth.isLoggedIn;
@@ -35,8 +35,4 @@ angular.module('qmUpApp')
         }
 
 
-        $scope.$on('$destroy', function() {
-            socket.unsyncUpdates('thing');
-            socket.unsyncUpdates('playlist');
-        });
     });
