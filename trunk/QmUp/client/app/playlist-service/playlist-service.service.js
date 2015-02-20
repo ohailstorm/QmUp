@@ -277,8 +277,16 @@ angular.module('qmUpApp')
                 var remainingSongs = _.select(playlist, function(c) {
                     return played.indexOf(c._id) == -1;
                 });
+                console.log(remainingSongs);
+                if(remainingSongs){
+                    var test = _.sortBy(remainingSongs, function (song) {
+                        console.log("song:", song.votes.length);
+                        return song.votes.length;
 
-                return remainingSongs;
+                    });
+                }
+                console.log(test);
+                return test.reverse();
 
             },
             playlistLength: function(argument) {
@@ -303,6 +311,12 @@ angular.module('qmUpApp')
             },
             getName: function() {
                 return playlistName;
+            },
+            voteForTrack: function (track) {
+                
+                $http.post('/api/playlists/vote/' +playlistId+"/"+ track._id, track).error(function(response, status) {
+                    alert("Something went wrong: " + response.message);
+                });
             }
 
 

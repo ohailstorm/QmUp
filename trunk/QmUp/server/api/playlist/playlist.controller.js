@@ -140,7 +140,7 @@ exports.addCollaborator = function(req, res) {
         }
 
         User.findOne({
-                'facebook.id': req.body.user
+                'facebookId': req.body.user
             },
             function(err, user) {
                 if (!user) {
@@ -262,6 +262,29 @@ exports.removeCollaborator = function(req, res) {
         });
     });
 };
+
+exports.vote = function (req, res) {
+     Playlist.findById(req.params.id, function(err, playlist) {
+        if (err) {
+            return handleError(res, err);
+        }
+        if (!playlist) {
+            return res.send(404);
+        }
+        console.log(_.find(playlist.songs.id(req.params.songId).votes, {'ip':req.user._id.toString()}));
+        if(!_.find(playlist.songs.id(req.params.songId).votes, {ip:req.user._id.toString()})){
+            playlist.songs.id(req.params.songId).votes.push({ip:req.user._id});
+        }
+       
+        playlist.save(function(err, song) {
+
+            if (err) {
+                return handleError(res, err);
+            }
+            return res.send(204);
+        });
+    });
+}
 
 function handleError(res, err) {
     return res.send(500, err);

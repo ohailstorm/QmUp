@@ -16,6 +16,7 @@ router.get('/search/:name', controller.findPlaylist);
 router.post('/', auth.isAuthenticated(), controller.create);
 router.post('/:id', auth.isAuthenticated(), controller.addSong);
 router.post('/:id/collaborator', auth.isAuthenticated(), controller.addCollaborator);
+router.post('/vote/:id/:songId', auth.isAuthenticated(), controller.vote);
 
 
 router.put('/:id', auth.isAuthenticated(), controller.update);

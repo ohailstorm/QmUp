@@ -66,11 +66,14 @@
                     <thead>
                         <th></th>
                         <th></th>
-
+                        <th></th>
                     </thead>
                     <tbody>
                         <tr ng-repeat="item in playlist track by $index">
                             <td>{{item.title}}</td>
+                            <td>
+                                <span class="fa fa-thumbs-up" ng-click="voteForTrack(item)" ng-if="isAdmin()"></span>
+                                </td>
                             <td>
                                 <span class="fa fa-remove" ng-click="removeTrack(item)" ng-if="isAdmin()"></span>
                             </td>

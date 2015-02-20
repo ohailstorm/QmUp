@@ -193,6 +193,11 @@ angular.module('qmUpApp')
     $scope.toggleRemoteSkipping = function() {
         $scope.allowRemoteSkipping = !$scope.allowRemoteSkipping;
     }
+    $scope.voteForTrack = function (track) {
+      
+        playListService.voteForTrack(track);
+
+    }
 
 
     $scope.openModal = function() {
